@@ -226,7 +226,14 @@ CREATE TABLE CobrosPendientes (
 
 
 --25.
-
+CREATE TABLE Secciones (
+    SeccionesID SERIAL PRIMARY KEY,        
+    Horario INTEGER,                 
+    Año_Academico VARCHAR(50),        
+    Semestre_Academico VARCHAR(50),   
+    DoctorID INTEGER REFERENCES Usuarios(UsuarioID), 
+    ClaseID INTEGER REFERENCES Clases(ClaseID)      
+);
 --26.
 
 --27.
