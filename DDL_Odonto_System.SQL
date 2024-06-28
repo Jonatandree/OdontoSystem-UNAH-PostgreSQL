@@ -235,16 +235,41 @@ CREATE TABLE Secciones (
     ClaseID INTEGER REFERENCES Clases(ClaseID)      
 );
 --26.
-
+CREATE TABLE Alumnos_X_Seccion (
+    SeccionesID INTEGER NOT NULL,           
+    AlumnoID INTEGER NOT NULL,                
+    Nota_Final DECIMAL(10,2),                
+    PRIMARY KEY (SeccionesID, AlumnoID),  
+    FOREIGN KEY (SeccionesID) REFERENCES Secciones(SeccionesID),
+    FOREIGN KEY (AlumnoID) REFERENCES Usuarios(UsuarioID)          
+);
 --27.
-
+CREATE TABLE Cargo (
+    CargoID SERIAL PRIMARY KEY,    
+    Nombre VARCHAR(100) NOT NULL,       
+    Descripcion TEXT                     
+);
 --28.
-
+CREATE TABLE Privilegios_X_Cargo (
+    CargoID INTEGER NOT NULL,                        
+    PrivilegiosID INTEGER NOT NULL,                
+    PRIMARY KEY (CargoID, PrivilegiosID),           
+    FOREIGN KEY (CargoID) REFERENCES Cargo(CargoID), 
+    FOREIGN KEY (PrivilegiosID) REFERENCES Privilegios(PrivilegiosID) 
+);
 --29.
 
 --30.
-
+CREATE TABLE Area (
+    AreaID SERIAL PRIMARY KEY,    
+    Nombre VARCHAR(100) NOT NULL    
+);
 --31.
+CREATE TABLE Examen_Estomatologico (
+    Examen_EstomatologicoID SERIAL PRIMARY KEY,    
+    DiagnosticoID INTEGER NOT NULL,           
+    FOREIGN KEY (DiagnosticoID) REFERENCES Diagnosticos(DiagnosticoID)  
+);
 
 --32.
 
