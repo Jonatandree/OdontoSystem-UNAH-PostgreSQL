@@ -180,7 +180,7 @@ ________________________________________________________________________________
 
 --20.
 CREATE TABLE Remisiones (
-    RemisioID SERIAL PRIMARY KEY,
+    RemisionID SERIAL PRIMARY KEY,
     PacienteID INTEGER REFERENCES Pacientes(PacienteID),
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
     HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
@@ -193,7 +193,7 @@ CREATE TABLE Tickets (
     TicketsID SERIAL PRIMARY KEY,
     Fecha TIMESTAMP NOT NULL,
     NumeroDeTurno INTEGER NOT NULL,
-    RemicionID INTEGER REFERENCES Remisiones(RemicionID)
+    RemicionID INTEGER REFERENCES Remisiones(RemisionID)
 );
 
 --22.
@@ -258,6 +258,32 @@ CREATE TABLE Privilegios_X_Cargo (
     FOREIGN KEY (PrivilegiosID) REFERENCES Privilegios(PrivilegiosID) 
 );
 --29.
+CREATE TABLE Diagnosticos (
+    DiagnosticoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada diagnóstico
+    Fecha_Creacion DATE, -- Fecha de creación del diagnóstico
+    Motivo_Consulta TEXT, -- Motivo de la consulta
+    Historia_de_Enfermedad TEXT, -- Historia de la enfermedad
+    Interconsultas TEXT, -- Interconsultas realizadas
+    Estado_Gestacion BOOLEAN, -- Estado de gestación (true/false)
+    Periodo_Menstrual BOOLEAN, -- Periodo menstrual (true/false)
+    Consume_Tabaco BOOLEAN, -- Indicador de consumo de tabaco (true/false)
+    Apiñamiento_Dental BOOLEAN, -- Indicador de apiñamiento dental (true/false)
+    Dificultad_Respiratoria BOOLEAN, -- Indicador de dificultad respiratoria (true/false)
+    Brumismo BOOLEAN, -- Indicador de bruxismo (true/false)
+    Piersin_Bucal BOOLEAN, -- Indicador de uso de piercing bucal (true/false)
+    Usa_Protesis_Dental BOOLEAN, -- Indicador de uso de prótesis dental (true/false)
+    Observaciones TEXT, -- Observaciones adicionales
+    Frecuencia_Cepillado_Por_Dia INTEGER, -- Frecuencia de cepillado por día
+    Tiempo_De_Cepillado VARCHAR(50), -- Duración del cepillado (descripción)
+    Tamaño_De_Cepillo VARCHAR(50), -- Tamaño del cepillo (descripción)
+    Tipo_De_Cerdas_Del_Cepillo VARCHAR(50), -- Tipo de cerdas del cepillo
+    Presion_Ejercida_Al_Cepillarse VARCHAR(50), -- Presión ejercida al cepillarse
+    Usa_Hilo_Dental BOOLEAN, -- Indicador de uso de hilo dental (true/false)
+    Sangrado_Encillas BOOLEAN, -- Indicador de sangrado de encías (true/false)
+    Comentario TEXT, -- Comentarios adicionales
+    EstudianteID INTEGER REFERENCES Estudiantes(EstudianteID), -- Clave foránea referenciando a la tabla Estudiantes
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID) -- Clave foránea referenciando a la tabla HistoriaClinica
+);
 
 --30.
 CREATE TABLE Area (
@@ -345,11 +371,15 @@ CREATE TABLE Medicamentos_Recetados (
 
 --42 OJO.
 CREATE TABLE Descripcion_Medicamentos (
-    Medicamentos_RecetadosID INTEGER PRIMARY KEY REFERENCES Medicamentos_Recetados(Medicamentos_RecetadosID),
-    Dosis VARCHAR(50),
+    Medicamentos_RecetadosID INTEGER,
+    Dosis VARCHAR(255),
     Motivo TEXT,
-    MedicamentoID INTEGER REFERENCES Medicamentos(MedicamentoID)
+    MedicamentosID INTEGER,
+    PRIMARY KEY (Medicamentos_RecetadosID, MedicamentosID),
+    FOREIGN KEY (Medicamentos_RecetadosID) REFERENCES Medicamentos_Recetados(Medicamentos_RecetadosID),
+    FOREIGN KEY (MedicamentosID) REFERENCES Medicamentos(MedicamentoID)
 );
+
 
 --43.
 CREATE TABLE SignosVitales (
@@ -432,29 +462,41 @@ CREATE TABLE Detalle_Presupuesto (
     ID_Detalle_Presupuesto SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada detalle de presupuesto
     Clinica VARCHAR(100), -- Nombre o identificación de la clínica
     Tratamiento VARCHAR(100), -- Nombre o descripción del tratamiento
-    Estado VARCHAR(50), -- Estado del procedimiento (por ejemplo: pendiente, completado, cancelado)
     NumeroDiente INTEGER, -- Número de diente asociado (opcional, puede ser NULL)
     Monto NUMERIC(10, 2), -- Monto asociado al detalle del presupuesto
+    EstadoAprobacionID INTEGER REFERENCES EstadosAprovacionDocente(EstadoAprobacionID),
     PresupuestoID INTEGER REFERENCES Presupuestos(PresupuestoID), -- Clave foránea referenciando a la tabla Presupuestos
     Lista_TratamientoID INTEGER REFERENCES Lista_Tratamientos(Lista_TratamientoID) -- Clave foránea referenciando a la tabla Lista_Tratamientos
 );
 
 --53. OJOOOO CAJEROS
 CREATE TABLE Recibos (
-    ReciboID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada recibo
-    Nombre_Paciente VARCHAR(100), -- Nombre del paciente
-    Dni VARCHAR(20), -- DNI del paciente
-    CodigoRecibo VARCHAR(50), -- Código único del recibo
-    Tratamiento VARCHAR(100), -- Nombre o descripción del tratamiento
-    Clinica VARCHAR(100), -- Nombre o identificación de la clínica
-    Docente VARCHAR(100), -- Nombre del docente responsable del tratamiento
-    Estudiante VARCHAR(100), -- Nombre del estudiante o residente involucrado en el tratamiento
-    Monto NUMERIC(10, 2), -- Monto total del recibo
-    CajeroID INTEGER REFERENCES Cajeros(CajeroID), -- Clave foránea referenciando a la tabla Cajeros
-    ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto) -- Clave foránea referenciando a la tabla Detalle_Presupuesto
+    ReciboID SERIAL PRIMARY KEY,
+    Nombre_Paciente VARCHAR(255),
+    Dni VARCHAR(50),
+    CodigoRecibo VARCHAR(50),
+    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID),
+    ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
+    DocenteID INTEGER REFERENCES  Usuarios(UsuarioID) ,
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID) ,
+    Monto DECIMAL(10, 2),
+    CajeroID INTEGER REFERENCES Usuarios(UsuarioID) ,
+    ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto)
 );
 
+
 --54.
+CREATE TABLE ListaTratamiento (
+    Lista_TratamientoID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada registro de tratamiento
+    DienteID INTEGER REFERENCES Dientes(DienteID), -- Clave foránea referenciando a la tabla Dientes
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID), -- Clave foránea referenciando a la tabla Diagnosticos
+    ReciboID INTEGER REFERENCES Recibos(ReciboID), -- Clave foránea referenciando a la tabla Recibos
+    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), -- Clave foránea referenciando a la tabla Tratamientos
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID), -- Clave foránea referenciando a la tabla Estudiantes
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID), -- Clave foránea referenciando a la tabla Docentes
+    SeccionID INTEGER REFERENCES Secciones(SeccionID) -- Clave foránea referenciando a la tabla Secciones
+);
 
 --55.
 CREATE TABLE EstadosAprobacionDocente (
@@ -491,10 +533,24 @@ CREATE TABLE Lista_Dientes (
 );
 
 --59.
+CREATE TABLE CirugiasBucal (
+    CirugiaBucalID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada cirugía bucal
+    Pieza_Dentaria INTEGER, -- Almacena la descripción de la pieza dentaria involucrada en la cirugía
+    Diagnostico TEXT, -- Almacena la descripción del diagnóstico relacionado con la cirugía
+    RegistroID INTEGER REFERENCES Registros(RegistroID), -- Clave foránea referenciando a la tabla Registros
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID), -- Clave foránea referenciando a la tabla Estudiantes
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID) -- Clave foránea referenciando a la tabla Plan_Tratamiento
+);
 
 --60.
 
 --61.
+CREATE TABLE Periodontogramas (
+    PeriodontogramasID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada periodontograma
+    Nombre VARCHAR(100), -- Nombre descriptivo del periodontograma
+    Imagen BYTEA, -- Almacena la imagen del periodontograma en formato binario
+    PeriodonciaID INTEGER REFERENCES Periodoncias(PeriodonciaID) -- Clave foránea referenciando a la tabla Periodoncia
+);
 
 --62.
 
@@ -503,6 +559,11 @@ CREATE TABLE Lista_Dientes (
 --64.
 
 --65.
+CREATE TABLE TipoConductos (
+    TipoConductosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de conducto
+    Nombre VARCHAR(100) NOT NULL, -- Nombre del tipo de conducto, con un límite de 100 caracteres
+    Descripcion TEXT -- Descripción detallada del tipo de conducto
+);
 
 --66.
 
