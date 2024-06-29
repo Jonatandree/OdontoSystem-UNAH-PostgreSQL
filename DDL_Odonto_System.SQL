@@ -539,7 +539,7 @@ CREATE TABLE CirugiasBucal (
 );
 
 
--60.
+--60.
 CREATE TABLE TipoConductos (
     TipoConductosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de conducto
     Nombre VARCHAR(100) NOT NULL, -- Nombre del tipo de conducto, con un límite de 100 caracteres
