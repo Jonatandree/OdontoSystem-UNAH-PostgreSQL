@@ -281,7 +281,7 @@ CREATE TABLE Diagnosticos (
     Usa_Hilo_Dental BOOLEAN, -- Indicador de uso de hilo dental (true/false)
     Sangrado_Encillas BOOLEAN, -- Indicador de sangrado de encías (true/false)
     Comentario TEXT, -- Comentarios adicionales
-    EstudianteID INTEGER REFERENCES Estudiantes(EstudianteID), -- Clave foránea referenciando a la tabla Estudiantes
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID), -- Clave foránea referenciando a la tabla Estudiantes
     HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID) -- Clave foránea referenciando a la tabla HistoriaClinica
 );
 
