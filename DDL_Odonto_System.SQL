@@ -460,14 +460,15 @@ CREATE TABLE Presupuestos (
 --52.
 CREATE TABLE Detalle_Presupuesto (
     ID_Detalle_Presupuesto SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada detalle de presupuesto
-    Clinica VARCHAR(100), -- Nombre o identificación de la clínica
-    Tratamiento VARCHAR(100), -- Nombre o descripción del tratamiento
-    NumeroDiente INTEGER, -- Número de diente asociado (opcional, puede ser NULL)
-    Monto NUMERIC(10, 2), -- Monto asociado al detalle del presupuesto
-    EstadoAprobacionID INTEGER REFERENCES EstadosAprovacionDocente(EstadoAprobacionID),
+    ClinicaID INTEGER REFERENCES Clinicas(ClinicaID), -- Clave foránea referenciando a la tabla Clinicas
+    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), -- Clave foránea referenciando a la tabla Tratamientos
+    EstadoID INTEGER REFERENCES Estados(EstadoID), -- Clave foránea referenciando a la tabla Estados
+    NumeroDiente VARCHAR(10), -- Número o identificador del diente involucrado, limitado a 10 caracteres
+    Monto NUMERIC(10, 2), -- Monto asociado al tratamiento, con precisión para valores monetarios
     PresupuestoID INTEGER REFERENCES Presupuestos(PresupuestoID), -- Clave foránea referenciando a la tabla Presupuestos
-    Lista_TratamientoID INTEGER REFERENCES Lista_Tratamientos(Lista_TratamientoID) -- Clave foránea referenciando a la tabla Lista_Tratamientos
+    Lista_TratamientoID INTEGER REFERENCES ListaTratamiento(Lista_TratamientoID) -- Clave foránea referenciando a la tabla ListaTratamiento
 );
+
 
 --53. OJOOOO CAJEROS
 CREATE TABLE Recibos (
