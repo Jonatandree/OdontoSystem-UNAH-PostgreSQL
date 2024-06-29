@@ -272,58 +272,223 @@ CREATE TABLE Examen_Estomatologico (
 );
 
 --32.
-
+CREATE TABLE Area_X_Examen (
+    Examen_EstomatologicoID INTEGER NOT NULL,
+    Afeccion TEXT,
+    AreaID INTEGER NOT NULL,
+    PRIMARY KEY (Examen_EstomatologicoID, AreaID),
+    FOREIGN KEY (Examen_EstomatologicoID) REFERENCES Examen_Estomatologico(Examen_EstomatologicoID),
+    FOREIGN KEY (AreaID) REFERENCES Area(AreaID)
+);
 --33.
-
+CREATE TABLE ConsentimientoInformado (
+    ConsentimientoID SERIAL PRIMARY KEY,      -- Identificador único y autoincremental para cada registro de consentimiento
+    Fecha DATE NOT NULL,                      -- Fecha en que se otorgó el consentimiento
+    Consentimiento BYTEA NOT NULL,            -- Imagen del consentimiento en formato binario
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID) -- Clave foránea referenciando a la tabla Diagnostico
+);
 --34.
-
+CREATE TABLE Tipo_Alergias (
+    TipoAlergiasID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de alergia
+    Nombre VARCHAR(100) NOT NULL,        -- Nombre del tipo de alergia, con una longitud máxima de 100 caracteres
+    Descripcion TEXT                     -- Descripción del tipo de alergia
+);
 --35.
+CREATE TABLE Alergias (
+    AlergiasID SERIAL PRIMARY KEY,           -- Identificador único y autoincremental para cada alergia
+    Nombre VARCHAR(100) NOT NULL,            -- Nombre de la alergia, con una longitud máxima de 100 caracteres
+    Descripcion TEXT,                        -- Descripción de la alergia
+    Tipo_EnfermedadID INTEGER REFERENCES Tipo_Alergias(TipoAlergiasID)  -- Clave foránea referenciando a la tabla Tipo_Alergias
+);
 
 --36.
+CREATE TABLE Alergias_X_Pacientes (
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID),                               -- Clave foránea referenciando a la tabla Diagnostico
+    AlergiasID INTEGER REFERENCES Alergias(AlergiasID),  -- Clave foránea referenciando a la tabla Alergias
+    PRIMARY KEY (DiagnosticoID, AlergiasID)              -- Clave primaria compuesta por DiagnosticoID y AlergiasID
+);
 
 --37.
+CREATE TABLE Tipo_Enfermedad (
+    TipoEnfermedadID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de enfermedad
+    Nombre VARCHAR(100) NOT NULL,        -- Nombre del tipo de enfermedad, con una longitud máxima de 100 caracteres
+    Descripcion TEXT                     -- Descripción del tipo de enfermedad
+);
 
 --38.
+CREATE TABLE Enfermedad (
+    EnfermedadID SERIAL PRIMARY KEY,           -- Identificador único y autoincremental para cada enfermedad
+    Nombre VARCHAR(100) NOT NULL,              -- Nombre de la enfermedad, con una longitud máxima de 100 caracteres
+    Descripcion TEXT,                          -- Descripción de la enfermedad
+    Tipo_EnfermedadID INTEGER REFERENCES Tipo_Enfermedad(TipoEnfermedadID) -- Clave foránea referenciando a la tabla Tipo_Enfermedad
+);
 
 --39.
+CREATE TABLE Enfermeda_X_Paciente (
+    EnfermedadID INTEGER REFERENCES Enfermedad(EnfermedadID), -- Clave foránea referenciando a la tabla Enfermedad
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID), -- Clave foránea referenciando a la tabla Diagnostico
+    PRIMARY KEY (EnfermedadID, DiagnosticoID)                  -- Clave primaria compuesta por EnfermedadID y DiagnosticoID
+);
 
 --40.
+CREATE TABLE Medicamentos (
+    MedicamentoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada medicamento
+    Nombre VARCHAR(100) NOT NULL      -- Nombre del medicamento, con una longitud máxima de 100 caracteres
+);
 
 --41.
+CREATE TABLE Medicamentos_Recetados (
+    Medicamentos_RecetadosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada registro de medicamento recetado
+    Observaciones TEXT,                          -- Observaciones asociadas a la receta de medicamento
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID) -- Clave foránea referenciando a la tabla Diagnostico
+);
 
---42.
+--42 OJO.
+CREATE TABLE Descripcion_Medicamentos (
+    Medicamentos_RecetadosID INTEGER PRIMARY KEY REFERENCES Medicamentos_Recetados(Medicamentos_RecetadosID),
+    Dosis VARCHAR(50),
+    Motivo TEXT,
+    MedicamentoID INTEGER REFERENCES Medicamentos(MedicamentoID)
+);
 
 --43.
+CREATE TABLE SignosVitales (
+    Signos_VitalesID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada registro de signos vitales
+    Presion_Arterial VARCHAR(20),
+    Pulso INTEGER,
+    Peso DECIMAL(5,2),
+    F_Respiratoria INTEGER,
+    Saturacion_De_Oxigeno INTEGER,
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID) -- Clave foránea referenciando a la tabla Diagnostico
+);
 
 --44.
+CREATE TABLE Odontogramas (
+    OdontogramaID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada registro de odontograma
+    Total_Piezas_Sana INTEGER,
+    Total_Ausentes INTEGER,
+    Observaciones TEXT,
+    Pronostico TEXT,
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID) -- Clave foránea referenciando a la tabla Diagnostico
+);
 
 --45.
+CREATE TABLE Estados_Piezas_Dentarias (
+    Estados_Piezas_DentariasID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada estado de pieza dental
+    Nombre VARCHAR(100),
+    Codigo VARCHAR(20) UNIQUE -- Código único para cada estado de pieza dental
+);
 
 --46.
+CREATE TABLE Cuadrantes (
+    CuadranteID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada cuadrante dental
+    Nombre VARCHAR(100),
+    Descripcion TEXT,
+    Codigo VARCHAR(20) UNIQUE -- Código único para cada cuadrante dental
+);
 
 --47.
+CREATE TABLE Dientes (
+    DienteID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada diente
+    Nombre VARCHAR(100),
+    Numero INTEGER,
+    CuadranteID INTEGER REFERENCES Cuadrantes(CuadranteID) -- Clave foránea referenciando a la tabla Cuadrantes
+);
 
 --48.
+CREATE TABLE Plan_Tratamiento (
+    Plan_TratamientoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada plan de tratamiento
+    Observaciones TEXT -- Campo para observaciones o notas asociadas al plan de tratamiento
+);
 
 --49.
+CREATE TABLE Tratamientos (
+    TratamientoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tratamiento
+    Nombre VARCHAR(100),
+    Codigo VARCHAR(20) UNIQUE, -- Código único para cada tratamiento
+    Costo NUMERIC(10, 2) -- Costo del tratamiento, usando NUMERIC para precisión monetaria
+);
 
 --50.
+CREATE TABLE Tratamiento_X_Clinica (
+    TratamientoID INTEGER,
+    ClinicaID INTEGER,
+    PRIMARY KEY (TratamientoID, ClinicaID),
+    FOREIGN KEY (TratamientoID) REFERENCES Tratamientos(TratamientoID),
+    FOREIGN KEY (ClinicaID) REFERENCES Clinicas(ClinicaID)
+);
 
 --51.
+CREATE TABLE Presupuestos (
+    PresupuestoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada presupuesto
+    Costo NUMERIC(10, 2), -- Costo total del presupuesto
+    Saldo NUMERIC(10, 2), -- Saldo pendiente del presupuesto
+    Fecha_Creacion DATE, -- Fecha de creación del presupuesto
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID) -- Clave foránea referenciando a la tabla Plan_Tratamiento
+);
 
 --52.
+CREATE TABLE Detalle_Presupuesto (
+    ID_Detalle_Presupuesto SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada detalle de presupuesto
+    Clinica VARCHAR(100), -- Nombre o identificación de la clínica
+    Tratamiento VARCHAR(100), -- Nombre o descripción del tratamiento
+    Estado VARCHAR(50), -- Estado del procedimiento (por ejemplo: pendiente, completado, cancelado)
+    NumeroDiente INTEGER, -- Número de diente asociado (opcional, puede ser NULL)
+    Monto NUMERIC(10, 2), -- Monto asociado al detalle del presupuesto
+    PresupuestoID INTEGER REFERENCES Presupuestos(PresupuestoID), -- Clave foránea referenciando a la tabla Presupuestos
+    Lista_TratamientoID INTEGER REFERENCES Lista_Tratamientos(Lista_TratamientoID) -- Clave foránea referenciando a la tabla Lista_Tratamientos
+);
 
---53.
+--53. OJOOOO CAJEROS
+CREATE TABLE Recibos (
+    ReciboID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada recibo
+    Nombre_Paciente VARCHAR(100), -- Nombre del paciente
+    Dni VARCHAR(20), -- DNI del paciente
+    CodigoRecibo VARCHAR(50), -- Código único del recibo
+    Tratamiento VARCHAR(100), -- Nombre o descripción del tratamiento
+    Clinica VARCHAR(100), -- Nombre o identificación de la clínica
+    Docente VARCHAR(100), -- Nombre del docente responsable del tratamiento
+    Estudiante VARCHAR(100), -- Nombre del estudiante o residente involucrado en el tratamiento
+    Monto NUMERIC(10, 2), -- Monto total del recibo
+    CajeroID INTEGER REFERENCES Cajeros(CajeroID), -- Clave foránea referenciando a la tabla Cajeros
+    ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto) -- Clave foránea referenciando a la tabla Detalle_Presupuesto
+);
 
 --54.
 
 --55.
+CREATE TABLE EstadosAprobacionDocente (
+    EstadoAprobacionID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada estado de aprobación
+    Nombre VARCHAR(100) -- Nombre descriptivo del estado de aprobación
+);
 
---56.
+--56 OJOO NOTA.
+CREATE TABLE Evolucion_Tratamiento (
+    Evolucion_TratamientoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada registro de evolución
+    Nota_Final VARCHAR(255), -- Nota final del tratamiento
+    EstadoAprobacionID INTEGER REFERENCES EstadosAprobacionDocente(EstadoAprobacionID), -- Clave foránea referenciando a la tabla EstadosAprobacionDocente
+    Lista_TratamientoID INTEGER REFERENCES ListaTratamiento(Lista_TratamientoID) -- Clave foránea referenciando a la tabla ListaTratamiento
+);
 
 --57.
+CREATE TABLE Procedimientos_De_Evolucion (
+    Procedimientos_De_EvolucioID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada procedimiento de evolución
+    Fecha DATE, -- Fecha en que se realizó el procedimiento
+    Procedimiento_Realizado TEXT, -- Detalles del procedimiento realizado
+    EstadoAprobacionID INTEGER REFERENCES EstadosAprobacionDocente(EstadoAprobacionID), -- Clave foránea referenciando a la tabla EstadosAprobacionDocente
+    Evolucion_TratamientoID INTEGER REFERENCES Evolucion_Tratamiento(Evolucion_TratamientoID) -- Clave foránea referenciando a la tabla Evolucion_Tratamiento
+);
 
 --58.
+CREATE TABLE Lista_Dientes (
+    OdontogramaID INTEGER,
+    DienteID INTEGER,
+    Estados_Piezas_DentariasID INTEGER,
+    PRIMARY KEY (OdontogramaID, DienteID, Estados_Piezas_DentariasID),
+    FOREIGN KEY (OdontogramaID) REFERENCES Odontogramas(OdontogramaID),
+    FOREIGN KEY (DienteID) REFERENCES Dientes(DienteID),
+    FOREIGN KEY (Estados_Piezas_DentariasID) REFERENCES Estados_Piezas_Dentarias(Estados_Piezas_DentariasID)
+);
 
 --59.
 
