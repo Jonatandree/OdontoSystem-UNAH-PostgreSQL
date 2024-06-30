@@ -540,13 +540,33 @@ CREATE TABLE CirugiasBucal (
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID) -- Clave foránea referenciando a la tabla Plan_Tratamiento
 );
 
-
---61.
-CREATE TABLE TipoConductos (
-    TipoConductosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de conducto
-    Nombre VARCHAR(100) NOT NULL, -- Nombre del tipo de conducto, con un límite de 100 caracteres
-    Descripcion TEXT -- Descripción detallada del tipo de conducto
+--61 
+CREATE TABLE Periodoncias (
+    PeriodonciaID SERIAL PRIMARY KEY,
+    Color BOOLEAN,
+    Explique_Color TEXT,
+    Tamaño BOOLEAN,
+    Explique_Tamaño TEXT,
+    Contorno BOOLEAN,
+    Explique_Contorno TEXT,
+    forma BOOLEAN,
+    Explique_forma TEXT,
+    ConsistencIa BOOLEAN,
+    Explique_ConsistencIa TEXT,
+    Textura BOOLEAN,
+    Explique_Textura TEXT,
+    Posicion BOOLEAN,
+    Explique_Posicion TEXT,
+    Valor_Riesgo_Peridontal VARCHAR(255),
+    Recomendaciones TEXT,
+    Diagnostico_General TEXT,
+    Pronostico_General TEXT,
+    Fundamentos_Pronostico TEXT,
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
+
 
 
 --62.
@@ -558,21 +578,195 @@ CREATE TABLE Periodontogramas (
 );
 
 
+--63
+CREATE TABLE Operatorias (
+    OperatoriaID SERIAL PRIMARY KEY,
+    Sobremordida_Vertical BOOLEAN,
+    Mordida_Abierta BOOLEAN,
+    Ruidos_En_Boca BOOLEAN,
+    Sobremordida_Horizontal BOOLEAN,
+    Hiperlaxitud_Ligamentos BOOLEAN,
+    Abrasion BOOLEAN,
+    Erosion BOOLEAN,
+    Atriccion BOOLEAN,
+    Bruxismo BOOLEAN,
+    imagen_diagnostico_inicial BYTEA,
+    imagen_diagnostico_Final BYTEA,
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
 
---63.
 
---63.
+
 
 --64.
+CREATE TABLE OdontoPedriatrias (
+    OdontoPedriatriaID SERIAL PRIMARY KEY,
+    Prenatales TEXT,
+    Perinatales TEXT,
+    Patologicos TEXT,
+    Farmacologicos TEXT,
+    Quirurgicos_Hospitalarios TEXT,
+    Traumaticos TEXT,
+    alergias_Medicamento BOOLEAN,
+    Especificacion_alergias_Medicamento TEXT,
+    Alergia_Anestesico BOOLEAN,
+    Especificacion_Alergia_Anestesico TEXT,
+    Alergia_Alimentos BOOLEAN,
+    Especificacion_Alergia_Alimentos TEXT,
+    Transfunciones TEXT,
+    Perfil VARCHAR(7) CHECK (Perfil IN ('CONCAVO', 'CONVEXO', 'RECTO')),
+    Cabeza VARCHAR(14) CHECK (Cabeza IN ('MESOCEFALICO', 'DOLICOCEFALICA', 'BRANQUICEFALICA')),
+    Denticion VARCHAR(10) CHECK (Denticion IN ('DECIDUA', 'MIXTA', 'PERMANENTE')),
+    Clase_Molar_Derecha VARCHAR(3) CHECK (Clase_Molar_Derecha IN ('I', 'II', 'III')),
+    Clase_Molar_Izquierda VARCHAR(3) CHECK (Clase_Molar_Izquierda IN ('I', 'II', 'III')),
+    Plano_Recto VARCHAR(9) CHECK (Plano_Recto IN ('DERECHO', 'IZQUIERDO')),
+    Plano_Mesial VARCHAR(9) CHECK (Plano_Mesial IN ('DERECHO', 'IZQUIERDO')),
+    Plano_Distal VARCHAR(9) CHECK (Plano_Distal IN ('DERECHO', 'IZQUIERDO')),
+    Clase_Canina_Derecha VARCHAR(3) CHECK (Clase_Canina_Derecha IN ('I', 'II', 'III')),
+    Clase_Canina_Izquierda VARCHAR(3) CHECK (Clase_Canina_Izquierda IN ('I', 'II', 'III')),
+    Sobre_mordida_Horizontal NUMERIC(5, 2),
+    Piezas_Involucradas_Modida_Horizontal INTEGER,
+    Sobre_Mordida_Vertical NUMERIC(5, 2),
+    Piezas_Involucradas_Modida_Vertical INTEGER,
+    Mordida_Cruzada BOOLEAN,
+    Anterior BOOLEAN,
+    Posterior BOOLEAN,
+    Piezas_Involucradas_Mordida_Cruzada INTEGER,
+    Mordida_Borde_A_Borde BOOLEAN,
+    Mordida_Abierta BOOLEAN,
+    Razon_Mordida_Abierta TEXT,
+    Linea_Media BOOLEAN,
+    Arco_Dentario VARCHAR(5) CHECK (Arco_Dentario IN ('TIPO1', 'TIPO2')),
+    Tipo_Respiracion VARCHAR(5) CHECK (Tipo_Respiracion IN ('NASAL', 'ORAL')),
+    Ronca BOOLEAN,
+    Rechina_Dientes BOOLEAN,
+    Sellado_Labial BOOLEAN,
+    Desglucion VARCHAR(7) CHECK (Desglucion IN ('INFANTIL', 'ADULTO')),
+    Tonicidad_Labial VARCHAR(11) CHECK (Tonicidad_Labial IN ('NORMAL', 'HIPERTONISMO', 'HIPOTONISMO')),
+    Apertura_Bucal NUMERIC(5, 2),
+    Desgaste_Caninos BOOLEAN,
+    Habitos_Bucales VARCHAR(100) CHECK (Habitos_Bucales IN ('SUCCION DIGITAL', 'CHUPON', 'MORDERSE LAS UÑAS', 'PROTECCION LINGUAL')),
+    Presencia_Sangrado BOOLEAN,
+    Movilidad_Dentaria BOOLEAN,
+    Fisiologica BOOLEAN,
+    Patologica BOOLEAN,
+    Presencia_Abceso BOOLEAN,
+    Localizacion_Presencia_Absceso TEXT,
+    Halitosis BOOLEAN,
+    Alimentos_Mas_Consumidos TEXT,
+    Carbohidratos TEXT,
+    Proteinas TEXT,
+    Grasas TEXT,
+    Come_Frecuentemente_Entre_Comidas BOOLEAN,
+    Frecuencia_Comidas TEXT,
+    Uso_Biberon VARCHAR(9) CHECK (Uso_Biberon IN ('DIURNO', 'NOCTURNO', 'MADRUGADA')),
+    Frecuencia_uso_de_biberon TEXT,
+    Numero_Biberones_Por_Dia INTEGER,
+    Onzas_De_Leche_Biberon INTEGER,
+    Agregados_Biberon TEXT,
+    Cepillado_Despues_Biberon BOOLEAN,
+    Duerme_con_el_biberon BOOLEAN,
+    Uso_Vaso_Entrenador BOOLEAN,
+    Leche_de_Vaso_Entrenador TEXT,
+    Consumo_Bebidas_Azucaradas TEXT,
+    Consumo_Jugos_Azucarados TEXT,
+    Mantiene_Lactancia_Materna BOOLEAN,
+    Exclusiva BOOLEAN,
+    Combinada BOOLEAN,
+    Combinacion_Lactancia TEXT,
+    Observaciones TEXT,
+    Imagen_Control_Placa_oleary BYTEA,
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
+
 
 --65.
+CREATE TABLE Emergencias (
+    EmergenciaID SERIAL PRIMARY KEY,
+    Num_de_Diente INTEGER,
+    Num_dientes_Con_Caries INTEGER,
+    Num_dientes_Con_Fractura INTEGER,
+    Exposicion_Pulpar TEXT,
+    Num_Protesis_Dentales INTEGER,
+    Presencia_Dolor BOOLEAN,
+    Tipo_Dolor VARCHAR(20) CHECK (Tipo_Dolor IN ('LOCALIZADO', 'IRRADIADO', 'ESPORANEO', 'ESTIMULOS', 'NOCTURNOS')),
+    Intensidad INTEGER CHECK (Intensidad IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
+    PresenciaDeFistula BOOLEAN,
+    Presencia_Bolsa_Periodontal BOOLEAN,
+    Movilidad BOOLEAN,
+    Grado_movilidad INTEGER CHECK (Grado_movilidad IN (1, 2, 3)),
+    Prueba_Termica BOOLEAN,
+    Prueba_Termica_resultado VARCHAR(1) CHECK (Prueba_Termica_resultado IN ('+', '-')),
+    Palpitacion BOOLEAN,
+    Palpitacion_resultado VARCHAR(1) CHECK (Palpitacion_resultado IN ('+', '-')),
+    percucion_Vertical BOOLEAN,
+    percucion_Vertical_Resultado VARCHAR(1) CHECK (percucion_Vertical_Resultado IN ('+', '-')),
+    percucion_Horizontal BOOLEAN,
+    percucion_Horizontal_Resultado VARCHAR(1) CHECK (percucion_Horizontal_Resultado IN ('+', '-')),
+    imagen BYTEA,
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
+
 
 
 --66.
+CREATE TABLE TipoConductos (
+    TipoConductosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de conducto
+    Nombre VARCHAR(100) NOT NULL, -- Nombre del tipo de conducto, con un límite de 100 caracteres
+    Descripcion TEXT -- Descripción detallada del tipo de conducto
+);
+
 
 --67.
+CREATE TABLE Endodoncias (
+    EndodonciaID SERIAL PRIMARY KEY,
+    Num_Organo_dentario INTEGER,
+    Presencia_de_Dolor VARCHAR(20) CHECK (Presencia_de_Dolor IN ('LOCALIZADO', 'IRRADIADO', 'ESPONTANEOS', 'NOCTURNOS', 'PROVOCADOS')),
+    Estimulo VARCHAR(20) CHECK (Estimulo IN ('FRIO', 'CALOR', 'DULCE', 'MASTICADO')),
+    Movilidad VARCHAR(20) CHECK (Movilidad IN ('FISIOLOGICA(SANO)', 'GRADO 1', 'GRADO 2', 'GRADO 3')),
+    Pruebas_Termicas TEXT,
+    Palpitacion BOOLEAN,
+    Percucion BOOLEAN,
+    Profundida_Sondaje TEXT,
+    Presencia_Bolsa_Periodontal BOOLEAN,
+    Profundidad_Bolsa_Periodontal TEXT,
+    Presencia_Trayecto_fistuloso BOOLEAN,
+    Caries BOOLEAN,
+    Restauraciones BOOLEAN,
+    R_Interna BOOLEAN,
+    R_Externa BOOLEAN,
+    Zona_Radiolucida_periapipal BOOLEAN,
+    Tratamiento_Conductos_Previos BOOLEAN,
+    Esp_ligamento_periodontal_Ensanchado BOOLEAN,
+    Discontinuidad_del_espacio BOOLEAN,
+    Tamaño_Camara_pulpar VARCHAR(20) CHECK (Tamaño_Camara_pulpar IN ('NORMAL', 'ESTRECHA', 'ENSANCHADA', 'RETRAIDA')),
+    Tamaño_condunto VARCHAR(20) CHECK (Tamaño_condunto IN ('NORMAL', 'ESTRECHO', 'AMPLIO', 'APICE ABIERTO')),
+    Diagnostico_Pulpar TEXT,
+    Diagnostico_Periapical TEXT,
+    Plan_Tratamiento INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
+
 
 --68.
+CREATE TABLE Conductos (
+    EndodonciaID INTEGER,
+    TipoConductosID INTEGER,
+    Log_Trabajo DECIMAL,
+    Puntos_De_Referencia VARCHAR(100),
+    Lima_Maestra DECIMAL,
+    Cono_Maestro DECIMAL,
+    PRIMARY KEY (EndodonciaID, TipoConductosID),
+    FOREIGN KEY (EndodonciaID) REFERENCES Endodoncias(EndodonciaID)
+);
+
 
 --69.
 
