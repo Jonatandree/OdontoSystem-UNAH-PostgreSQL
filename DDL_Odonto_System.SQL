@@ -768,6 +768,251 @@ CREATE TABLE Conductos (
 );
 
 
+
+
+
+
 --69.
+CREATE TABLE ParcialRemovible (
+    ParcialRemovibleID SERIAL PRIMARY KEY,
+    Desviacion_Apertura TEXT,
+    Desviacion_Cierre TEXT,
+    Tono_Muscular TEXT,
+    Maseterio_Izquierdo TEXT,
+    Maseterio_Derecho TEXT,
+    Temporal_Izquierdo TEXT,
+    Temporal_Derecho TEXT,
+    Contactos_Prematuros BOOLEAN,
+    Interferencia_Oclusales BOOLEAN,
+    Desgaste_Selectivo BOOLEAN,
+    Clase_Kennedy_Superior TEXT,
+    Clase_Kennedy_Inferior TEXT,
+    Espacio_interoclusal BOOLEAN,
+    Espacio_Endetulo_Superior TEXT,
+    Espacio_Modificacion_1_Superior VARCHAR(50),
+    Espacio_Modificacion_2_Superior VARCHAR(50),
+    Espacio_Modificacion_3_Superior VARCHAR(50),
+    Espacio_Endetulo_Inferior TEXT,
+    Espacio_Modificacion_1_Inferior VARCHAR(50),
+    Espacio_Modificacion_2_Inferior VARCHAR(50),
+    Espacio_Modificacion_3_Inferior VARCHAR(50),
+    Piezas_Adecuadas TEXT,
+    Ubicacion_Favorable BOOLEAN,
+    Formacion_Planos_Guias BOOLEAN,
+    Modificacion_Dentales BOOLEAN,
+    Especificacion TEXT,
+    Foto_Prueba_Armazon BYTEA,
+    Foto_Relacion_interoclusales BYTEA,
+    Foto_Instalacion_PPR BYTEA,
+    Foto_Control_Post_operatorio BYTEA,
+    Imagen_superior BYTEA,
+    Clase_superior VARCHAR(150),
+    Conector_superior VARCHAR(150),
+    Base_superior VARCHAR(150),
+    Retenedores_Directos_Superior VARCHAR(150),
+    Retenedores_Indirectos_Superior VARCHAR(150),
+    Imagen_Inferior BYTEA,
+    Clase_Inferior VARCHAR(150),
+    Conector_Inferior VARCHAR(150),
+    Base_Inferior VARCHAR(150),
+    Retenedores_Directos_Inferior VARCHAR(150),
+    Retenedores_Indirectos_Inferior VARCHAR(150),
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
+
+
 
 --70.
+CREATE TABLE Pilares (
+    PilaresID SERIAL PRIMARY KEY,
+    DienteID INTEGER,
+    Num_Pilar INTEGER,
+    Preparacion_planos_guias BOOLEAN,
+    Preparacion_Descanzo BOOLEAN,
+    Areas_Retentivas BOOLEAN,
+    ParcialRemovibleID INTEGER,
+    FOREIGN KEY (DienteID) REFERENCES Dientes(DienteID),
+    FOREIGN KEY (ParcialRemovibleID) REFERENCES ParcialRemovible(ParcialRemovibleID)
+);
+
+
+--71.
+CREATE TABLE ProtesisTotal (
+    ProtesisTotalID SERIAL PRIMARY KEY,
+    Menton_Prominente BOOLEAN,
+    Musculatura_Perioral BOOLEAN,
+    Existe_Patologia_Extraoral BOOLEAN,
+    Explicacion_Patologia_Extraoral TEXT,
+    Asimetrias_Faciales BOOLEAN,
+    Desviacion_Apertura TEXT,
+    Desviacion_Cierre TEXT,
+    Tono_Muscular TEXT,
+    Masetero_Izquierdo TEXT,
+    Masetero_Derecho TEXT,
+    Temporal_Izquierdo TEXT,
+    Temporal_Derecho TEXT,
+    Presencia_Ruido_Derecho TEXT,
+    Presencia_Ruido_Izquierda TEXT,
+    Luxacion_Derecha TEXT,
+    Luxacion_Izquierda TEXT,
+    Subluxacion_Derecha TEXT,
+    Subluxacion_Izquierda TEXT,
+    Observaciones TEXT,
+    Fenotipo_Facial VARCHAR(50),
+    Forma_Facial VARCHAR(50),
+    Medida_Vertical_Reposo DECIMAL(5, 2),
+    Tercio_Superior DECIMAL(5, 2),
+    Tercio_Medio DECIMAL(5, 2),
+    Tercio_Inferior DECIMAL(5, 2),
+    Asimetria_Tercios BOOLEAN,
+    Especifique_Asimetria_Tercios TEXT,
+    Quinto_Central DECIMAL(5, 2),
+    Quinto_Lateral_Derecha DECIMAL(5, 2),
+    Quinto_Lateral_Izquierda DECIMAL(5, 2),
+    Quinto_Externo_Derecho DECIMAL(5, 2),
+    Quinto_Externo_Izquierdo DECIMAL(5, 2),
+    Asimetria_Quintos BOOLEAN,
+    Especifique_Asimetria_Quintos TEXT,
+    Perfil VARCHAR(50),
+    Relacion_Maxilomandibular INTEGER,
+    Color_de_piel VARCHAR(50),
+    Color_de_ojos VARCHAR(50),
+    Presencia_Dientes BOOLEAN,
+    Ausencia_Total_Dientes BOOLEAN,
+    Portador_Protesis BOOLEAN,
+    Protesis_Combinada BOOLEAN,
+    Protesis_Bien_Adaptada BOOLEAN,
+    Requiere_Cambio BOOLEAN,
+    Porque_Requiere_Cambios TEXT,
+    Espacio_Intermaxilar_Reducido BOOLEAN,
+    Espacio_Intermaxilar_Suficiente BOOLEAN,
+    Mucosa_Maxilar_Superior VARCHAR(50),
+    Mucosa_Maxilar_Inferior VARCHAR(50),
+    Lesiones TEXT,
+    Torus_Paladino VARCHAR(50),
+    Torus_Mandibular VARCHAR(50),
+    Consistencia_Papila_Derecho VARCHAR(50),
+    Tamaño_Papila_Derecho VARCHAR(50),
+    Consistencia_Papila_Izquierdo VARCHAR(50),
+    Tamaño_Papila_Izquierdo VARCHAR(50),
+    Lengua_Tamaño VARCHAR(50),
+    Lengua_Posicion VARCHAR(50),
+    Desplazamiento_Lengua BOOLEAN,
+    Desplazamiento_Glandulas BOOLEAN,
+    Saliva VARCHAR(50),
+    Forma_Maxilar_Superior VARCHAR(50),
+    Forma_Maxilar_Inferior VARCHAR(50),
+    Simetria_Maxilar_Superior VARCHAR(50),
+    Simetria_Maxilar_Inferior VARCHAR(50),
+    Rebordes_Maxilar_Superior VARCHAR(50),
+    Rebordes_Maxilar_Inferior VARCHAR(50),
+    Tuberosidad_Maxilar_Superior VARCHAR(50),
+    Tubo_Reten_Maxilar_Superior VARCHAR(50),
+    Hamular_Maxilar_Superior VARCHAR(50),
+    Zona_Cierre_Posterior VARCHAR(50),
+    Fosa_Retro_Derecha_Profunda VARCHAR(50),
+    Fosa_Retro_Derecha_Retentiva VARCHAR(50),
+    Fosa_Retro_Izquierda_Profunda VARCHAR(50),
+    Fosa_Retro_Izquierda_Retentiva VARCHAR(50),
+    Frenillo_Insercion_Max_S_Anterior VARCHAR(50),
+    Frenillo_Insercion_Max_I_Anterior VARCHAR(50),
+    Frenillo_Consistencia_Max_S_Anterior VARCHAR(50),
+    Frenillo_Consistencia_Max_I_Anterior VARCHAR(50),
+    Frenillo_Insercion_Max_S_Posterior VARCHAR(50),
+    Frenillo_Insercion_Max_I_Posterior VARCHAR(50),
+    Frenillo_Consistencia_Max_S_Posterior VARCHAR(50),
+    Frenillo_Consistencia_Max_I_Posterior VARCHAR(50),
+    Seibert_Max_S_Sector_Izquierdo BOOLEAN,
+    Seibert_Max_I_Sector_Izquierdo BOOLEAN,
+    Seibert_Max_S_Sector_Derecho BOOLEAN,
+    Seibert_Max_I_Sector_Derecho BOOLEAN,
+    Longitud_Lineas_Caninas DECIMAL(5, 2),
+    Altura_Incisal DECIMAL(5, 2),
+    Eleccion_Color_Dientes TEXT,
+    Eleccion_Formas_Dientes TEXT,
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
+
+
+--72.
+CREATE TABLE Ortodoncia (
+    OrtodonciaID SERIAL PRIMARY KEY,
+    Forma_Cara VARCHAR(50),
+    Ojeras BOOLEAN,
+    Musculatura_Peribucal VARCHAR(50),
+    Relacion_Tercios_Medios_Inferior VARCHAR(50),
+    Relacion_Tercios_Inferior_Medios VARCHAR(50),
+    Presencia_Mentolabial BOOLEAN,
+    Perfil VARCHAR(50),
+    Protrusion_labial VARCHAR(50),
+    Relacion_Molar_Derecha VARCHAR(50),
+    Relacion_Molar_Izquierda VARCHAR(50),
+    Relacion_Canina_Derecha VARCHAR(50),
+    Relacion_Canina_Izquierda VARCHAR(50),
+    Mordida_Profunda BOOLEAN,
+    Mordida_Profunda_Porcentaje DECIMAL(5, 2),
+    Mordida_Abierta BOOLEAN,
+    Sobremordida_Horizontal BOOLEAN,
+    Sobremordida_Horizontal_Medida DECIMAL(5, 2),
+    Perdida_Dientes_Temporales BOOLEAN,
+    Perdida_Dientes_Temporales_Detalle TEXT,
+    Perdida_Dientes_Permanentes BOOLEAN,
+    Perdida_Dientes_Permanentes_Detalle TEXT,
+    Desviacion_Superior VARCHAR(50),
+    Desviacion_Inferior VARCHAR(50),
+    Desviacion_Linea_Media_Arqueada BOOLEAN,
+    Mordida_Cruzada_Posterior_Derecha BOOLEAN,
+    Mordida_Cruzada_Posterior_Izquierda BOOLEAN,
+    Mordida_Cruzada_Anterior BOOLEAN,
+    Discrepancia_Dental_Superior DECIMAL(5, 2),
+    Discrepancia_Dental_Inferior DECIMAL(5, 2),
+    Incompetencia_Labial BOOLEAN,
+    Higiene_Bucal VARCHAR(50),
+    Estado_Periodontal VARCHAR(50),
+    Frenillo BOOLEAN,
+    Frenillo_Detalle TEXT,
+    Forma_Paladar VARCHAR(50),
+    Paladar_Profundo BOOLEAN,
+    Presencia_Torus VARCHAR(50),
+    Respiracion_Bucal BOOLEAN,
+    Respiracion_Bucal_Causa TEXT,
+    Deglucion_Normal BOOLEAN,
+    Fonacion VARCHAR(1),
+    Habitos TEXT,
+    Apertura_Boca_Dolor BOOLEAN,
+    Apertura_Boca_Chasquido BOOLEAN,
+    Disminucion_De_Apertura_Boca BOOLEAN,
+    Biotipo_Facial VARCHAR(50),
+    Clase_Esqueletica VARCHAR(50),
+    Clase_Dental VARCHAR(50),
+    IMPA_93_97 VARCHAR(50),
+    HistoriaClinicaID INTEGER REFERENCES HistoriaClinica(HistoriaClinicaID),
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+);
+
+
+--73. protesis-fija
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
