@@ -649,7 +649,8 @@ CREATE TABLE Cirugias_Bucal (
     Diagnostico TEXT, -- Almacena la descripción del diagnóstico relacionado con la cirugía
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID), -- Clave foránea referenciando a la tabla Registros
     EstudianteID INTEGER REFERENCES Usuarios(UsuarioID), -- Clave foránea referenciando a la tabla Estudiantes
-    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID) -- Clave foránea referenciando a la tabla Plan_Tratamiento
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 
@@ -704,7 +705,8 @@ CREATE TABLE Periodoncias (
     Fundamentos_Pronostico TEXT,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 
@@ -734,7 +736,8 @@ CREATE TABLE Operatorias (
     imagen_diagnostico_Final BYTEA,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 
@@ -882,7 +885,8 @@ CREATE TABLE Odonto_Pedriatrias (
     Imagen_Control_Placa_oleary BYTEA,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 CREATE TABLE Habitos_Bucales_X_Odonto_Pedriatrias (
@@ -968,7 +972,8 @@ CREATE TABLE Endodoncias (
     Diagnostico_Periapical TEXT,
     Plan_Tratamiento INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 -- Tabla de relación para Tipo_Dolor y Endodoncias
@@ -1030,7 +1035,8 @@ CREATE TABLE Emergencias (
     imagen BYTEA,
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 
@@ -1097,7 +1103,8 @@ CREATE TABLE Parcial_Removible (
     Retenedores_Indirectos_Inferior VARCHAR(150),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 
@@ -1298,7 +1305,7 @@ CREATE TABLE Protesis_Total (
     Presencia_Dientes BOOLEAN,
     Ausencia_Total_Dientes BOOLEAN,
     Portador_Protesis BOOLEAN,
-    Protesis_Combinada BOOLEAN,
+    Protesis_Combinada BOOLEAN, 
     Protesis_Bien_Adaptada BOOLEAN,
     Requiere_Cambio BOOLEAN,
     Porque_Requiere_Cambios TEXT,
@@ -1350,7 +1357,8 @@ CREATE TABLE Protesis_Total (
     Eleccion_Formas_Dientes TEXT,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
 
@@ -1462,5 +1470,6 @@ CREATE TABLE Ortodoncias (
     IMPA_93_97 INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
+    EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
+    DocenteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
