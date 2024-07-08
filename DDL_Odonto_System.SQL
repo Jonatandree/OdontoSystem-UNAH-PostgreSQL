@@ -26,6 +26,7 @@ DROP TABLE Tipo_Tamaño_Papilla;
 DROP TABLE Tipo_Consistencia_Papilla;
 DROP TABLE Tipo_Torus;
 DROP TABLE Tipo_Mucosa_Maxilar;
+DROP TABLE Color_de_ojos;
 DROP TABLE Tipo_Color_Piel;
 DROP TABLE Tipo_Forma_Facial;
 DROP TABLE Tipo_Fenotipo_Facial;
@@ -123,7 +124,7 @@ DROP TABLE Ocupaciones;
 
 
 
-
+--1
 CREATE TABLE Ocupaciones (
     OcupacionID SERIAL PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL
@@ -153,14 +154,11 @@ CREATE TABLE Nacionalidades (
     NacionalidadID SERIAL PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL
 );
-
-
 --6.
 CREATE TABLE Tipo_Documentos (
     Tipo_DocumentoID SERIAL PRIMARY KEY,
     Nombre_Documento VARCHAR(50) NOT NULL
 );
-
 
 --7.
 CREATE TABLE Cargos (
@@ -168,8 +166,6 @@ CREATE TABLE Cargos (
     Nombre VARCHAR(100) NOT NULL,
     Descripcion TEXT
 );
-
-
 
 --8.
 CREATE TABLE Personas (
@@ -185,8 +181,6 @@ CREATE TABLE Personas (
     Estado_CivilID INTEGER REFERENCES Estado_Civil(Estado_CivilID),
     NacionalidadID INTEGER REFERENCES Nacionalidades(NacionalidadID)
 );
-
-
 --9.
 CREATE TABLE Persona_Documentos (
     PersonaID INTEGER,
@@ -196,8 +190,6 @@ CREATE TABLE Persona_Documentos (
     FOREIGN KEY (PersonaID) REFERENCES Personas(PersonaID),
     FOREIGN KEY (Tipo_DocumentoID) REFERENCES Tipo_Documentos(Tipo_DocumentoID)
 );
-
-
 --10.
 CREATE TABLE Contactos_Referencias (
     Persona_ResponsableID SERIAL PRIMARY KEY,
@@ -205,13 +197,6 @@ CREATE TABLE Contactos_Referencias (
     Primer_Apellido VARCHAR(50) NOT NULL,
     Telefono VARCHAR(10)
 );
-
-
-------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------
-
-
-
 --11.
 CREATE TABLE Pacientes (
     PacienteID SERIAL PRIMARY KEY,
@@ -222,7 +207,6 @@ CREATE TABLE Pacientes (
     OcupacionID INTEGER REFERENCES Ocupaciones(OcupacionID),
     PersonaID INTEGER REFERENCES Personas(PersonaID)
 );
-
 --12.
 CREATE TABLE Expedientes (
     ExpedienteID SERIAL PRIMARY KEY,
@@ -230,25 +214,18 @@ CREATE TABLE Expedientes (
     Numero_Expediente VARCHAR(50) NOT NULL,
     PacienteID INTEGER REFERENCES Pacientes(PacienteID)
 );
-
-
-
 --13.
 CREATE TABLE Correos (
     CorreosID SERIAL PRIMARY KEY,
     Correo VARCHAR(75) NOT NULL,
     Contraseña VARCHAR(50) NOT NULL
 );
-
-
 --14.
 CREATE TABLE Privilegios (
     PrivilegiosID SERIAL PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
     Descripcion TEXT
 );
-
-
 --15.
 CREATE TABLE Usuarios (
     UsuarioID SERIAL PRIMARY KEY,
@@ -257,24 +234,18 @@ CREATE TABLE Usuarios (
     CargoID INTEGER REFERENCES Cargos(CargoID),
     PersonaID INTEGER REFERENCES Personas(PersonaID)
 );
-
-
 --16.
 CREATE TABLE Departamentos (
     DepartamentoID SERIAL PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
     Jefe_Departamento INTEGER REFERENCES Personas(PersonaID)
 );
-
-
 --17
 CREATE TABLE Clinicas (
     ClinicaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(50) NOT NULL,
     DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID)
 );
-
-
 --18
 CREATE TABLE Clases (
     ClaseID SERIAL PRIMARY KEY,
@@ -282,8 +253,6 @@ CREATE TABLE Clases (
     Codigo VARCHAR(100) NOT NULL,
     DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID)
 );
-
-
 --19.
 CREATE TABLE Historia_Clinica (
     Historia_ClinicaID SERIAL PRIMARY KEY,
@@ -291,8 +260,6 @@ CREATE TABLE Historia_Clinica (
     Numero_Registro INTEGER NOT NULL,
     ExpedienteID INTEGER REFERENCES Expedientes(ExpedienteID)
 );
-
-
 --20.
 CREATE TABLE Citas (
     CitasID SERIAL PRIMARY KEY,
@@ -301,24 +268,11 @@ CREATE TABLE Citas (
     EstudianteID INTEGER REFERENCES Usuarios(UsuarioID),
     PacienteID INTEGER REFERENCES Pacientes(PacienteID)
 );
-
-
-
-
-
-------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------
-
-
-
 --21
 CREATE TABLE Estados_Aprobacion_Docente (
     Estado_AprobacionID SERIAL PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL
 );
-
-
-
 --22.
 CREATE TABLE Remisiones (
     RemisionID SERIAL PRIMARY KEY,
@@ -327,8 +281,6 @@ CREATE TABLE Remisiones (
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     EstadoID INTEGER REFERENCES Estados_Aprobacion_Docente(Estado_AprobacionID)
 );
-
-
 --23.
 CREATE TABLE Tickets (
     TicketsID SERIAL PRIMARY KEY,
@@ -336,7 +288,6 @@ CREATE TABLE Tickets (
     Numero_De_Turno INTEGER NOT NULL,
     RemicionID INTEGER REFERENCES Remisiones(RemisionID)
 );
-
 --24.
 CREATE TABLE Remisiones_imagenologia (
     Remisio_ImagenologiaID SERIAL PRIMARY KEY,
@@ -345,8 +296,6 @@ CREATE TABLE Remisiones_imagenologia (
     centro_medico VARCHAR(100),
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID)
 );
-
-
 --25.
 CREATE TABLE Radiografias_X_remision (
     Radiografias_X_remisionID SERIAL PRIMARY KEY,
@@ -354,8 +303,6 @@ CREATE TABLE Radiografias_X_remision (
     RadiografiaID INTEGER REFERENCES Tipo_Radiografias(RadiografiaID),
     Remisio_ImagenologiaID INTEGER REFERENCES Remisiones_imagenologia(Remisio_ImagenologiaID)
 );
-
-
 --26.
 CREATE TABLE Cobros_Pendientes (
     Cobros_PendientesID SERIAL PRIMARY KEY,
@@ -364,7 +311,6 @@ CREATE TABLE Cobros_Pendientes (
     monto DECIMAL(10, 2),
     Remisiones_imagenologiaID INTEGER REFERENCES Remisiones_imagenologia(Remisio_ImagenologiaID)
 );
-
 --27.
 CREATE TABLE Secciones (
     SeccionesID SERIAL PRIMARY KEY,        
@@ -374,7 +320,6 @@ CREATE TABLE Secciones (
     DoctorID INTEGER REFERENCES Usuarios(UsuarioID), 
     ClaseID INTEGER REFERENCES Clases(ClaseID)      
 );
-
 --28.
 CREATE TABLE Alumnos_X_Seccion (
     SeccionesID INTEGER NOT NULL,           
@@ -395,18 +340,6 @@ CREATE TABLE Privilegios_X_Cargo (
     FOREIGN KEY (CargoID) REFERENCES Cargos(CargoID), 
     FOREIGN KEY (PrivilegiosID) REFERENCES Privilegios(PrivilegiosID) 
 );
-
-
-
-
-
-
-
-
-
-
-------------------------------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------------------------------
 
 --31.
 CREATE TABLE Diagnosticos (
@@ -1209,6 +1142,11 @@ CREATE TABLE Tipo_Color_Piel (
 );
 
 
+CREATE TABLE Color_de_Ojos (
+    Color_de_OjosID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(255) UNIQUE NOT NULL
+);
+
 --( RESILIENTE, FIRME, FLACIDA)
 CREATE TABLE Tipo_Mucosa_Maxilar (
     Tipo_Mucosa_MaxilarID SERIAL PRIMARY KEY,
@@ -1338,8 +1276,8 @@ CREATE TABLE Protesis_Total (
     Subluxacion_Derecha TEXT,
     Subluxacion_Izquierda TEXT,
     Observaciones TEXT,
-    Fenotipo_Facial VARCHAR(50),
-    Forma_Facial VARCHAR(50),
+    Fenotipo_Facial INTEGER REFERENCES Tipo_Fenotipo_Facial(Tipo_Fenotipo_FacialID),
+    Forma_Facial INTEGER REFERENCES Tipo_Forma_Facial(Tipo_Forma_FacialID),
     Medida_Vertical_Reposo DECIMAL(5, 2),
     Tercio_Superior DECIMAL(5, 2),
     Tercio_Medio DECIMAL(5, 2),
@@ -1353,10 +1291,10 @@ CREATE TABLE Protesis_Total (
     Quinto_Externo_Izquierdo DECIMAL(5, 2),
     Asimetria_Quintos BOOLEAN,
     Especifique_Asimetria_Quintos TEXT,
-    Perfil VARCHAR(50),
-    Relacion_Maxilomandibular INTEGER,
-    Color_de_piel VARCHAR(50),
-    Color_de_ojos VARCHAR(50),
+    Perfil INTEGER REFERENCES Tipo_Perfil(Tipo_PerfilID),
+    Relacion_Maxilomandibular TEXT,
+    Color_de_piel INTEGER REFERENCES Tipo_Color_Piel(Tipo_Color_PielID),
+    Color_de_ojos INTEGER REFERENCES Color_de_Ojos(Color_de_OjosID),
     Presencia_Dientes BOOLEAN,
     Ausencia_Total_Dientes BOOLEAN,
     Portador_Protesis BOOLEAN,
@@ -1366,42 +1304,42 @@ CREATE TABLE Protesis_Total (
     Porque_Requiere_Cambios TEXT,
     Espacio_Intermaxilar_Reducido BOOLEAN,
     Espacio_Intermaxilar_Suficiente BOOLEAN,
-    Mucosa_Maxilar_Superior VARCHAR(50),
-    Mucosa_Maxilar_Inferior VARCHAR(50),
+    Mucosa_Maxilar_Superior INTEGER REFERENCES Tipo_Mucosa_Maxilar(Tipo_Mucosa_MaxilarID),
+    Mucosa_Maxilar_Inferior INTEGER REFERENCES Tipo_Mucosa_Maxilar(Tipo_Mucosa_MaxilarID),
     Lesiones TEXT,
-    Torus_Paladino VARCHAR(50),
-    Torus_Mandibular VARCHAR(50),
-    Consistencia_Papila_Derecho VARCHAR(50),
-    Tamaño_Papila_Derecho VARCHAR(50),
-    Consistencia_Papila_Izquierdo VARCHAR(50),
-    Tamaño_Papila_Izquierdo VARCHAR(50),
-    Lengua_Tamaño VARCHAR(50),
-    Lengua_Posicion VARCHAR(50),
+    Torus_Paladino INTEGER REFERENCES Tipo_Torus(Tipo_TorusID),
+    Torus_Mandibular INTEGER REFERENCES Tipo_Torus(Tipo_TorusID),
+    Consistencia_Papila_Derecho INTEGER REFERENCES Tipo_Consistencia_Papilla(Tipo_Consistencia_PapillaID),
+    Tamaño_Papila_Derecho INTEGER REFERENCES Tipo_Tamaño_Papilla(Tipo_Tamaño_PapillaID),
+    Consistencia_Papila_Izquierdo INTEGER REFERENCES Tipo_Consistencia_Papilla(Tipo_Consistencia_PapillaID),
+    Tamaño_Papila_Izquierdo INTEGER REFERENCES Tipo_Tamaño_Papilla(Tipo_Tamaño_PapillaID),
+    Lengua_Tamaño INTEGER REFERENCES Tipo_Lengua_Tamaño(Tipo_Lengua_TamañoID),
+    Lengua_Posicion INTEGER REFERENCES Tipo_Lengua_Posicion(Tipo_Lengua_PosicionID),
     Desplazamiento_Lengua BOOLEAN,
     Desplazamiento_Glandulas BOOLEAN,
-    Saliva VARCHAR(50),
-    Forma_Maxilar_Superior VARCHAR(50),
-    Forma_Maxilar_Inferior VARCHAR(50),
-    Simetria_Maxilar_Superior VARCHAR(50),
-    Simetria_Maxilar_Inferior VARCHAR(50),
-    Rebordes_Maxilar_Superior VARCHAR(50),
-    Rebordes_Maxilar_Inferior VARCHAR(50),
-    Tuberosidad_Maxilar_Superior VARCHAR(50),
-    Tubo_Reten_Maxilar_Superior VARCHAR(50),
-    Hamular_Maxilar_Superior VARCHAR(50),
-    Zona_Cierre_Posterior VARCHAR(50),
-    Fosa_Retro_Derecha_Profunda VARCHAR(50),
-    Fosa_Retro_Derecha_Retentiva VARCHAR(50),
-    Fosa_Retro_Izquierda_Profunda VARCHAR(50),
-    Fosa_Retro_Izquierda_Retentiva VARCHAR(50),
-    Frenillo_Insercion_Max_S_Anterior VARCHAR(50),
-    Frenillo_Insercion_Max_I_Anterior VARCHAR(50),
-    Frenillo_Consistencia_Max_S_Anterior VARCHAR(50),
-    Frenillo_Consistencia_Max_I_Anterior VARCHAR(50),
-    Frenillo_Insercion_Max_S_Posterior VARCHAR(50),
-    Frenillo_Insercion_Max_I_Posterior VARCHAR(50),
-    Frenillo_Consistencia_Max_S_Posterior VARCHAR(50),
-    Frenillo_Consistencia_Max_I_Posterior VARCHAR(50),
+    Saliva INTEGER REFERENCES Tipo_Saliva(Tipo_SalivaID),
+    Forma_Maxilar_Superior INTEGER REFERENCES Tipo_Forma_Maxilar(Tipo_Forma_MaxilarID),
+    Forma_Maxilar_Inferior INTEGER REFERENCES Tipo_Forma_Maxilar(Tipo_Forma_MaxilarID),
+    Simetria_Maxilar_Superior INTEGER REFERENCES Tipo_Simetria_Maxilar(Tipo_Simetria_MaxilarID),
+    Simetria_Maxilar_Inferior INTEGER REFERENCES Tipo_Simetria_Maxilar(Tipo_Simetria_MaxilarID),
+    Rebordes_Maxilar_Superior INTEGER REFERENCES Tipo_Rebordes_Maxilar(Tipo_Rebordes_MaxilarID),
+    Rebordes_Maxilar_Inferior INTEGER REFERENCES Tipo_Rebordes_Maxilar(Tipo_Rebordes_MaxilarID),
+    Tuberosidad_Maxilar_Superior INTEGER REFERENCES Tipo_Tuberosidad_Maxilar(Tipo_Tuberosidad_MaxilarID),
+    Tubo_Reten_Maxilar_Superior INTEGER REFERENCES Tipo_Tubo_Reten(Tipo_Tubo_RetenID),
+    Hamular_Maxilar_Superior INTEGER REFERENCES Tipo_Torus(Tipo_TorusID),
+    Zona_Cierre_Posterior INTEGER REFERENCES Tipo_Zona_Cierre(Tipo_Zona_CierreID),
+    Fosa_Retro_Derecha_Profunda INTEGER REFERENCES Tipo_Fosa_Retro_Profunda( Tipo_Fosa_Retro_ProfundaID),
+    Fosa_Retro_Derecha_Retentiva INTEGER REFERENCES Tipo_Fosa_Retro_Retentiva( Tipo_Fosa_Retro_RetentivaID),
+    Fosa_Retro_Izquierda_Profunda INTEGER REFERENCES Tipo_Fosa_Retro_Profunda( Tipo_Fosa_Retro_ProfundaID),
+    Fosa_Retro_Izquierda_Retentiva INTEGER REFERENCES Tipo_Fosa_Retro_Retentiva( Tipo_Fosa_Retro_RetentivaID),
+    Frenillo_Insercion_Max_S_Anterior INTEGER REFERENCES Tipo_Frenillo_Insercion(Tipo_Frenillo_InsercionID),
+    Frenillo_Insercion_Max_I_Anterior INTEGER REFERENCES Tipo_Frenillo_Insercion(Tipo_Frenillo_InsercionID),
+    Frenillo_Consistencia_Max_S_Anterior INTEGER REFERENCES Tipo_Frenillo_Consistencia(Tipo_Frenillo_ConsistenciaID),
+    Frenillo_Consistencia_Max_I_Anterior INTEGER REFERENCES Tipo_Frenillo_Consistencia(Tipo_Frenillo_ConsistenciaID),
+    Frenillo_Insercion_Max_S_Posterior INTEGER REFERENCES Tipo_Frenillo_Insercion(Tipo_Frenillo_InsercionID),
+    Frenillo_Insercion_Max_I_Posterior INTEGER REFERENCES Tipo_Frenillo_Insercion(Tipo_Frenillo_InsercionID),
+    Frenillo_Consistencia_Max_S_Posterior INTEGER REFERENCES Tipo_Frenillo_Consistencia(Tipo_Frenillo_ConsistenciaID),
+    Frenillo_Consistencia_Max_I_Posterior INTEGER REFERENCES Tipo_Frenillo_Consistencia(Tipo_Frenillo_ConsistenciaID),
     Seibert_Max_S_Sector_Izquierdo BOOLEAN,
     Seibert_Max_I_Sector_Izquierdo BOOLEAN,
     Seibert_Max_S_Sector_Derecho BOOLEAN,
@@ -1414,12 +1352,6 @@ CREATE TABLE Protesis_Total (
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
-
-
-
-
-
-
 
 
 
