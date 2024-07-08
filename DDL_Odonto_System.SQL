@@ -1,12 +1,63 @@
 DROP TABLE Ortodoncias;
+DROP TABLE Estado_Bucal_Ortodoncia;
+DROP TABLE Tipo_Biotipo_Facial;
+DROP TABLE Tipo_Forma_Paladar;
+DROP TABLE Tipo_Desviacion;
+DROP TABLE Tipo_Relacion_Clases;
+DROP TABLE Tipo_Protrusion_Labial;
+DROP TABLE Tipo_Relacion_Tercios;
+DROP TABLE Tipo_Musculatura_Peribucal;
+DROP TABLE Tipo_Forma_Cara;
 DROP TABLE protesis_total;
+DROP TABLE Tipo_Frenillo_Consistencia;
+DROP TABLE Tipo_Frenillo_Insercion;
+DROP TABLE Tipo_Fosa_Retro_Retentiva;
+DROP TABLE Tipo_Fosa_Retro_Profunda;
+DROP TABLE Tipo_Zona_Cierre;
+DROP TABLE Tipo_Tuberosidad_Maxilar;
+DROP TABLE Tipo_Rebordes_Maxilar;
+DROP TABLE Tipo_Simetria_Maxilar;
+DROP TABLE Tipo_Tubo_Reten;
+DROP TABLE Tipo_Forma_Maxilar;
+DROP TABLE Tipo_Saliva;
+DROP TABLE Tipo_Lengua_Tamaño;
+DROP TABLE Tipo_Lengua_Posicion;
+DROP TABLE Tipo_Tamaño_Papilla;
+DROP TABLE Tipo_Consistencia_Papilla;
+DROP TABLE Tipo_Torus;
+DROP TABLE Tipo_Mucosa_Maxilar;
+DROP TABLE Tipo_Color_Piel;
+DROP TABLE Tipo_Forma_Facial;
+DROP TABLE Tipo_Fenotipo_Facial;
 DROP TABLE Pilares;
 DROP TABLE Parcial_Removible;
-DROP TABLE Conductos;
-DROP TABLE Endodoncias;
-DROP TABLE Tipo_Conductos;
+DROP TABLE Tipo_Dolor_Emergencias;
 DROP TABLE Emergencias;
+DROP TABLE Tipo_Resultado_Emergencia;
+DROP TABLE Conductos;
+DROP TABLE Tipo_Estimulo_Endodoncia;
+DROP TABLE Tipo_Dolor_Endodoncias;
+DROP TABLE Endodoncias;
+DROP TABLE Tipo_Tamaño_Conducto;
+DROP TABLE Tipo_Tamaño_Camara;
+DROP TABLE Tipo_Dolor;
+DROP TABLE Tipo_Estimulo;
+DROP TABLE Tipo_Grado_Movilidad;
+DROP TABLE Tipo_Conductos;
+DROP TABLE Tipo_Uso_Biberon_X_Odonto_Pedriatrias;
+DROP TABLE Habitos_Bucales_X_Odonto_Pedriatrias;
 DROP TABLE Odonto_Pedriatrias;
+DROP TABLE Tipo_Perfil;
+DROP TABLE Tipo_Desglucion;
+DROP TABLE Tipo_Respiracion;
+DROP TABLE Tipo_Arco_Odonto_Pedriatrias;
+DROP TABLE Tipo_Planos_Odonto_Pedriatrias;
+DROP TABLE Tipo_Cabeza;
+DROP TABLE Tipo_Denticion;
+DROP TABLE Tipo_Clase_Num_Romano;
+DROP TABLE Tonicidad_Labial;
+DROP TABLE Habitos_Bucales;
+DROP TABLE Tipo_Uso_Biberon;
 DROP TABLE Operatorias;
 DROP TABLE Periodontogramas;
 DROP TABLE Periodoncias;
@@ -70,7 +121,9 @@ DROP TABLE Sexos;
 DROP TABLE Tipo_Radiografias;
 DROP TABLE Ocupaciones;
 
---1.
+
+
+
 CREATE TABLE Ocupaciones (
     OcupacionID SERIAL PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL
@@ -755,6 +808,9 @@ CREATE TABLE Operatorias (
 
 
 
+
+
+
 CREATE TABLE Tipo_Uso_Biberon (
     Tipo_Uso_BiberonID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
@@ -792,19 +848,27 @@ CREATE TABLE Tipo_Perfil (
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+CREATE TABLE Tipo_Planos_Odonto_Pedriatrias (
+    Tipo_Planos_Odonto_PedriatriasID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE Tipo_Arco_Odonto_Pedriatrias (
+    Tipo_Arco_Odonto_PedriatriasID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(255) UNIQUE NOT NULL
+);
 
 
 
+CREATE TABLE Tipo_Respiracion (
+    Tipo_RespiracionID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(25) UNIQUE NOT NULL
+);
 
-
-
-
-
-
-
-
-
-
+CREATE TABLE Tipo_Desglucion (
+    Tipo_DesglucionID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(25) UNIQUE NOT NULL
+);
 
 
 --64.
@@ -823,16 +887,16 @@ CREATE TABLE Odonto_Pedriatrias (
     Alergia_Alimentos BOOLEAN,
     Especificacion_Alergia_Alimentos TEXT,
     Transfunciones TEXT,
-    Perfil VARCHAR(7) CHECK (Perfil IN ('CONCAVO', 'CONVEXO', 'RECTO')),
-    Cabeza VARCHAR(14) CHECK (Cabeza IN ('MESOCEFALICO', 'DOLICOCEFALICA', 'BRANQUICEFALICA')),
-    Denticion VARCHAR(10) CHECK (Denticion IN ('DECIDUA', 'MIXTA', 'PERMANENTE')),
-    Clase_Molar_Derecha VARCHAR(3) CHECK (Clase_Molar_Derecha IN ('I', 'II', 'III')),
-    Clase_Molar_Izquierda VARCHAR(3) CHECK (Clase_Molar_Izquierda IN ('I', 'II', 'III')),
-    Plano_Recto VARCHAR(9) CHECK (Plano_Recto IN ('DERECHO', 'IZQUIERDO')),
-    Plano_Mesial VARCHAR(9) CHECK (Plano_Mesial IN ('DERECHO', 'IZQUIERDO')),
-    Plano_Distal VARCHAR(9) CHECK (Plano_Distal IN ('DERECHO', 'IZQUIERDO')),
-    Clase_Canina_Derecha VARCHAR(3) CHECK (Clase_Canina_Derecha IN ('I', 'II', 'III')),
-    Clase_Canina_Izquierda VARCHAR(3) CHECK (Clase_Canina_Izquierda IN ('I', 'II', 'III')),
+    Perfil INTEGER REFERENCES Tipo_Perfil(Tipo_PerfilID),
+    Cabeza INTEGER REFERENCES Tipo_Cabeza(Tipo_CabezaID),
+    Denticion INTEGER REFERENCES Tipo_Denticion(Tipo_DenticionID),
+    Clase_Molar_Derecha INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
+    Clase_Molar_Izquierda INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
+    Plano_Recto INTEGER REFERENCES Tipo_Planos_Odonto_Pedriatrias(Tipo_Planos_Odonto_PedriatriasID),
+    Plano_Mesial INTEGER REFERENCES Tipo_Planos_Odonto_Pedriatrias(Tipo_Planos_Odonto_PedriatriasID),
+    Plano_Distal INTEGER REFERENCES Tipo_Planos_Odonto_Pedriatrias(Tipo_Planos_Odonto_PedriatriasID),
+    Clase_Canina_Derecha INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
+    Clase_Canina_Izquierda INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
     Sobre_mordida_Horizontal NUMERIC(5, 2),
     Piezas_Involucradas_Modida_Horizontal INTEGER,
     Sobre_Mordida_Vertical NUMERIC(5, 2),
@@ -845,16 +909,15 @@ CREATE TABLE Odonto_Pedriatrias (
     Mordida_Abierta BOOLEAN,
     Razon_Mordida_Abierta TEXT,
     Linea_Media BOOLEAN,
-    Arco_Dentario VARCHAR(5) CHECK (Arco_Dentario IN ('TIPO1', 'TIPO2')),
-    Tipo_Respiracion VARCHAR(5) CHECK (Tipo_Respiracion IN ('NASAL', 'ORAL')),
+    Arco_Dentario INTEGER REFERENCES Tipo_Arco_Odonto_Pedriatrias(Tipo_Arco_Odonto_PedriatriasID),
+    Tipo_Respiracion INTEGER REFERENCES Tipo_Respiracion(Tipo_RespiracionID),
     Ronca BOOLEAN,
     Rechina_Dientes BOOLEAN,
     Sellado_Labial BOOLEAN,
-    Desglucion VARCHAR(7) CHECK (Desglucion IN ('INFANTIL', 'ADULTO')),
-    Tonicidad_Labial VARCHAR(11) CHECK (Tonicidad_Labial IN ('NORMAL', 'HIPERTONISMO', 'HIPOTONISMO')),
+    Desglucion INTEGER REFERENCES Tipo_Desglucion(Tipo_DesglucionID),
+    Tonicidad_Labial INTEGER REFERENCES Tonicidad_Labial(Tonicidad_LabialID),
     Apertura_Bucal NUMERIC(5, 2),
     Desgaste_Caninos BOOLEAN,
-    Habitos_Bucales VARCHAR(100) CHECK (Habitos_Bucales IN ('SUCCION DIGITAL', 'CHUPON', 'MORDERSE LAS UÑAS', 'PROTECCION LINGUAL')),
     Presencia_Sangrado BOOLEAN,
     Movilidad_Dentaria BOOLEAN,
     Fisiologica BOOLEAN,
@@ -868,7 +931,6 @@ CREATE TABLE Odonto_Pedriatrias (
     Grasas TEXT,
     Come_Frecuentemente_Entre_Comidas BOOLEAN,
     Frecuencia_Comidas TEXT,
-    Uso_Biberon VARCHAR(9) CHECK (Uso_Biberon IN ('DIURNO', 'NOCTURNO', 'MADRUGADA')),
     Frecuencia_uso_de_biberon TEXT,
     Numero_Biberones_Por_Dia INTEGER,
     Onzas_De_Leche_Biberon INTEGER,
@@ -890,8 +952,6 @@ CREATE TABLE Odonto_Pedriatrias (
     EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
-
-
 CREATE TABLE Habitos_Bucales_X_Odonto_Pedriatrias (
     Habitos_BucalesID INT NOT NULL,
     OdontoPedriatriaID INT NOT NULL,
@@ -912,13 +972,15 @@ CREATE TABLE Tipo_Uso_Biberon_X_Odonto_Pedriatrias (
     FOREIGN KEY (Historia_ClinicaID) REFERENCES Historia_Clinica(Historia_ClinicaID)
 );
 
+
+
+
 --66.
 CREATE TABLE Tipo_Conductos (
     Tipo_ConductosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de conducto
     Nombre VARCHAR(100) NOT NULL, -- Nombre del tipo de conducto, con un límite de 100 caracteres
     Descripcion TEXT -- Descripción detallada del tipo de conducto
 );
-
 
 
 
@@ -932,36 +994,26 @@ CREATE TABLE Tipo_Estimulo (
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Tipo_Estimulo_Endodoncia (
-    Tipo_Estimulo_EndodonciaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
 CREATE TABLE Tipo_Dolor (
     Tipo_DolorID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
-
-CREATE TABLE Tipo_Tamano_Camara (
-    Tipo_Tamano_CamaraID SERIAL PRIMARY KEY,
+CREATE TABLE Tipo_Tamaño_Camara (
+    Tipo_Tamaño_CamaraID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Tipo_Tamano_Conducto (
-    Tipo_Tamano_ConductoID SERIAL PRIMARY KEY,
+CREATE TABLE Tipo_Tamaño_Conducto (
+    Tipo_Tamaño_ConductoID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
-
-
---67.
+-- Tabla principal con las FK
 CREATE TABLE Endodoncias (
     EndodonciaID SERIAL PRIMARY KEY,
     Num_Organo_dentario INTEGER,
-    Presencia_de_Dolor VARCHAR(20) CHECK (Presencia_de_Dolor IN ('LOCALIZADO', 'IRRADIADO', 'ESPONTANEOS', 'NOCTURNOS', 'PROVOCADOS')),
-    Estimulo VARCHAR(20) CHECK (Estimulo IN ('FRIO', 'CALOR', 'DULCE', 'MASTICADO')),
-    Movilidad VARCHAR(20) CHECK (Movilidad IN ('FISIOLOGICA(SANO)', 'GRADO 1', 'GRADO 2', 'GRADO 3')),
+    Movilidad INTEGER REFERENCES Tipo_Grado_Movilidad(Tipo_Grado_MovilidadID),
     Pruebas_Termicas TEXT,
     Palpitacion BOOLEAN,
     Percucion BOOLEAN,
@@ -977,8 +1029,8 @@ CREATE TABLE Endodoncias (
     Tratamiento_Conductos_Previos BOOLEAN,
     Esp_ligamento_periodontal_Ensanchado BOOLEAN,
     Discontinuidad_del_espacio BOOLEAN,
-    Tamaño_Camara_pulpar VARCHAR(20) CHECK (Tamaño_Camara_pulpar IN ('NORMAL', 'ESTRECHA', 'ENSANCHADA', 'RETRAIDA')),
-    Tamaño_condunto VARCHAR(20) CHECK (Tamaño_condunto IN ('NORMAL', 'ESTRECHO', 'AMPLIO', 'APICE ABIERTO')),
+    Tamaño_Camara_pulpar INTEGER REFERENCES Tipo_Tamaño_Camara(Tipo_Tamaño_CamaraID),
+    Tamaño_condunto INTEGER REFERENCES Tipo_Tamaño_Conducto(Tipo_Tamaño_ConductoID),
     Diagnostico_Pulpar TEXT,
     Diagnostico_Periapical TEXT,
     Plan_Tratamiento INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
@@ -986,17 +1038,26 @@ CREATE TABLE Endodoncias (
     EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
 
+-- Tabla de relación para Tipo_Dolor y Endodoncias
 CREATE TABLE Tipo_Dolor_Endodoncias (
-    Tipo_DolorID INT NOT NULL,
-    EndodonciaID INT NOT NULL,
+    Tipo_DolorID INT NOT NULL REFERENCES Tipo_Dolor(Tipo_DolorID),
+    EndodonciaID INT NOT NULL REFERENCES Endodoncias(EndodonciaID),
     PRIMARY KEY (Tipo_DolorID, EndodonciaID)
-); 
+);
+
+CREATE TABLE Tipo_Estimulo_Endodoncia (
+    Tipo_EstimuloID INT NOT NULL REFERENCES Tipo_Estimulo(Tipo_EstimuloID),
+    EndodonciaID INT NOT NULL REFERENCES Endodoncias(EndodonciaID),
+    PRIMARY KEY (Tipo_EstimuloID, EndodonciaID)
+
+);
+
 
 
 --68.
 CREATE TABLE Conductos (
     EndodonciaID INTEGER,
-    Tipo_ConductosID INTEGER,
+    Tipo_ConductosID INTEGER REFERENCES Tipo_Conductos(Tipo_ConductosID),
     Log_Trabajo DECIMAL,
     Puntos_De_Referencia VARCHAR(100),
     Lima_Maestra DECIMAL,
@@ -1005,6 +1066,10 @@ CREATE TABLE Conductos (
     FOREIGN KEY (EndodonciaID) REFERENCES Endodoncias(EndodonciaID)
 );
 
+CREATE TABLE Tipo_Resultado_Emergencia (
+    Tipo_Resultado_EmergenciaID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(25) UNIQUE NOT NULL
+);
 
 
 --65.
@@ -1016,20 +1081,19 @@ CREATE TABLE Emergencias (
     Exposicion_Pulpar TEXT,
     Num_Protesis_Dentales INTEGER,
     Presencia_Dolor BOOLEAN,
-    Tipo_Dolor VARCHAR(20) CHECK (Tipo_Dolor IN ('LOCALIZADO', 'IRRADIADO', 'ESPORANEO', 'ESTIMULOS', 'NOCTURNOS')),
     Intensidad INTEGER CHECK (Intensidad IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
     PresenciaDeFistula BOOLEAN,
     Presencia_Bolsa_Periodontal BOOLEAN,
     Movilidad BOOLEAN,
     Grado_movilidad INTEGER CHECK (Grado_movilidad IN (1, 2, 3)),
     Prueba_Termica BOOLEAN,
-    Prueba_Termica_resultado VARCHAR(1) CHECK (Prueba_Termica_resultado IN ('+', '-')),
+    Prueba_Termica_resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
     Palpitacion BOOLEAN,
-    Palpitacion_resultado VARCHAR(1) CHECK (Palpitacion_resultado IN ('+', '-')),
+    Palpitacion_resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
     percucion_Vertical BOOLEAN,
-    percucion_Vertical_Resultado VARCHAR(1) CHECK (percucion_Vertical_Resultado IN ('+', '-')),
+    percucion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
     percucion_Horizontal BOOLEAN,
-    percucion_Horizontal_Resultado VARCHAR(1) CHECK (percucion_Horizontal_Resultado IN ('+', '-')),
+    percucion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
     imagen BYTEA,
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
@@ -1046,6 +1110,9 @@ CREATE TABLE Tipo_Dolor_Emergencias (
     FOREIGN KEY (EmergenciaID) REFERENCES Emergencias(EmergenciaID),
     FOREIGN KEY (Historia_ClinicaID) REFERENCES Historia_Clinica(Historia_ClinicaID)
 );
+
+
+
 
 
 
@@ -1122,107 +1189,128 @@ CREATE TABLE Pilares (
 
 ------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------
-
+--( MESOFACIAL, BRANQUIFACIAL, DOLICOFACIA)
 CREATE TABLE Tipo_Fenotipo_Facial (
     Tipo_Fenotipo_FacialID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
-
+--(REDONDA, OVALADA, CUADRADA,TRIANGULAR)
 CREATE TABLE Tipo_Forma_Facial (
     Tipo_Forma_FacialID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
+
+--(MESTIZO, AFRODECENDIENTE, CAUCASICO)
 CREATE TABLE Tipo_Color_Piel (
     Tipo_Color_PielID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
+--( RESILIENTE, FIRME, FLACIDA)
 CREATE TABLE Tipo_Mucosa_Maxilar (
     Tipo_Mucosa_MaxilarID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+--( PRESENTE, AUSENTE) Hamular_Maxilar_Superior
 CREATE TABLE Tipo_Torus (
     Tipo_TorusID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
+--( FIRME, RESILIENTE,FLACIDO-)
 CREATE TABLE Tipo_Consistencia_Papilla (
     Tipo_Consistencia_PapillaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+--( PEQUEÑO, MEDIANO,GRANDE)
+CREATE TABLE Tipo_Tamaño_Papilla (
+    Tipo_Tamaño_PapillaID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(255) UNIQUE NOT NULL
+);
+
+--( RETRAIDA,ADELANTADA)
 CREATE TABLE Tipo_Lengua_Posicion (
     Tipo_Lengua_PosicionID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Tipo_Lengua_Tamano (
-    Tipo_Lengua_TamanoID SERIAL PRIMARY KEY,
+--( NORMAL, MACROGLOSIA,MICROGLOSIA)
+CREATE TABLE Tipo_Lengua_Tamaño (
+    Tipo_Lengua_TamañoID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
-CREATE TABLE Tipo_Tamano_Papilla (
-    Tipo_Tamano_PapillaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
+--( AUMENTADA, DISMINUIDA)-
 CREATE TABLE Tipo_Saliva (
     Tipo_SalivaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+--( OVOIDE,TRIANGULAR, CUADRANGULAR).
 CREATE TABLE Tipo_Forma_Maxilar (
     Tipo_Forma_MaxilarID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+--( RENTENTIVA, NO RETENTIVA)
 CREATE TABLE Tipo_Tubo_Reten (
     Tipo_Tubo_RetenID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+--( SIMETRICOS, ASIMETRICOS)
 CREATE TABLE Tipo_Simetria_Maxilar (
     Tipo_Simetria_MaxilarID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+--( FORMA U, FORMA V, FORMA C)
 CREATE TABLE Tipo_Rebordes_Maxilar (
     Tipo_Rebordes_MaxilarID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
+
 
 CREATE TABLE Tipo_Tuberosidad_Maxilar (
     Tipo_Tuberosidad_MaxilarID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
 CREATE TABLE Tipo_Zona_Cierre (
     Tipo_Zona_CierreID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
+
 
 CREATE TABLE Tipo_Fosa_Retro_Profunda (
     Tipo_Fosa_Retro_ProfundaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
 CREATE TABLE Tipo_Fosa_Retro_Retentiva (
     Tipo_Fosa_Retro_RetentivaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
+
 
 CREATE TABLE Tipo_Frenillo_Insercion (
     Tipo_Frenillo_InsercionID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
 CREATE TABLE Tipo_Frenillo_Consistencia (
     Tipo_Frenillo_ConsistenciaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
-
 
 
 
@@ -1329,16 +1417,28 @@ CREATE TABLE Protesis_Total (
 
 
 
+
+
+
+
+
+
+
+--(LARGA, CUADRADA, OVALADA)
 CREATE TABLE Tipo_Forma_Cara (
     Tipo_Forma_CaraID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
+--( NORMAL, HIPOTONICA, HIPERTONICA)
 CREATE TABLE Tipo_Musculatura_Peribucal (
     Tipo_Musculatura_PeribucalID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+
+--(AUMENTADO, DISMINUIDO)
 CREATE TABLE Tipo_Relacion_Tercios (
     Tipo_Relacion_TerciosID SERIAL PRIMARY KEY,
     Nombre VARCHAR(255) UNIQUE NOT NULL
@@ -1369,40 +1469,28 @@ CREATE TABLE Tipo_Biotipo_Facial (
     Nombre VARCHAR(255) UNIQUE NOT NULL
 );
 
+CREATE TABLE Estado_Bucal_Ortodoncia (
+    Estado_Bucal_OrtodonciaID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(255) UNIQUE NOT NULL
+);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--
 
 --72.
 CREATE TABLE Ortodoncias (
     OrtodonciaID SERIAL PRIMARY KEY,
-    Forma_Cara VARCHAR(50),
+    Forma_CaraID INTEGER REFERENCES Tipo_Forma_Cara(Tipo_Forma_CaraID),
     Ojeras BOOLEAN,
-    Musculatura_Peribucal VARCHAR(50),
-    Relacion_Tercios_Medios_Inferior VARCHAR(50),
-    Relacion_Tercios_Inferior_Medios VARCHAR(50),
+    Musculatura_PeribucalID INTEGER REFERENCES Tipo_Musculatura_Peribucal(Tipo_Musculatura_PeribucalID),
+    Relacion_Tercios_Medios_InferiorID INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID),
+    Relacion_Tercios_Inferior_MediosID INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID),
     Presencia_Mentolabial BOOLEAN,
-    Perfil VARCHAR(50),
-    Protrusion_labial VARCHAR(50),
-    Relacion_Molar_Derecha VARCHAR(50),
-    Relacion_Molar_Izquierda VARCHAR(50),
-    Relacion_Canina_Derecha VARCHAR(50),
-    Relacion_Canina_Izquierda VARCHAR(50),
+    Perfil INTEGER REFERENCES Tipo_Perfil(Tipo_PerfilID),
+    Protrusion_LabialID INTEGER REFERENCES Tipo_Protrusion_Labial(Tipo_Protrusion_LabialID),
+    Relacion_Molar_DerechaID INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
+    Relacion_Molar_IzquierdaID INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
+    Relacion_Canina_DerechaID INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
+    Relacion_Canina_IzquierdaID INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
     Mordida_Profunda BOOLEAN,
     Mordida_Profunda_Porcentaje DECIMAL(5, 2),
     Mordida_Abierta BOOLEAN,
@@ -1412,8 +1500,8 @@ CREATE TABLE Ortodoncias (
     Perdida_Dientes_Temporales_Detalle TEXT,
     Perdida_Dientes_Permanentes BOOLEAN,
     Perdida_Dientes_Permanentes_Detalle TEXT,
-    Desviacion_Superior VARCHAR(50),
-    Desviacion_Inferior VARCHAR(50),
+    Desviacion_SuperiorID INTEGER REFERENCES Tipo_Desviacion(Tipo_DesviacionID),
+    Desviacion_InferiorID INTEGER REFERENCES Tipo_Desviacion(Tipo_DesviacionID),
     Desviacion_Linea_Media_Arqueada BOOLEAN,
     Mordida_Cruzada_Posterior_Derecha BOOLEAN,
     Mordida_Cruzada_Posterior_Izquierda BOOLEAN,
@@ -1421,11 +1509,11 @@ CREATE TABLE Ortodoncias (
     Discrepancia_Dental_Superior DECIMAL(5, 2),
     Discrepancia_Dental_Inferior DECIMAL(5, 2),
     Incompetencia_Labial BOOLEAN,
-    Higiene_Bucal VARCHAR(50),
-    Estado_Periodontal VARCHAR(50),
+    Higiene_Bucal INTEGER REFERENCES Estado_Bucal_Ortodoncia(Estado_Bucal_OrtodonciaID),
+    Estado_Periodontal INTEGER REFERENCES Estado_Bucal_Ortodoncia(Estado_Bucal_OrtodonciaID),
     Frenillo BOOLEAN,
     Frenillo_Detalle TEXT,
-    Forma_Paladar VARCHAR(50),
+    Forma_PaladarID INTEGER REFERENCES Tipo_Forma_Paladar(Tipo_Forma_PaladarID),
     Paladar_Profundo BOOLEAN,
     Presencia_Torus VARCHAR(50),
     Respiracion_Bucal BOOLEAN,
@@ -1436,14 +1524,11 @@ CREATE TABLE Ortodoncias (
     Apertura_Boca_Dolor BOOLEAN,
     Apertura_Boca_Chasquido BOOLEAN,
     Disminucion_De_Apertura_Boca BOOLEAN,
-    Biotipo_Facial VARCHAR(50),
-    Clase_Esqueletica VARCHAR(50),
-    Clase_Dental VARCHAR(50),
-    IMPA_93_97 VARCHAR(50),
+    Biotipo_FacialID INTEGER REFERENCES Tipo_Biotipo_Facial(Tipo_Biotipo_FacialID),
+    Clase_Esqueletica INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
+    Clase_Dental INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
+    IMPA_93_97 INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID INTEGER REFERENCES Usuarios(UsuarioID)
 );
-
-
-
