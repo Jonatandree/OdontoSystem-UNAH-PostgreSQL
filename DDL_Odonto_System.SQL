@@ -218,7 +218,7 @@ CREATE TABLE Expedientes (
 CREATE TABLE Correos (
     CorreosID SERIAL PRIMARY KEY,
     Correo VARCHAR(75) NOT NULL,
-    Contraseña VARCHAR(50) NOT NULL
+    Contraseña text NOT NULL
 );
 --14.
 CREATE TABLE Privilegios (
