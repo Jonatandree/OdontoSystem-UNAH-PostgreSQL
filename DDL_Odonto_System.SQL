@@ -231,7 +231,7 @@ CREATE TABLE Privilegios (
 );
 --15.
 CREATE TABLE Usuarios (
-    NumeroCuenta INTEGER PRIMARY KEY,
+    NumeroCuenta VARCHAR(20) PRIMARY KEY,
     CorreoID INTEGER REFERENCES Correos(CorreosID),
     CargoID INTEGER REFERENCES Cargos(CargoID),
     PersonaID INTEGER REFERENCES Personas(PersonaID)
@@ -266,7 +266,7 @@ CREATE TABLE Citas (
     CitasID SERIAL PRIMARY KEY,
     Fecha DATE NOT NULL,
     Estado INTEGER,
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     PacienteID INTEGER REFERENCES Pacientes(PacienteID)
 );
 --21
@@ -314,17 +314,18 @@ CREATE TABLE Cobros_Pendientes (
 );
 --27.
 CREATE TABLE Secciones (
-    SeccionesID SERIAL PRIMARY KEY,        
+    SeccionesID INTEGER PRIMARY KEY,        
     Horario INTEGER,                 
     Año_Academico VARCHAR(50),        
     Semestre_Academico VARCHAR(50),   
-    DoctorID INTEGER REFERENCES Usuarios(NumeroCuenta), 
+    DoctorID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
     Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID)      
 );
+
 --28.
 CREATE TABLE Alumnos_X_Seccion (
     SeccionesID INTEGER NOT NULL,           
-    AlumnoID INTEGER NOT NULL,                
+    AlumnoID VARCHAR(20) NOT NULL,                
     Nota_Final DECIMAL(10,2),                
     PRIMARY KEY (SeccionesID, AlumnoID),  
     FOREIGN KEY (SeccionesID) REFERENCES Secciones(SeccionesID),
@@ -405,9 +406,9 @@ CREATE TABLE Diagnosticos (
     Tecnica_Radiográfica INTEGER REFERENCES Tipo_Tecnica_Radiográfica(Tipo_Tecnica_RadiográficaID),
     Organo_Dentario TEXT, 
     Motivo_Examen_Radiografico TEXT,
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta), 
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta) 
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) 
 );
 
 
@@ -640,8 +641,8 @@ CREATE TABLE Lista_Tratamiento (
     DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID), -- Clave foránea referenciando a la tabla Diagnosticos
     TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), -- Clave foránea referenciando a la tabla Tratamientos
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Docentes
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Docentes
     SeccionID INTEGER REFERENCES Secciones(SeccionesID) -- Clave foránea referenciando a la tabla Secciones
 );
 
@@ -666,13 +667,12 @@ CREATE TABLE Recibos (
     CodigoRecibo VARCHAR(50),
     TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID),
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
-    DocenteID INTEGER REFERENCES  Usuarios(NumeroCuenta) ,
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta) ,
+    DocenteID VARCHAR(20) REFERENCES  Usuarios(NumeroCuenta) ,
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) ,
     Monto DECIMAL(10, 2),
-    CajeroID INTEGER REFERENCES Usuarios(NumeroCuenta) ,
+    CajeroID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) ,
     ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto)
 );
-
 
 --57.
 CREATE TABLE Evolucion_Tratamiento (
@@ -708,9 +708,9 @@ CREATE TABLE Cirugias_Bucal (
     Pieza_Dentaria INTEGER, -- Almacena la descripción de la pieza dentaria involucrada en la cirugía
     Diagnostico TEXT, -- Almacena la descripción del diagnóstico relacionado con la cirugía
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID), -- Clave foránea referenciando a la tabla Registros
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 
@@ -765,8 +765,8 @@ CREATE TABLE Periodoncias (
     Fundamentos_Pronostico TEXT,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 
@@ -796,8 +796,8 @@ CREATE TABLE Operatorias (
     imagen_diagnostico_Final BYTEA,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 
@@ -945,8 +945,8 @@ CREATE TABLE Odonto_Pedriatrias (
     Imagen_Control_Placa_oleary BYTEA,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 CREATE TABLE Habitos_Bucales_X_Odonto_Pedriatrias (
@@ -1032,8 +1032,8 @@ CREATE TABLE Endodoncias (
     Diagnostico_Periapical TEXT,
     Plan_Tratamiento INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 -- Tabla de relación para Tipo_Dolor y Endodoncias
@@ -1095,8 +1095,8 @@ CREATE TABLE Emergencias (
     imagen BYTEA,
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 
@@ -1163,8 +1163,8 @@ CREATE TABLE Parcial_Removible (
     Retenedores_Indirectos_Inferior VARCHAR(150),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 
@@ -1417,8 +1417,8 @@ CREATE TABLE Protesis_Total (
     Eleccion_Formas_Dientes TEXT,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
 
 
@@ -1530,6 +1530,6 @@ CREATE TABLE Ortodoncias (
     IMPA_93_97 INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
-    EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta),
-    DocenteID INTEGER REFERENCES Usuarios(NumeroCuenta)
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
