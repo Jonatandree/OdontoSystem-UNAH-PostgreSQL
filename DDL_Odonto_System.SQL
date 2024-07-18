@@ -250,7 +250,7 @@ CREATE TABLE Clinicas (
 );
 --18
 CREATE TABLE Clases (
-    Codigo_ClaseID SERIAL PRIMARY KEY,
+    Codigo_ClaseID VARCHAR(10) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
     DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID)
 );
@@ -319,7 +319,7 @@ CREATE TABLE Secciones (
     Año_Academico VARCHAR(50),        
     Semestre_Academico VARCHAR(50),   
     DoctorID INTEGER REFERENCES Usuarios(NumeroCuenta), 
-    Codigo_ClaseID INTEGER REFERENCES Clases(Codigo_ClaseID)      
+    Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID)      
 );
 --28.
 CREATE TABLE Alumnos_X_Seccion (
