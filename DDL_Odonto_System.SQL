@@ -130,32 +130,32 @@ DROP TABLE Ocupaciones;
 --1
 CREATE TABLE Ocupaciones (
     OcupacionID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL
+    Nombre VARCHAR(100) NOT NULL UNIQUE 
 );
 --2
 CREATE TABLE Tipo_Radiografias (
     RadiografiaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL UNIQUE,
     Costo DECIMAL(10, 2) NOT NULL
 );
 
 --3.
 CREATE TABLE Sexos (
     SexoID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL
+    Nombre VARCHAR(100) NOT NULL UNIQUE
 );
 
 --4.
 CREATE TABLE Estado_Civil (
     Estado_CivilID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL
+    Nombre VARCHAR(50) NOT NULL UNIQUE
 );
 
 
 --5.
 CREATE TABLE Nacionalidades (
     NacionalidadID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL
+    Nombre VARCHAR(50) NOT NULL UNIQUE
 );
 --6.
 CREATE TABLE Tipo_Documentos (
@@ -166,7 +166,7 @@ CREATE TABLE Tipo_Documentos (
 --7.
 CREATE TABLE Cargos (
     CargoID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL UNIQUE,
     Descripcion TEXT
 );
 
@@ -188,7 +188,7 @@ CREATE TABLE Personas (
 CREATE TABLE Persona_Documentos (
     PersonaID INTEGER,
     Tipo_DocumentoID INTEGER,
-    Documento VARCHAR(100),
+    Documento VARCHAR(100) UNIQUE,
     PRIMARY KEY (PersonaID, Tipo_DocumentoID),
     FOREIGN KEY (PersonaID) REFERENCES Personas(PersonaID),
     FOREIGN KEY (Tipo_DocumentoID) REFERENCES Tipo_Documentos(Tipo_DocumentoID)
@@ -214,7 +214,7 @@ CREATE TABLE Pacientes (
 CREATE TABLE Expedientes (
     ExpedienteID SERIAL PRIMARY KEY,
     Fecha_Creacion TIMESTAMP NOT NULL,
-    Numero_Expediente VARCHAR(50) NOT NULL,
+    Numero_Expediente VARCHAR(50) NOT NULL UNIQUE,
     PacienteID INTEGER REFERENCES Pacientes(PacienteID)
 );
 --13.
@@ -226,7 +226,7 @@ CREATE TABLE Correos (
 --14.
 CREATE TABLE Privilegios (
     PrivilegiosID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
+    Nombre VARCHAR(50) NOT NULL UNIQUE,
     Descripcion TEXT
 );
 --15.
@@ -239,19 +239,19 @@ CREATE TABLE Usuarios (
 --16.
 CREATE TABLE Departamentos (
     DepartamentoID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL UNIQUE,
     Jefe_Departamento INTEGER REFERENCES Personas(PersonaID)
 );
 --17
 CREATE TABLE Clinicas (
     ClinicaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
+    Nombre VARCHAR(50) NOT NULL UNIQUE,
     DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID)
 );
 --18
 CREATE TABLE Clases (
     Codigo_ClaseID VARCHAR(10) PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL UNIQUE,
     DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID)
 );
 --19.
@@ -272,7 +272,7 @@ CREATE TABLE Citas (
 --21
 CREATE TABLE Estados_Aprobacion_Docente (
     Estado_AprobacionID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL
+    Nombre VARCHAR(100) NOT NULL UNIQUE
 );
 --22.
 CREATE TABLE Remisiones (
@@ -282,6 +282,7 @@ CREATE TABLE Remisiones (
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     EstadoID INTEGER REFERENCES Estados_Aprobacion_Docente(Estado_AprobacionID)
 );
+
 --23.
 CREATE TABLE Tickets (
     TicketsID SERIAL PRIMARY KEY,
@@ -310,6 +311,7 @@ CREATE TABLE Cobros_Pendientes (
     Concepto VARCHAR(255),
     Estado VARCHAR(50),
     monto DECIMAL(10, 2),
+    PacienteID INTEGER REFERENCES Pacientes(PacienteID),-- SE AGREGO ESTE CAMPO CON ALTER
     Remisiones_imagenologiaID INTEGER REFERENCES Remisiones_imagenologia(Remisio_ImagenologiaID)
 );
 --27.
@@ -333,7 +335,7 @@ CREATE TABLE Alumnos_X_Seccion (
 
 CREATE TABLE Tipo_Tecnica_Radiográfica (
     Tipo_Tecnica_RadiográficaID SERIAL PRIMARY KEY,
-    Nombre_Tecnica_Radiográfica TEXT NOT NULL
+    Nombre_Tecnica_Radiográfica TEXT NOT NULL UNIQUE
 );
 
 --30.
@@ -415,7 +417,7 @@ CREATE TABLE Diagnosticos (
 
 CREATE TABLE Tipo_Droga (
     DrogaID SERIAL PRIMARY KEY,
-    Nombre_Droga TEXT NOT NULL
+    Nombre_Droga TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE Consumo_Drogas (
@@ -432,7 +434,7 @@ CREATE TABLE Consumo_Drogas (
 --32.
 CREATE TABLE Area (
     AreaID SERIAL PRIMARY KEY,    
-    Nombre VARCHAR(100) NOT NULL    
+    Nombre VARCHAR(100) NOT NULL UNIQUE    
 );
 --33.
 CREATE TABLE Examen_Estomatologico (
@@ -460,13 +462,13 @@ CREATE TABLE Consentimiento_Informado (
 --36.
 CREATE TABLE Tipo_Alergias (
     TipoAlergiasID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de alergia
-    Nombre VARCHAR(100) NOT NULL,        -- Nombre del tipo de alergia, con una longitud máxima de 100 caracteres
+    Nombre VARCHAR(100) NOT NULL UNIQUE,        -- Nombre del tipo de alergia, con una longitud máxima de 100 caracteres
     Descripcion TEXT                     -- Descripción del tipo de alergia
 );
 --37.
 CREATE TABLE Alergias (
     AlergiasID SERIAL PRIMARY KEY,           -- Identificador único y autoincremental para cada alergia
-    Nombre VARCHAR(100) NOT NULL,            -- Nombre de la alergia, con una longitud máxima de 100 caracteres
+    Nombre VARCHAR(100) NOT NULL UNIQUE,            -- Nombre de la alergia, con una longitud máxima de 100 caracteres
     Descripcion TEXT,                        -- Descripción de la alergia
     Tipo_EnfermedadID INTEGER REFERENCES Tipo_Alergias(TipoAlergiasID)  -- Clave foránea referenciando a la tabla Tipo_Alergias
 );
@@ -481,14 +483,14 @@ CREATE TABLE Alergias_X_Pacientes (
 --39.
 CREATE TABLE Tipo_Enfermedad (
     TipoEnfermedadID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de enfermedad
-    Nombre VARCHAR(100) NOT NULL,        -- Nombre del tipo de enfermedad, con una longitud máxima de 100 caracteres
+    Nombre VARCHAR(100) NOT NULL UNIQUE,        -- Nombre del tipo de enfermedad, con una longitud máxima de 100 caracteres
     Descripcion TEXT                     -- Descripción del tipo de enfermedad
 );
 
 --40.
 CREATE TABLE Enfermedad (
     EnfermedadID SERIAL PRIMARY KEY,           -- Identificador único y autoincremental para cada enfermedad
-    Nombre VARCHAR(100) NOT NULL,              -- Nombre de la enfermedad, con una longitud máxima de 100 caracteres
+    Nombre VARCHAR(100) NOT NULL UNIQUE,              -- Nombre de la enfermedad, con una longitud máxima de 100 caracteres
     Descripcion TEXT,                          -- Descripción de la enfermedad
     Tipo_EnfermedadID INTEGER REFERENCES Tipo_Enfermedad(TipoEnfermedadID) -- Clave foránea referenciando a la tabla Tipo_Enfermedad
 );
@@ -517,7 +519,7 @@ CREATE TABLE Enfermeda_X_Paciente (
 --42.
 CREATE TABLE Medicamentos (
     MedicamentoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada medicamento
-    Nombre VARCHAR(100) NOT NULL      -- Nombre del medicamento, con una longitud máxima de 100 caracteres
+    Nombre VARCHAR(100) NOT NULL UNIQUE      -- Nombre del medicamento, con una longitud máxima de 100 caracteres
 );
 
 --43.
@@ -610,7 +612,7 @@ CREATE TABLE Plan_Tratamiento (
 --51.
 CREATE TABLE Tratamientos (
     TratamientoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tratamiento
-    Nombre VARCHAR(100),
+    Nombre VARCHAR(100) UNIQUE,
     Codigo VARCHAR(20) UNIQUE, -- Código único para cada tratamiento
     Costo NUMERIC(10, 2) -- Costo del tratamiento, usando NUMERIC para precisión monetaria
 );
@@ -669,6 +671,7 @@ CREATE TABLE Recibos (
     DocenteID INTEGER REFERENCES  Usuarios(NumeroCuenta) ,
     EstudianteID INTEGER REFERENCES Usuarios(NumeroCuenta) ,
     Monto DECIMAL(10, 2),
+    Imagen BYTEA, --falta imagen
     CajeroID INTEGER REFERENCES Usuarios(NumeroCuenta) ,
     ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto)
 );
@@ -975,7 +978,7 @@ CREATE TABLE Tipo_Uso_Biberon_X_Odonto_Pedriatrias (
 --66.
 CREATE TABLE Tipo_Conductos (
     Tipo_ConductosID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada tipo de conducto
-    Nombre VARCHAR(100) NOT NULL, -- Nombre del tipo de conducto, con un límite de 100 caracteres
+    Nombre VARCHAR(100) NOT NULL UNIQUE, -- Nombre del tipo de conducto, con un límite de 100 caracteres
     Descripcion TEXT -- Descripción detallada del tipo de conducto
 );
 
