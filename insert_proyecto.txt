@@ -8,26 +8,41 @@ INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Radiografía Panoramica',
 INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Radiografía Periodontal', 100.00);
 
 -- Sexos
-INSERT INTO Sexos (Nombre) VALUES ('Masculino');
-INSERT INTO Sexos (Nombre) VALUES ('Femenino');
+INSERT INTO Sexos (Nombre) VALUES 
+('Masculino'),
+('Femenino'),
+('Otro');
 
 -- Estado_Civil
 INSERT INTO Estado_Civil (Nombre) VALUES ('Soltero');
 INSERT INTO Estado_Civil (Nombre) VALUES ('Casado'); 
 
 -- Nacionalidades
-INSERT INTO Nacionalidades (Nombre) VALUES ('Hondureño');
-INSERT INTO Nacionalidades (Nombre) VALUES ('Venezolano');
+INSERT INTO Nacionalidades (Nombre) VALUES 
+('Hondureña'),
+('Guatemalteca'),
+('Salvadoreña'),
+('Nicaragüense'),
+('Costarricense');
 
 -- Tipo_Documento
-INSERT INTO Tipo_Documentos (Nombre_Documento) VALUES ('DNI');
-INSERT INTO Tipo_Documentos (Nombre_Documento) VALUES ('Pasaporte');
+INSERT INTO Tipo_Documentos (Nombre_Documento) VALUES 
+('DNI'),
+('Pasaporte'),
+('Carnet de estudiante');
 
 -- Cargos
-INSERT INTO Cargos (Nombre, Descripcion) VALUES ('Dentista', 'Responsable del tratamiento y diagnóstico dental.');
-INSERT INTO Cargos (Nombre, Descripcion) VALUES ('Docente', 'Responsable de los estudiantes y sus notas.');
+INSERT INTO Cargos (Nombre, Descripcion) VALUES 
+('Estudiante', 'Estudiante de la universidad'),
+('Docente', 'Docente de la universidad'),
+('Jefatura', 'Jefe de departamento'),
+('Recepción', 'Personal de recepción'),
+('Pre-recepción', 'Personal de pre-recepción'),
+('Imagenología', 'Imagenología'),
+('Paciente', 'Paciente');
 
 -- Personas
 INSERT INTO Personas (Primer_Nombre, Segundo_Nombre, Primer_Apellido, Segundo_Apellido, Fecha_Nacimiento, Direccion, Telefono, SexoID, Estado_CivilID, NacionalidadID) VALUES 
 ('Carlos', 'Miguel', 'Rodriguez', 'Fernandez', '1975-06-15', 'Calle Salud 123', '1234567890', 1, 2, 1),
 ('Ana', 'Maria', 'Lopez', 'Martinez', '1980-04-22', 'Avenida Sonrisa 456', '0987654321', 2, 1, 2);
+
