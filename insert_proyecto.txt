@@ -46,3 +46,9 @@ INSERT INTO Personas (Primer_Nombre, Segundo_Nombre, Primer_Apellido, Segundo_Ap
 ('Carlos', 'Miguel', 'Rodriguez', 'Fernandez', '1975-06-15', 'Calle Salud 123', '1234567890', 1, 2, 1),
 ('Ana', 'Maria', 'Lopez', 'Martinez', '1980-04-22', 'Avenida Sonrisa 456', '0987654321', 2, 1, 2);
 
+-- Estado_Citas
+INSERT INTO Estado_Citas (Nombre) 
+VALUES 
+('Pendiente'),
+('Realizada'),
+('Expirada');
