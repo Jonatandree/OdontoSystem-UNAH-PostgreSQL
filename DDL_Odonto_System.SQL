@@ -262,10 +262,15 @@ CREATE TABLE Historia_Clinica (
     ExpedienteID INTEGER REFERENCES Expedientes(ExpedienteID)
 );
 --20.
+CREATE TABLE Estado_Citas (
+    EstadoID SERIAL PRIMARY KEY,
+    Nombre VARCHAR(30) NOT NULL
+);
+
 CREATE TABLE Citas (
     CitasID SERIAL PRIMARY KEY,
     Fecha DATE NOT NULL,
-    Estado INTEGER,
+    EstadoID INTEGER REFERENCES Estado_Citas(EstadoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     PacienteID INTEGER REFERENCES Pacientes(PacienteID)
 );
