@@ -32,9 +32,9 @@ DROP TABLE Tipo_Forma_Facial;
 DROP TABLE Tipo_Fenotipo_Facial;
 DROP TABLE Pilares;
 DROP TABLE Parcial_Removible;
-DROP TABLE Tipo_Dolor_Emergencias;
-DROP TABLE Emergencias;
-DROP TABLE Tipo_Resultado_Emergencia;
+DROP TABLE Tipo_Dolor_Urgencias;
+DROP TABLE Urgencias;
+DROP TABLE Tipo_Resultado_Urgencia;
 DROP TABLE Conductos;
 DROP TABLE Tipo_Estimulo_Endodoncia;
 DROP TABLE Tipo_Dolor_Endodoncias;
@@ -1082,16 +1082,16 @@ CREATE TABLE Conductos (
     FOREIGN KEY (EndodonciaID) REFERENCES Endodoncias(EndodonciaID)
 );
 
-CREATE TABLE Tipo_Resultado_Emergencia (
-    Tipo_Resultado_EmergenciaID SERIAL PRIMARY KEY,
+CREATE TABLE Tipo_Resultado_Urgencia (
+    Tipo_Resultado_UrgenciaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(25) UNIQUE NOT NULL
 );
 
 
 --65.
-CREATE TABLE Emergencias (
-    EmergenciaID SERIAL PRIMARY KEY,
-    Num_de_Diente INTEGER,
+CREATE TABLE Urgencias (
+    UrgenciaID SERIAL PRIMARY KEY,
+    Num_de_Organo_Dentario INTEGER,
     Num_dientes_Con_Caries INTEGER,
     Num_dientes_Con_Fractura INTEGER,
     Exposicion_Pulpar TEXT,
@@ -1103,13 +1103,13 @@ CREATE TABLE Emergencias (
     Movilidad BOOLEAN,
     Grado_movilidad INTEGER CHECK (Grado_movilidad IN (1, 2, 3)),
     Prueba_Termica BOOLEAN,
-    Prueba_Termica_resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
+    Prueba_Termica_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
     Palpitacion BOOLEAN,
-    Palpitacion_resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
+    Palpitacion_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
     percucion_Vertical BOOLEAN,
-    percucion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
+    percucion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
     percucion_Horizontal BOOLEAN,
-    percucion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
+    percucion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
     imagen TEXT,
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
@@ -1118,13 +1118,13 @@ CREATE TABLE Emergencias (
 );
 
 
-CREATE TABLE Tipo_Dolor_Emergencias (
+CREATE TABLE Tipo_Dolor_Urgencias (
     Tipo_DolorID INT NOT NULL,
-    EmergenciaID INT NOT NULL,
+    UrgenciaID INT NOT NULL,
     Historia_ClinicaID INT NOT NULL,
-    PRIMARY KEY (Tipo_DolorID, EmergenciaID, Historia_ClinicaID),
+    PRIMARY KEY (Tipo_DolorID, UrgenciaID, Historia_ClinicaID),
     FOREIGN KEY (Tipo_DolorID) REFERENCES Tipo_Dolor(Tipo_DolorID),
-    FOREIGN KEY (EmergenciaID) REFERENCES Emergencias(EmergenciaID),
+    FOREIGN KEY (UrgenciaID) REFERENCES Urgencias(UrgenciaID),
     FOREIGN KEY (Historia_ClinicaID) REFERENCES Historia_Clinica(Historia_ClinicaID)
 );
 
