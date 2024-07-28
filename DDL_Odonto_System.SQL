@@ -66,7 +66,8 @@ DROP TABLE Cirugias_Bucal;
 DROP TABLE Lista_Dientes;
 DROP TABLE Evolucion_Procedimiento;
 DROP TABLE Evolucion_Tratamiento;
-DROP TABLE Recibos;
+DROP TABLE Cobros_Pendientes;
+DROP TABLE Recibos;--------------
 DROP TABLE Detalle_Presupuesto;
 DROP TABLE Lista_Tratamiento;
 DROP TABLE Presupuestos;
@@ -98,13 +99,14 @@ DROP TABLE Privilegios_X_Cargo;
 DROP TABLE Tipo_Tecnica_Radiográfica;
 DROP TABLE Alumnos_X_Seccion;
 DROP TABLE Secciones;
-DROP TABLE Cobros_Pendientes;
+--DROP TABLE Cobros_Pendientes;
 DROP TABLE Radiografias_X_remision;
 DROP TABLE Remisiones_imagenologia;
 DROP TABLE Tickets;
 DROP TABLE Remisiones;
 DROP TABLE Estados_Aprobacion_Docente;
 DROP TABLE Citas;
+DROP TABLE Estado_Citas;
 DROP TABLE Historia_Clinica;
 DROP TABLE Clases;
 DROP TABLE Clinicas;
@@ -231,11 +233,10 @@ CREATE TABLE Privilegios (
 );
 --15.
 CREATE TABLE Usuarios (
-    NumeroCuenta VARCHAR(20),
+    NumeroCuenta VARCHAR(20)PRIMARY KEY,
     CorreoID INTEGER REFERENCES Correos(CorreosID),
     CargoID INTEGER REFERENCES Cargos(CargoID),
-    PersonaID INTEGER REFERENCES Personas(PersonaID),
-    PRIMARY KEY (NumeroCuenta, CargoID)
+    PersonaID INTEGER REFERENCES Personas(PersonaID)
 );
 --16.
 CREATE TABLE Departamentos (
@@ -321,7 +322,6 @@ CREATE TABLE Cobros_Pendientes (
     Concepto VARCHAR(255),
     Estado VARCHAR(50),
     monto DECIMAL(10, 2),
-    ReciboID INTEGER REFERENCES Recibos(ReciboID);
     PacienteID INTEGER REFERENCES Pacientes(PacienteID),
     Remisiones_imagenologiaID INTEGER REFERENCES Remisiones_imagenologia(Remisio_ImagenologiaID)
 );
@@ -683,9 +683,11 @@ CREATE TABLE Recibos (
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) ,
     Monto DECIMAL(10, 2),
     CajeroID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) ,
-    (PacienteID) REFERENCES Pacientes(PacienteID),
+    PacienteID INTEGER REFERENCES Pacientes(PacienteID),
     ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto)
 );
+
+
 
 --57.
 CREATE TABLE Evolucion_Tratamiento (
@@ -1140,9 +1142,9 @@ CREATE TABLE Parcial_Removible (
     Problema_Protesis_anterior TEXT,
     Causa_Perdida_Dientes TEXT,
     Ingiene_Oral BOOLEAN,
-    Indice_Caries //  ALTO , MODERADO- BAJO
+    Indice_Caries TEXT,
     Calidad_Tegido TEXT,
-    Cantidad_Tegido TEXT,// ALTO , MODERADO- BAJO
+    Cantidad_Tegido TEXT,
     Numero_Posicion_Diente TEXT,
     Tamaño_Dientes_Remanetes TEXT, 
     Condiciones_Proceso TEXT,
@@ -1573,4 +1575,73 @@ CREATE TABLE Ortodoncias (
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
+
+ALTER TABLE Cobros_Pendientes
+ADD COLUMN ReciboID INTEGER REFERENCES Recibos(ReciboID);
+
+
+
+
+--------------- INSERTS KEVIN ---------------
+-- Insertar datos en Cargos
+INSERT INTO Cargos (Nombre, Descripcion) VALUES 
+('Estudiante', 'Estudiante de la universidad'),
+('Docente', 'Docente de la universidad'),
+('Jefatura', 'Jefe de departamento'),
+('Recepción', 'Personal de recepción'),
+('Pre-recepción', 'Personal de pre-recepción'),
+('Imagenología', 'Imagenología'),
+('Paciente', 'Paciente');
+
+-- Insertar datos en Sexos
+INSERT INTO Sexos (Nombre) VALUES 
+('Masculino'),
+('Femenino'),
+('Otro');
+
+-- Insertar datos en Estado_Civil
+INSERT INTO Estado_Civil (Nombre) VALUES 
+('Soltero'),
+('Casado');
+
+-- Insertar datos en Nacionalidades
+INSERT INTO Nacionalidades (Nombre) VALUES 
+('Hondureña'),
+('Guatemalteca'),
+('Salvadoreña'),
+('Nicaragüense'),
+('Costarricense');
+
+-- Insertar datos en Tipo_Documentos
+INSERT INTO Tipo_Documentos (Nombre_Documento) VALUES 
+('DNI'),
+('Pasaporte'),
+('Carnet de estudiante');
+
+---------------------------------------------------------------
+
+
+-- Insertar datos en Estados_Aprobacion_Docente
+INSERT INTO Estados_Aprobacion_Docente (Nombre)
+VALUES
+    ('Pendiente'),
+    ('Aprobado'),
+    ('Rechazado');
+
+
+
+INSERT INTO Clinicas (Nombre, DepartamentoID)
+VALUES
+    ('Diagnostico', null), 
+    ('Urgencia', null), 
+    ('Periodoncia', null), 
+    ('Ortodoncia', null), 
+    ('Operatoria', null),
+    ('Cirugía', null),
+    ('Paidodoncia', null),
+    ('Endodoncia', null),
+    ('Prótesis Removible', null),
+    ('Prótesis Total', null)
+    ; 
+
 
