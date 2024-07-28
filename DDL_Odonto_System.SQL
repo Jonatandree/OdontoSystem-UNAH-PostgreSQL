@@ -270,10 +270,13 @@ CREATE TABLE Estado_Citas (
 CREATE TABLE Citas (
     CitasID SERIAL PRIMARY KEY,
     Fecha DATE NOT NULL,
+    HoraInicio TIME NOT NULL,
+    HoraFin TIME,
     EstadoID INTEGER REFERENCES Estado_Citas(EstadoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     PacienteID INTEGER REFERENCES Pacientes(PacienteID)
 );
+
 --21
 CREATE TABLE Estados_Aprobacion_Docente (
     Estado_AprobacionID SERIAL PRIMARY KEY,
