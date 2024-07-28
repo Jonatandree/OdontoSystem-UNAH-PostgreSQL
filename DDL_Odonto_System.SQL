@@ -231,10 +231,11 @@ CREATE TABLE Privilegios (
 );
 --15.
 CREATE TABLE Usuarios (
-    NumeroCuenta VARCHAR(20) PRIMARY KEY,
+    NumeroCuenta VARCHAR(20),
     CorreoID INTEGER REFERENCES Correos(CorreosID),
     CargoID INTEGER REFERENCES Cargos(CargoID),
-    PersonaID INTEGER REFERENCES Personas(PersonaID)
+    PersonaID INTEGER REFERENCES Personas(PersonaID),
+    PRIMARY KEY (NumeroCuenta, CargoID)
 );
 --16.
 CREATE TABLE Departamentos (
@@ -294,14 +295,14 @@ CREATE TABLE Tickets (
 CREATE TABLE Remisiones_imagenologia (
     Remisio_ImagenologiaID SERIAL PRIMARY KEY,
     PacienteID INTEGER REFERENCES Pacientes(PacienteID),
-    imagen_remision BYTEA,
+    imagen_remision TEXT,
     centro_medico VARCHAR(100),
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID)
 );
 --25.
 CREATE TABLE Radiografias_X_remision (
     Radiografias_X_remisionID SERIAL PRIMARY KEY,
-    Imagen_Radiografia BYTEA,
+    Imagen_Radiografia TEXT,
     RadiografiaID INTEGER REFERENCES Tipo_Radiografias(RadiografiaID),
     Remisio_ImagenologiaID INTEGER REFERENCES Remisiones_imagenologia(Remisio_ImagenologiaID)
 );
@@ -311,7 +312,8 @@ CREATE TABLE Cobros_Pendientes (
     Concepto VARCHAR(255),
     Estado VARCHAR(50),
     monto DECIMAL(10, 2),
-    PacienteID INTEGER REFERENCES Pacientes(PacienteID),-- SE AGREGO ESTE CAMPO CON ALTER
+    ReciboID INTEGER REFERENCES Recibos(ReciboID);
+    PacienteID INTEGER REFERENCES Pacientes(PacienteID),
     Remisiones_imagenologiaID INTEGER REFERENCES Remisiones_imagenologia(Remisio_ImagenologiaID)
 );
 --27.
@@ -437,6 +439,7 @@ CREATE TABLE Area (
     AreaID SERIAL PRIMARY KEY,    
     Nombre VARCHAR(100) NOT NULL UNIQUE    
 );
+
 --33.
 CREATE TABLE Examen_Estomatologico (
     Examen_EstomatologicoID SERIAL PRIMARY KEY,    
@@ -664,15 +667,14 @@ CREATE TABLE Detalle_Presupuesto (
 --56
 CREATE TABLE Recibos (
     ReciboID SERIAL PRIMARY KEY,
-    Nombre_Paciente VARCHAR(255),
-    Dni VARCHAR(50),
     CodigoRecibo VARCHAR(50),
-    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID),
+    imagen TEXT,
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
     DocenteID VARCHAR(20) REFERENCES  Usuarios(NumeroCuenta) ,
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) ,
     Monto DECIMAL(10, 2),
     CajeroID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) ,
+    (PacienteID) REFERENCES Pacientes(PacienteID),
     ID_Detalle_Presupuesto INTEGER REFERENCES Detalle_Presupuesto(ID_Detalle_Presupuesto)
 );
 
@@ -780,7 +782,7 @@ CREATE TABLE Periodoncias (
 CREATE TABLE Periodontogramas (
     PeriodontogramasID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada periodontograma
     Nombre VARCHAR(100), -- Nombre descriptivo del periodontograma
-    Imagen BYTEA, -- Almacena la imagen del periodontograma en formato binario
+    Imagen TEXT, -- Almacena la imagen del periodontograma en formato binario
     PeriodonciaID INTEGER REFERENCES Periodoncias(PeriodonciaID) -- Clave foránea referenciando a la tabla Periodoncia
 );
 
@@ -797,8 +799,8 @@ CREATE TABLE Operatorias (
     Erosion BOOLEAN,
     Atriccion BOOLEAN,
     Bruxismo BOOLEAN,
-    imagen_diagnostico_inicial BYTEA,
-    imagen_diagnostico_Final BYTEA,
+    imagen_diagnostico_inicial TEXT,
+    imagen_diagnostico_Final TEXT,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
@@ -947,7 +949,7 @@ CREATE TABLE Odonto_Pedriatrias (
     Combinada BOOLEAN,
     Combinacion_Lactancia TEXT,
     Observaciones TEXT,
-    Imagen_Control_Placa_oleary BYTEA,
+    Imagen_Control_Placa_oleary TEXT,
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
@@ -1097,7 +1099,7 @@ CREATE TABLE Emergencias (
     percucion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
     percucion_Horizontal BOOLEAN,
     percucion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Emergencia(Tipo_Resultado_EmergenciaID),
-    imagen BYTEA,
+    imagen TEXT,
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
@@ -1124,6 +1126,30 @@ CREATE TABLE Tipo_Dolor_Emergencias (
 --69.
 CREATE TABLE Parcial_Removible (
     Parcial_RemovibleID SERIAL PRIMARY KEY,
+    Uso_protesis BOOLEAN,
+    Tipo_Protesis_anterior TEXT,
+    Problema_Protesis_anterior TEXT,
+    Causa_Perdida_Dientes TEXT,
+    Ingiene_Oral BOOLEAN,
+    Indice_Caries //  ALTO , MODERADO- BAJO
+    Calidad_Tegido TEXT,
+    Cantidad_Tegido TEXT,// ALTO , MODERADO- BAJO
+    Numero_Posicion_Diente TEXT,
+    Tamaño_Dientes_Remanetes TEXT, 
+    Condiciones_Proceso TEXT,
+    Coincide_Relacion_Oclucion BOOLEAN,
+    Interaciones_Frenillo BOOLEAN,
+    Tipo_Saliva TEXT,
+    Cantida_Normal_Saliva  BOOLEAN,
+    Cantida_Normal_Saliva_No BOOLEAN, -- si en caso Cantida_Normal_Saliva es NO  ( Sialorrea o Xerostomía) 
+    Línea_milohioidea TEXT,
+    Tejidos_de_crestas_alveolares TEXT,
+    Tuberosidad_del_maxilar TEXT,
+    Hueso_alveolar_de_soporte TEXT,
+    Presenta_Anomalías_óseas BOOLEAN,
+    Especificacion_Presenta_Anomalías_óseas TEXT,
+    Indicado_Procedimiento_Quirurgico BOOLEAN,
+    Especificacion_Indicado_Procedimiento_Quirurgico TEXT,
     Desviacion_Apertura TEXT,
     Desviacion_Cierre TEXT,
     Tono_Muscular TEXT,
@@ -1150,17 +1176,17 @@ CREATE TABLE Parcial_Removible (
     Formacion_Planos_Guias BOOLEAN,
     Modificacion_Dentales BOOLEAN,
     Especificacion TEXT,
-    Foto_Prueba_Armazon BYTEA,
-    Foto_Relacion_interoclusales BYTEA,
-    Foto_Instalacion_PPR BYTEA,
-    Foto_Control_Post_operatorio BYTEA,
-    Imagen_superior BYTEA,
+    Foto_Prueba_Armazon TEXT,
+    Foto_Relacion_interoclusales TEXT,
+    Foto_Instalacion_PPR TEXT,
+    Foto_Control_Post_operatorio TEXT,
+    Imagen_superior TEXT,
     Clase_superior VARCHAR(150),
     Conector_superior VARCHAR(150),
     Base_superior VARCHAR(150),
     Retenedores_Directos_Superior VARCHAR(150),
     Retenedores_Indirectos_Superior VARCHAR(150),
-    Imagen_Inferior BYTEA,
+    Imagen_Inferior TEXT,
     Clase_Inferior VARCHAR(150),
     Conector_Inferior VARCHAR(150),
     Base_Inferior VARCHAR(150),
@@ -1484,9 +1510,9 @@ CREATE TABLE Estado_Bucal_Ortodoncia (
 --72.
 CREATE TABLE Ortodoncias (
     OrtodonciaID SERIAL PRIMARY KEY,
-    foto_extraoral_centrada VARCHAR(255),
-    foto_extraoral_sonrisa VARCHAR(255),
-    foto_extraoral_perfil VARCHAR(255),
+    foto_extraoral_centrada TEXT,
+    foto_extraoral_sonrisa TEXT,
+    foto_extraoral_perfil TEXT,
     Forma_CaraID INTEGER REFERENCES Tipo_Forma_Cara(Tipo_Forma_CaraID),
     Ojeras BOOLEAN,
     Musculatura_PeribucalID INTEGER REFERENCES Tipo_Musculatura_Peribucal(Tipo_Musculatura_PeribucalID),
@@ -1524,7 +1550,7 @@ CREATE TABLE Ortodoncias (
     Forma_PaladarID INTEGER REFERENCES Tipo_Forma_Paladar(Tipo_Forma_PaladarID),
     Paladar_Profundo BOOLEAN,
     Presencia_Torus VARCHAR(50),
-    Foto_Oclusal_Superior VARCHAR(255),
+    Foto_Oclusal_Superior TEXT,
     Foto_Oclusal_Inferior VARCHAR(255),
     Apertura_Boca_Dolor BOOLEAN,
     Apertura_Boca_Chasquido BOOLEAN,
@@ -1540,38 +1566,4 @@ CREATE TABLE Ortodoncias (
 );
 
 
---------------- INSERTS KEVIN ---------------
--- Insertar datos en Cargos
-INSERT INTO Cargos (Nombre, Descripcion) VALUES 
-('Estudiante', 'Estudiante de la universidad'),
-('Docente', 'Docente de la universidad'),
-('Jefatura', 'Jefe de departamento'),
-('Recepción', 'Personal de recepción'),
-('Pre-recepción', 'Personal de pre-recepción'),
-('Imagenología', 'Imagenología'),
-('Paciente', 'Paciente');
 
--- Insertar datos en Sexos
-INSERT INTO Sexos (Nombre) VALUES 
-('Masculino'),
-('Femenino'),
-('Otro');
-
--- Insertar datos en Estado_Civil
-INSERT INTO Estado_Civil (Nombre) VALUES 
-('Soltero'),
-('Casado');
-
--- Insertar datos en Nacionalidades
-INSERT INTO Nacionalidades (Nombre) VALUES 
-('Hondureña'),
-('Guatemalteca'),
-('Salvadoreña'),
-('Nicaragüense'),
-('Costarricense');
-
--- Insertar datos en Tipo_Documentos
-INSERT INTO Tipo_Documentos (Nombre_Documento) VALUES 
-('DNI'),
-('Pasaporte'),
-('Carnet de estudiante');
