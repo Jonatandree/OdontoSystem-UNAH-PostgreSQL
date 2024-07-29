@@ -338,15 +338,16 @@ CREATE TABLE Secciones (
 );
 
 --28.
-CREATE TABLE Alumnos_X_Seccion (
-    SeccionesID INTEGER NOT NULL,           
-    Codigo_ClaseID VARCHAR(10) NOT NULL,
-    AlumnoID VARCHAR(20) NOT NULL,                
-    Nota_Final DECIMAL(10,2),                
-    PRIMARY KEY (SeccionesID, Codigo_ClaseID, AlumnoID),  
-    FOREIGN KEY (SeccionesID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
-    FOREIGN KEY (AlumnoID) REFERENCES Usuarios(NumeroCuenta)          
+CREATE TABLE alumnos_x_seccion (
+  SeccionesID INTEGER NOT NULL,
+  Codigo_ClaseID VARCHAR(10) NOT NULL,
+  AlumnoID VARCHAR(50) NOT NULL,
+  Nota_Final DECIMAL(10,2),   
+  PRIMARY KEY (SeccionesID, Codigo_ClaseID, AlumnoID),
+  FOREIGN KEY (SeccionesID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
+  FOREIGN KEY (AlumnoID) REFERENCES Usuarios(NumeroCuenta)
 );
+
 
 
 CREATE TABLE Tipo_Tecnica_Radiográfica (
