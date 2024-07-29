@@ -327,23 +327,27 @@ CREATE TABLE Cobros_Pendientes (
 );
 --27.
 CREATE TABLE Secciones (
-    SeccionesID INTEGER PRIMARY KEY,        
-    Horario INTEGER,                 
+    SeccionesID INTEGER NOT NULL,        
+    Hora_Inicio TIME,                 
+    Hora_Final TIME,                 
     Año_Academico VARCHAR(50),        
     Semestre_Academico VARCHAR(50),   
     DoctorID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
-    Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID)      
+    Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID),
+    PRIMARY KEY (SeccionesID, Codigo_ClaseID)
 );
 
 --28.
 CREATE TABLE Alumnos_X_Seccion (
     SeccionesID INTEGER NOT NULL,           
+    Codigo_ClaseID VARCHAR(10) NOT NULL,
     AlumnoID VARCHAR(20) NOT NULL,                
     Nota_Final DECIMAL(10,2),                
-    PRIMARY KEY (SeccionesID, AlumnoID),  
-    FOREIGN KEY (SeccionesID) REFERENCES Secciones(SeccionesID),
+    PRIMARY KEY (SeccionesID, Codigo_ClaseID, AlumnoID),  
+    FOREIGN KEY (SeccionesID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
     FOREIGN KEY (AlumnoID) REFERENCES Usuarios(NumeroCuenta)          
 );
+
 
 CREATE TABLE Tipo_Tecnica_Radiográfica (
     Tipo_Tecnica_RadiográficaID SERIAL PRIMARY KEY,
@@ -650,15 +654,18 @@ CREATE TABLE Presupuestos (
 
 --54.
 CREATE TABLE Lista_Tratamiento (
-    Lista_TratamientoID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada registro de tratamiento
-    DienteID INTEGER REFERENCES Dientes(DienteID), -- Clave foránea referenciando a la tabla Dientes
-    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID), -- Clave foránea referenciando a la tabla Diagnosticos
-    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), -- Clave foránea referenciando a la tabla Tratamientos
-    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
-    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
-    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Docentes
-    SeccionID INTEGER REFERENCES Secciones(SeccionesID) -- Clave foránea referenciando a la tabla Secciones
+    Lista_TratamientoID SERIAL PRIMARY KEY,  
+    DienteID INTEGER REFERENCES Dientes(DienteID), 
+    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID),
+    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), 
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    SeccionID INTEGER NOT NULL,  -- Parte de la clave primaria
+    Codigo_ClaseID VARCHAR(10) NOT NULL,  -- Parte de la clave primaria compuesta de Secciones
+    FOREIGN KEY (SeccionID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID)
 );
+
 
 
 --55
