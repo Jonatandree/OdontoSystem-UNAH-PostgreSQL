@@ -412,6 +412,7 @@ CREATE TABLE Diagnosticos (
     Tipo_De_Cerdas_Del_Cepillo VARCHAR(50), 
     Presion_Ejercida_Al_Cepillarse VARCHAR(50), 
     Usa_Hilo_Dental BOOLEAN, 
+    Usa_Enjuague_Bucal BOOLEAN, 
     Sangrado_Encias BOOLEAN, 
     Comentario TEXT, 
     Apariencia_General TEXT,
