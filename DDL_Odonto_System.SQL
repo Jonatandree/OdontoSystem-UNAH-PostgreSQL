@@ -559,11 +559,12 @@ CREATE TABLE Descripcion_Medicamentos (
 --45.
 CREATE TABLE Signos_Vitales (
     Signos_VitalesID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada registro de signos vitales
-    Presion_Arterial VARCHAR(20),
-    Pulso INTEGER,
+    Presion_Arterial DECIMAL(5,2),
+    Pulso DECIMAL(5,2),
+    F_Respiratoria DECIMAL(5,2),
     Peso DECIMAL(5,2),
-    F_Respiratoria INTEGER,
-    Saturacion_De_Oxigeno INTEGER,
+    Talla DECIMAL(5,2),
+    Saturacion_De_Oxigeno DECIMAL(5,2),
     DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID) -- Clave foránea referenciando a la tabla Diagnostico
 );
 
