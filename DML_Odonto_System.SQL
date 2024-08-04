@@ -35,6 +35,22 @@ INSERT INTO Tipo_Documentos (Nombre_Documento) VALUES
 ('Pasaporte'),
 ('Carnet de estudiante');
 
+INSERT INTO area (nombre) VALUES
+('Encía Paladar blando'),
+('Lengua'),
+('Paladar duro'),
+('Labios'),
+('ATM'),
+('Carrillos'),
+('Anodoncia'),
+('Piso de la boca'),
+('Supernumerarios'),
+('Ganglios linfáticos'),
+('Músculos'),
+('Glándulas salivales'),
+('Amígdalas'),
+('Otros');
+
 ---------------------------------------------------------------
 
 
