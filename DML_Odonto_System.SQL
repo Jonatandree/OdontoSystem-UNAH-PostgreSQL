@@ -60,3 +60,17 @@ VALUES
     ('Prótesis Removible', null),
     ('Prótesis Total', null)
     ; 
+
+
+
+INSERT INTO Cobros_Pendientes (Concepto, Estado, monto, PacienteID, Remisiones_imagenologiaID)
+VALUES ('Periapical', 'Pendiente', 150.00, 1, 1);
+
+
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Panorámica', 80.00);
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Periapical', 50.00);
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Oclusal', 60.00);
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Bitewing', 70.00);
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Palatina', 55.00);
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Cefalométrica', 90.00);
+INSERT INTO Tipo_Radiografias (Nombre, Costo) VALUES ('Tomografía', 120.00);

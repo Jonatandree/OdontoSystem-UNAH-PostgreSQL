@@ -601,7 +601,10 @@ CREATE TABLE Dientes (
 --50.
 CREATE TABLE Plan_Tratamiento (
     Plan_TratamientoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada plan de tratamiento
-    Observaciones TEXT -- Campo para observaciones o notas asociadas al plan de tratamiento
+    Costo DECIMAL(10, 2),
+    Saldo DECIMAL(10, 2),
+    Observaciones TEXT, -- Campo para observaciones o notas asociadas al plan de tratamiento
+    PersonaID INTEGER REFERENCES Personas(PersonaID)
 );
 
 
@@ -648,16 +651,22 @@ CREATE TABLE Presupuestos (
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID) -- Clave foránea referenciando a la tabla Plan_Tratamiento
 );
 
+
+
 --54.
 CREATE TABLE Lista_Tratamiento (
     Lista_TratamientoID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada registro de tratamiento
     DienteID INTEGER REFERENCES Dientes(DienteID), -- Clave foránea referenciando a la tabla Dientes
-    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID), -- Clave foránea referenciando a la tabla Diagnosticos
     TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), -- Clave foránea referenciando a la tabla Tratamientos
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
-    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Docentes
-    SeccionID INTEGER REFERENCES Secciones(SeccionesID) -- Clave foránea referenciando a la tabla Secciones
+    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    ClinicaID INTEGER REFERENCES Clinicas(ClinicaID), -- Clave foránea referenciando a la tabla Docentes
+    SeccionID INTEGER NOT NULL,-- Clave foránea referenciando a la tabla Secciones
+    ReciboID INTEGER REFERENCES Recibos(ReciboID), 
+    Codigo_ClaseID VARCHAR(10) NOT NULL,
+    FOREIGN KEY (SeccionID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
+    Estado VARCHAR(20) 
 );
 
 
@@ -1643,5 +1652,4 @@ VALUES
     ('Prótesis Removible', null),
     ('Prótesis Total', null)
     ; 
-
 
