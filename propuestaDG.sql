@@ -195,4 +195,16 @@ CREATE TABLE Enfermedades_X_Diagnostico (
     enfermedad INTEGER REFERENCES Enfermedades(id)
 );
 
+--Trigger Update
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
+CREATE TRIGGER update_diagnostico_updated_at
+BEFORE UPDATE ON Diagnostico
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
