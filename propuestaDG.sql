@@ -1,3 +1,53 @@
+CREATE TABLE Drogas (
+    id SERIAL PRIMARY KEY,
+    nombre TEXT NOT NULL
+);
+
+CREATE TABLE TamanoCepillo (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE TipoCerdas (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE PresionCepillado (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE TipoDisfuncion (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE RuidosArticulares (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE Medicamentos (
+    id SERIAL PRIMARY KEY,
+    nombre TEXT NOT NULL
+);
+
+CREATE TABLE Presentaciones (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE Frecuencias (
+    id SERIAL PRIMARY KEY,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE Enfermedades (
+    id SERIAL PRIMARY KEY,
+    nombre TEXT NOT NULL
+);
+
 CREATE TABLE Anamnesis (
     id SERIAL PRIMARY KEY,
     motivo_consulta TEXT,
@@ -33,11 +83,6 @@ CREATE TABLE AntecedentesPatologicos (
     c INTEGER
 );
 
-CREATE TABLE Drogas (
-    id SERIAL PRIMARY KEY,
-    nombre TEXT NOT NULL
-);
-
 CREATE TABLE AntecedentesNoPatologicos (
     id SERIAL PRIMARY KEY,
     consume_tabaco BOOLEAN,
@@ -46,7 +91,7 @@ CREATE TABLE AntecedentesNoPatologicos (
     consume_alcohol BOOLEAN,
     frecuencia_consumo_alcohol INTEGER,
     consume_drogas BOOLEAN,
-    tipo_droga INTEGER REFERENCES Drogas(id),  -- Clave foránea a la tabla Drogas
+    tipo_droga INTEGER REFERENCES Drogas(id),
     hace_cuanto_drogas INTEGER,
     embarazada BOOLEAN,
     menstruacion BOOLEAN,
@@ -57,6 +102,7 @@ CREATE TABLE AntecedentesNoPatologicos (
     usa_protesis_dental BOOLEAN,
     observaciones TEXT
 );
+
 CREATE TABLE AparienciaGeneral (
     id SERIAL PRIMARY KEY,
     estado_paciente TEXT
@@ -80,103 +126,22 @@ CREATE TABLE RevisionPorOrgano (
     extremidades TEXT
 );
 
-CREATE TABLE ExamenesEstomatologicos (
+CREATE TABLE ArticulacionTemporomandibular (
     id SERIAL PRIMARY KEY,
-    diagnostico_id INTEGER REFERENCES Diagnostico(id),
-    area TEXT,
-    afeccion TEXT
-);
-
--- Tabla para Tamaño de Cepillo
-CREATE TABLE TamanoCepillo (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL
-);
-
--- Tabla para Tipo de Cerdas
-CREATE TABLE TipoCerdas (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL
-);
-
--- Tabla para Presión de Cepillado
-CREATE TABLE PresionCepillado (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL
+    tipo_disfuncion INTEGER REFERENCES TipoDisfuncion(id),
+    ruidos_articulares INTEGER REFERENCES RuidosArticulares(id),
+    observaciones TEXT
 );
 
 CREATE TABLE HigieneBucal (
     id SERIAL PRIMARY KEY,
     frecuencia_cepillado TEXT,
-    tamano_cepillo INTEGER REFERENCES TamanoCepillo(id),  -- Clave foránea a la tabla TamanoCepillo
-    tipo_cerdas INTEGER REFERENCES TipoCerdas(id),        -- Clave foránea a la tabla TipoCerdas
-    presion_cepillado INTEGER REFERENCES PresionCepillado(id),  -- Clave foránea a la tabla PresionCepillado
+    tamano_cepillo INTEGER REFERENCES TamanoCepillo(id),
+    tipo_cerdas INTEGER REFERENCES TipoCerdas(id),
+    presion_cepillado INTEGER REFERENCES PresionCepillado(id),
     usa_hilo_dental BOOLEAN,
     usa_enjuague_bucal BOOLEAN
 );
-
-
--- Tabla para Tipo de Disfunción Temporomandibular
-CREATE TABLE TipoDisfuncion (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL -- Ejemplos: 'TMD', 'ATM'
-);
-
--- Tabla para Ruidos Articulares
-CREATE TABLE RuidosArticulares (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL -- Ejemplos: 'Crujidos', 'Sin ruidos'
-);
-
-
-CREATE TABLE ArticulacionTemporomandibular (
-    id SERIAL PRIMARY KEY,
-    tipo_disfuncion INTEGER REFERENCES TipoDisfuncion(id), -- Clave foránea a la tabla TipoDisfuncion
-    ruidos_articulares INTEGER REFERENCES RuidosArticulares(id), -- Clave foránea a la tabla RuidosArticulares
-    observaciones TEXT
-);
-
-
-
--- Tabla para Medicamentos
-CREATE TABLE Medicamentos (
-    id SERIAL PRIMARY KEY,
-    nombre TEXT NOT NULL -- Nombre del medicamento
-);
-
--- Tabla para Presentaciones de Medicamentos
-CREATE TABLE Presentaciones (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL -- Ejemplos: 'Tabletas', 'Jarabe', etc.
-);
-
--- Tabla para Frecuencias de Medicación
-CREATE TABLE Frecuencias (
-    id SERIAL PRIMARY KEY,
-    descripcion TEXT NOT NULL -- Ejemplos: 'Cada 12 horas', 'Una vez al día', etc.
-);
-
-
-CREATE TABLE Medicamentos_X_Diagnostico (
-    id SERIAL PRIMARY KEY,
-    diagnostico_id INTEGER REFERENCES Diagnostico(id), -- Clave foránea a la tabla Diagnostico
-    medicamento INTEGER REFERENCES Medicamentos(id), -- Clave foránea a la tabla Medicamentos
-    presentation INTEGER REFERENCES Presentaciones(id), -- Clave foránea a la tabla Presentaciones
-    dosis TEXT,
-    frecuencia INTEGER REFERENCES Frecuencias(id) -- Clave foránea a la tabla Frecuencias
-);
-
-CREATE TABLE Enfermedades (
-    id SERIAL PRIMARY KEY,
-    nombre TEXT NOT NULL -- Nombre de la enfermedad
-);
-
-CREATE TABLE Enfermedades_X_Diagnostico (
-    id SERIAL PRIMARY KEY,
-    diagnostico_id INTEGER REFERENCES Diagnostico(id), -- Clave foránea a la tabla Diagnostico
-    enfermedad INTEGER REFERENCES Enfermedades(id) -- Clave foránea a la tabla Enfermedades
-);
-
 
 CREATE TABLE Odontograma (
     id SERIAL PRIMARY KEY,
@@ -193,10 +158,10 @@ CREATE TABLE DientesOdontograma (
 );
 
 
-
 CREATE TABLE Diagnostico (
     id SERIAL PRIMARY KEY,
-	EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
+    consentimiento TEXT,
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -210,6 +175,24 @@ CREATE TABLE Diagnostico (
     revision_por_organo_id INTEGER REFERENCES RevisionPorOrgano(id),
     articulacion_temporomandibular_id INTEGER REFERENCES ArticulacionTemporomandibular(id),
     odontograma_id INTEGER REFERENCES Odontograma(id),
+    estado_aprobacion_id INTEGER REFERENCES Estados_Aprobacion_Docente(Estado_AprobacionID),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE Medicamentos_X_Diagnostico (
+    id SERIAL PRIMARY KEY,
+    diagnostico_id INTEGER REFERENCES Diagnostico(id),
+    medicamento INTEGER REFERENCES Medicamentos(id),
+    presentation INTEGER REFERENCES Presentaciones(id),
+    dosis TEXT,
+    frecuencia INTEGER REFERENCES Frecuencias(id)
+);
+
+CREATE TABLE Enfermedades_X_Diagnostico (
+    id SERIAL PRIMARY KEY,
+    diagnostico_id INTEGER REFERENCES Diagnostico(id),
+    enfermedad INTEGER REFERENCES Enfermedades(id)
+);
+
+
