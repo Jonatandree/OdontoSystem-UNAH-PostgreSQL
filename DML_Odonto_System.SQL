@@ -51,6 +51,165 @@ INSERT INTO area (nombre) VALUES
 ('Amígdalas'),
 ('Otros');
 
+
+-- Insertar datos en Drogas
+INSERT INTO Drogas (nombre) VALUES
+('Cocaína'),
+('Marihuana'),
+('Éxtasis'),
+('LSD'),
+('Heroína'),
+('Metanfetaminas'),
+('Ketamina'),
+('MDMA'),
+('Fentanilo'),
+('GHB'),
+('MDA'),
+('Psilocibina'),
+('Anfetaminas'),
+('Mescalina'),
+('DMT'),
+('Crack'),
+('Mushrooms'),
+('LSD'),
+('Otras');  -- Opción para otras drogas
+
+-- Insertar datos en TamanoCepillo
+INSERT INTO TamanoCepillo (descripcion) VALUES
+('Pequeño'),
+('Mediano'),
+('Grande');
+
+-- Insertar datos en TipoCerdas
+INSERT INTO TipoCerdas (descripcion) VALUES
+('Suave'),
+('Medio'),
+('Duro');
+
+-- Insertar datos en PresionCepillado
+INSERT INTO PresionCepillado (descripcion) VALUES
+('Bajo'),
+('Medio'),
+('Alto');
+
+-- Insertar datos en TipoDisfuncion
+INSERT INTO TipoDisfuncion (descripcion) VALUES
+('TMD'),
+('ATM'),
+('Sin Disfunción');
+
+-- Insertar datos en RuidosArticulares
+INSERT INTO RuidosArticulares (descripcion) VALUES
+('Crujidos'),
+('Sin ruidos'),
+('Chasquidos');
+
+-- Insertar datos en Medicamentos
+INSERT INTO Medicamentos (nombre) VALUES
+('Paracetamol'),
+('Ibuprofeno'),
+('Amoxicilina'),
+('Aspirina'),
+('Metformina'),
+('Loratadina'),
+('Cetirizina'),
+('Clopidogrel'),
+('Atorvastatina'),
+('Enalapril'),
+('Omeprazol'),
+('Salbutamol'),
+('Captopril'),
+('Losartán'),
+('Metoprolol'),
+('Diclofenaco'),
+('Naproxeno'),
+('Azitromicina'),
+('Tramadol'),
+('Doxiciclina'),
+('Lorazepam'),
+('Hydroxyzine'),
+('Morfina'),
+('Prednisona'),
+('Furosemida'),
+('Diazepam'),
+('Levotiroxina'),
+('Simvastatina'),
+('Sertralina'),
+('Ranitidina'),
+('Pantoprazol'),
+('Sildenafil'),
+('Buspirona'),
+('Clonazepam'),
+('Tamoxifeno'),
+('Insulina'),
+('Mebendazol'),
+('Ciprofloxacino'),
+('Lisinopril'),
+('Cefalexina'),
+('Valeriana'),
+('Ropinirol'),
+('Gabapentina'),
+('Carbamazepina'),
+('Otras');  -- Opción para otros medicamentos
+
+-- Insertar datos en Presentaciones
+INSERT INTO Presentaciones (descripcion) VALUES
+('Tabletas'),
+('Jarabe'),
+('Capsulas'),
+('Polvo'),
+('Inyección');
+
+-- Insertar datos en Frecuencias
+INSERT INTO Frecuencias (descripcion) VALUES
+('Cada 6 horas'),
+('Cada 12 horas'),
+('Una vez al día'),
+('Cada 2 días'),
+('Cada semana');
+
+-- Insertar datos en Enfermedades
+INSERT INTO Enfermedades (nombre) VALUES
+('Diabetes'),
+('Hipertensión'),
+('Asma'),
+('Cáncer'),
+('Artritis'),
+('Colesterol alto'),
+('Enfermedad cardíaca'),
+('EPOC (Enfermedad Pulmonar Obstructiva Crónica)'),
+('Insuficiencia renal'),
+('Gastritis'),
+('Úlcera péptica'),
+('Epilepsia'),
+('Esclerosis múltiple'),
+('Parkinson'),
+('Sclerosis lateral amiotrófica (ELA)'),
+('Fibromialgia'),
+('Lupus'),
+('Espondilitis anquilosante'),
+('Células de Sickle (Anemia de células falciformes)'),
+('Anemia'),
+('Hepatitis'),
+('Cirrosis'),
+('HIV/SIDA'),
+('Tuberculosis'),
+('Síndrome de Down'),
+('Síndrome de Marfan'),
+('Alergias alimentarias'),
+('Alergias estacionales'),
+('Migrañas'),
+('Síndrome del túnel carpiano'),
+('Obesidad'),
+('Osteoporosis'),
+('Psoriasis'),
+('Síndrome de fatiga crónica'),
+('Trastorno bipolar'),
+('Depresión'),
+('Esquizofrenia'),
+('Otras');  -- Opción para otras enfermedades
+
+
 ---------------------------------------------------------------
 
 
