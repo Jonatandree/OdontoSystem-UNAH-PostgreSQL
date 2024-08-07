@@ -605,7 +605,10 @@ CREATE TABLE Dientes (
 --50.
 CREATE TABLE Plan_Tratamiento (
     Plan_TratamientoID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada plan de tratamiento
-    Observaciones TEXT -- Campo para observaciones o notas asociadas al plan de tratamiento
+    Costo DECIMAL(10, 2),
+    Saldo DECIMAL(10, 2),
+    Observaciones TEXT, -- Campo para observaciones o notas asociadas al plan de tratamiento
+    PersonaID INTEGER REFERENCES Personas(PersonaID)
 );
 
 
@@ -652,18 +655,21 @@ CREATE TABLE Presupuestos (
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID) -- Clave foránea referenciando a la tabla Plan_Tratamiento
 );
 
---54.
+
+
 CREATE TABLE Lista_Tratamiento (
     Lista_TratamientoID SERIAL PRIMARY KEY,  
     DienteID INTEGER REFERENCES Dientes(DienteID), 
-    DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID),
     TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), 
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
+    ReciboID INTEGER REFERENCES Recibos(ReciboID), 
     SeccionID INTEGER NOT NULL,  -- Parte de la clave primaria
     Codigo_ClaseID VARCHAR(10) NOT NULL,  -- Parte de la clave primaria compuesta de Secciones
-    FOREIGN KEY (SeccionID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID)
+    FOREIGN KEY (SeccionID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
+    Estado VARCHAR(20) 
 );
 
 
@@ -1650,5 +1656,4 @@ VALUES
     ('Prótesis Removible', null),
     ('Prótesis Total', null)
     ; 
-
 
