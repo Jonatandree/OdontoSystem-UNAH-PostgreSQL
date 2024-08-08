@@ -1095,10 +1095,15 @@ CREATE TABLE Conductos (
     FOREIGN KEY (EndodonciaID) REFERENCES Endodoncias(EndodonciaID)
 );
 
+
+
+
 CREATE TABLE Tipo_Resultado_Urgencia (
     Tipo_Resultado_UrgenciaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(25) UNIQUE NOT NULL
 );
+
+
 
 
 --65.
@@ -1131,6 +1136,9 @@ CREATE TABLE Urgencias (
 );
 
 
+
+
+
 CREATE TABLE Tipo_Dolor_Urgencias (
     Tipo_DolorID INT NOT NULL,
     UrgenciaID INT NOT NULL,
@@ -1140,6 +1148,10 @@ CREATE TABLE Tipo_Dolor_Urgencias (
     FOREIGN KEY (UrgenciaID) REFERENCES Urgencias(UrgenciaID),
     FOREIGN KEY (Historia_ClinicaID) REFERENCES Historia_Clinica(Historia_ClinicaID)
 );
+
+
+
+
 
 
 
