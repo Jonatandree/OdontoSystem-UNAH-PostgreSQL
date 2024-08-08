@@ -327,23 +327,28 @@ CREATE TABLE Cobros_Pendientes (
 );
 --27.
 CREATE TABLE Secciones (
-    SeccionesID INTEGER PRIMARY KEY,        
-    Horario INTEGER,                 
+    SeccionesID INTEGER NOT NULL,        
+    Hora_Inicio TIME,                 
+    Hora_Final TIME,                 
     Año_Academico VARCHAR(50),        
     Semestre_Academico VARCHAR(50),   
     DoctorID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
-    Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID)      
+    Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID),
+    PRIMARY KEY (SeccionesID, Codigo_ClaseID)
 );
 
 --28.
-CREATE TABLE Alumnos_X_Seccion (
-    SeccionesID INTEGER NOT NULL,           
-    AlumnoID VARCHAR(20) NOT NULL,                
-    Nota_Final DECIMAL(10,2),                
-    PRIMARY KEY (SeccionesID, AlumnoID),  
-    FOREIGN KEY (SeccionesID) REFERENCES Secciones(SeccionesID),
-    FOREIGN KEY (AlumnoID) REFERENCES Usuarios(NumeroCuenta)          
+CREATE TABLE alumnos_x_seccion (
+  SeccionesID INTEGER NOT NULL,
+  Codigo_ClaseID VARCHAR(10) NOT NULL,
+  AlumnoID VARCHAR(50) NOT NULL,
+  Nota_Final DECIMAL(10,2),   
+  PRIMARY KEY (SeccionesID, Codigo_ClaseID, AlumnoID),
+  FOREIGN KEY (SeccionesID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
+  FOREIGN KEY (AlumnoID) REFERENCES Usuarios(NumeroCuenta)
 );
+
+
 
 CREATE TABLE Tipo_Tecnica_Radiográfica (
     Tipo_Tecnica_RadiográficaID SERIAL PRIMARY KEY,
@@ -376,7 +381,7 @@ CREATE TABLE Diagnosticos (
     Antecedentes_Adulto TEXT,
     Inmunoalérgicos TEXT,
     Menarquia TEXT,
-    FUM TEXT,
+    FUM DATE,
     Método_Plan_Familiar TEXT,
     Menopausia  TEXT,
     G INTEGER,
@@ -397,8 +402,8 @@ CREATE TABLE Diagnosticos (
     Consume_Tabaco BOOLEAN, 
     Apiñamiento_Dental BOOLEAN, 
     Dificultad_Respiratoria BOOLEAN, 
-    Brumismo BOOLEAN, 
-    Piersin_Bucal BOOLEAN, 
+    Bruxismo BOOLEAN, 
+    Piercing BOOLEAN, 
     Usa_Protesis_Dental BOOLEAN, 
     Observaciones TEXT, 
     Frecuencia_Cepillado_Por_Dia INTEGER, 
@@ -407,7 +412,8 @@ CREATE TABLE Diagnosticos (
     Tipo_De_Cerdas_Del_Cepillo VARCHAR(50), 
     Presion_Ejercida_Al_Cepillarse VARCHAR(50), 
     Usa_Hilo_Dental BOOLEAN, 
-    Sangrado_Encillas BOOLEAN, 
+    Usa_Enjuague_Bucal BOOLEAN, 
+    Sangrado_Encias BOOLEAN, 
     Comentario TEXT, 
     Apariencia_General TEXT,
     Revision_ORL TEXT,
@@ -423,9 +429,6 @@ CREATE TABLE Diagnosticos (
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta) 
 );
-
-
-
 
 CREATE TABLE Tipo_Droga (
     DrogaID SERIAL PRIMARY KEY,
@@ -557,11 +560,12 @@ CREATE TABLE Descripcion_Medicamentos (
 --45.
 CREATE TABLE Signos_Vitales (
     Signos_VitalesID SERIAL PRIMARY KEY, -- Identificador único y autoincremental para cada registro de signos vitales
-    Presion_Arterial VARCHAR(20),
-    Pulso INTEGER,
+    Presion_Arterial DECIMAL(5,2),
+    Pulso DECIMAL(5,2),
+    F_Respiratoria DECIMAL(5,2),
     Peso DECIMAL(5,2),
-    F_Respiratoria INTEGER,
-    Saturacion_De_Oxigeno INTEGER,
+    Talla DECIMAL(5,2),
+    Saturacion_De_Oxigeno DECIMAL(5,2),
     DiagnosticoID INTEGER REFERENCES Diagnosticos(DiagnosticoID) -- Clave foránea referenciando a la tabla Diagnostico
 );
 
@@ -653,21 +657,21 @@ CREATE TABLE Presupuestos (
 
 
 
---54.
 CREATE TABLE Lista_Tratamiento (
-    Lista_TratamientoID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada registro de tratamiento
-    DienteID INTEGER REFERENCES Dientes(DienteID), -- Clave foránea referenciando a la tabla Dientes
-    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), -- Clave foránea referenciando a la tabla Tratamientos
-    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
-    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
+    Lista_TratamientoID SERIAL PRIMARY KEY,  
+    DienteID INTEGER REFERENCES Dientes(DienteID), 
+    TratamientoID INTEGER REFERENCES Tratamientos(TratamientoID), 
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
-    ClinicaID INTEGER REFERENCES Clinicas(ClinicaID), -- Clave foránea referenciando a la tabla Docentes
-    SeccionID INTEGER NOT NULL,-- Clave foránea referenciando a la tabla Secciones
+    ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
     ReciboID INTEGER REFERENCES Recibos(ReciboID), 
-    Codigo_ClaseID VARCHAR(10) NOT NULL,
+    SeccionID INTEGER NOT NULL,  -- Parte de la clave primaria
+    Codigo_ClaseID VARCHAR(10) NOT NULL,  -- Parte de la clave primaria compuesta de Secciones
     FOREIGN KEY (SeccionID, Codigo_ClaseID) REFERENCES Secciones(SeccionesID, Codigo_ClaseID),
     Estado VARCHAR(20) 
 );
+
 
 
 --55
@@ -1091,10 +1095,15 @@ CREATE TABLE Conductos (
     FOREIGN KEY (EndodonciaID) REFERENCES Endodoncias(EndodonciaID)
 );
 
+
+
+
 CREATE TABLE Tipo_Resultado_Urgencia (
     Tipo_Resultado_UrgenciaID SERIAL PRIMARY KEY,
     Nombre VARCHAR(25) UNIQUE NOT NULL
 );
+
+
 
 
 --65.
@@ -1127,6 +1136,9 @@ CREATE TABLE Urgencias (
 );
 
 
+
+
+
 CREATE TABLE Tipo_Dolor_Urgencias (
     Tipo_DolorID INT NOT NULL,
     UrgenciaID INT NOT NULL,
@@ -1136,6 +1148,10 @@ CREATE TABLE Tipo_Dolor_Urgencias (
     FOREIGN KEY (UrgenciaID) REFERENCES Urgencias(UrgenciaID),
     FOREIGN KEY (Historia_ClinicaID) REFERENCES Historia_Clinica(Historia_ClinicaID)
 );
+
+
+
+
 
 
 
