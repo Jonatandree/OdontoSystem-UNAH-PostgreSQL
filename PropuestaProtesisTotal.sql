@@ -1,147 +1,16 @@
---( MESOFACIAL, BRANQUIFACIAL, DOLICOFACIA)
-CREATE TABLE Tipo_Fenotipo_Facial (
-    Tipo_Fenotipo_FacialID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
---(REDONDA, OVALADA, CUADRADA,TRIANGULAR)
-CREATE TABLE Tipo_Forma_Facial (
-    Tipo_Forma_FacialID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-
---(MESTIZO, AFRODECENDIENTE, CAUCASICO)
-CREATE TABLE Tipo_Color_Piel (
-    Tipo_Color_PielID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Color_de_Ojos (
-    Color_de_OjosID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( RESILIENTE, FIRME, FLACIDA)
-CREATE TABLE Tipo_Mucosa_Maxilar (
-    Tipo_Mucosa_MaxilarID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( PRESENTE, AUSENTE) Hamular_Maxilar_Superior
-CREATE TABLE Tipo_Torus (
-    Tipo_TorusID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
---( FIRME, RESILIENTE,FLACIDO-)
-CREATE TABLE Tipo_Consistencia_Papilla (
-    Tipo_Consistencia_PapillaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( PEQUEÑO, MEDIANO,GRANDE)
-CREATE TABLE Tipo_Tamaño_Papilla (
-    Tipo_Tamaño_PapillaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( RETRAIDA,ADELANTADA)
-CREATE TABLE Tipo_Lengua_Posicion (
-    Tipo_Lengua_PosicionID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( NORMAL, MACROGLOSIA,MICROGLOSIA)
-CREATE TABLE Tipo_Lengua_Tamaño (
-    Tipo_Lengua_TamañoID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( AUMENTADA, DISMINUIDA)-
-CREATE TABLE Tipo_Saliva (
-    Tipo_SalivaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( OVOIDE,TRIANGULAR, CUADRANGULAR).
-CREATE TABLE Tipo_Forma_Maxilar (
-    Tipo_Forma_MaxilarID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( RENTENTIVA, NO RETENTIVA)
-CREATE TABLE Tipo_Tubo_Reten (
-    Tipo_Tubo_RetenID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( SIMETRICOS, ASIMETRICOS)
-CREATE TABLE Tipo_Simetria_Maxilar (
-    Tipo_Simetria_MaxilarID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---( FORMA U, FORMA V, FORMA C)
-CREATE TABLE Tipo_Rebordes_Maxilar (
-    Tipo_Rebordes_MaxilarID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Tipo_Tuberosidad_Maxilar (
-    Tipo_Tuberosidad_MaxilarID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Tipo_Zona_Cierre (
-    Tipo_Zona_CierreID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Tipo_Fosa_Retro_Profunda (
-    Tipo_Fosa_Retro_ProfundaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Tipo_Fosa_Retro_Retentiva (
-    Tipo_Fosa_Retro_RetentivaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Tipo_Frenillo_Insercion (
-    Tipo_Frenillo_InsercionID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
-CREATE TABLE Tipo_Frenillo_Consistencia (
-    Tipo_Frenillo_ConsistenciaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
+DROP TABLE Protesis_Total_Propuesta;
+DROP TABLE Encerado_diagnostico_Protesis_Total;
+DROP TABLE Examen_Intraoral_Protesis_Total;
+DROP TABLE Observaciones_Protesis_Total;
+DROP TABLE Impresion_Clinica_Intraoral_Protesis_Total;
+DROP TABLE Examen_Extraoral_Protesis_Total;
+DROP TABLE Examen_ATM_Protesis_Total;
+DROP TABLE Impresion_Clinica_Extraoral_Protesis_Total;
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-CREATE TABLE Impresion_Clinica__Extraoral_Protesis_Total (
+CREATE TABLE Impresion_Clinica_Extraoral_Protesis_Total (
     Impresion_Clinica_Extraoralid SERIAL PRIMARY KEY,
     Menton_Prominente BOOLEAN,
     Musculatura_Perioral BOOLEAN,
@@ -275,17 +144,19 @@ CREATE TABLE Encerado_diagnostico_Protesis_Total (
 
 
 --71.
-CREATE TABLE Protesis_Total (
+CREATE TABLE Protesis_Total_Propuesta (
     Protesis_TotalID SERIAL PRIMARY KEY,
-    Impresion_Clinica_Extraoralid INTEGER REFERENCES Impresion_Clinica__Extraoral_Protesis_Total(Impresion_Clinica_Extraoralid);
-    Examen_ATMid INTEGER REFERENCES Examen_ATM_Protesis_Total(Examen_ATMid);
-    Examen_Extraoralid INTEGER REFERENCES Examen_Extraoral_Protesis_Total(Examen_Extraoralid);
-    Impresion_Clinica_Intraoralid INTEGER REFERENCES Impresion_Clinica_Intraoral_Protesis_Total(Impresion_Clinica_Intraoralid);
-    Observacionesid INTEGER REFERENCES Observaciones_Protesis_Total(Observacionesid);
-    Examen_Intraoral_protesis_totalid INTEGER REFERENCES Examen_Intraoral_Protesis_Total(Examen_Intraoral_protesis_totalid);
-    Enceradoid INTEGER REFERENCES Encerado_diagnostico_Protesis_Total(Enceradoid );
+    Impresion_Clinica_Extraoralid INTEGER REFERENCES Impresion_Clinica_Extraoral_Protesis_Total(Impresion_Clinica_Extraoralid),
+    Examen_ATMid INTEGER REFERENCES Examen_ATM_Protesis_Total(Examen_ATMid),
+    Examen_Extraoralid INTEGER REFERENCES Examen_Extraoral_Protesis_Total(Examen_Extraoralid),
+    Impresion_Clinica_Intraoralid INTEGER REFERENCES Impresion_Clinica_Intraoral_Protesis_Total(Impresion_Clinica_Intraoralid),
+    Observacionesid INTEGER REFERENCES Observaciones_Protesis_Total(Observacionesid),
+    Examen_Intraoral_protesis_totalid INTEGER REFERENCES Examen_Intraoral_Protesis_Total(Examen_Intraoral_protesis_totalid),
+    Enceradoid INTEGER REFERENCES Encerado_diagnostico_Protesis_Total(Enceradoid ),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
+
+
