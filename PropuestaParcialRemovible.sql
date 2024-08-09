@@ -1,18 +1,23 @@
 DROP TABLE Pilares_Parcial_Removible_Propuesta;
 DROP TABLE Parcial_Removible_Propuesta;
-DROP TABLE Pruebas_armazon_protesis_fija;
-DROP TABLE Preparación_protesis_fija;
-DROP TABLE Preparación_boca_protesis_fija;
-DROP TABLE Analisis_Fotografico_protesis_fija;
-DROP TABLE modelos_montados_protesis_fija;
-DROP TABLE analisis_modelos_protesis_fija;
-DROP TABLE Examen_atm_protesis_fija;
-DROP TABLE Observaciones_Intraorales_protesis_fija;
-DROP TABLE anamnesis_protesis_fija;
+DROP TABLE Pruebas_armazon_protesis_Removible;
+DROP TABLE Preparación_protesis_Removible;
+DROP TABLE Preparación_boca_protesis_Removible;
+DROP TABLE Analisis_Fotografico_protesis_Removible;
+DROP TABLE modelos_montados_protesis_Removible;
+DROP TABLE analisis_modelos_protesis_Removible;
+DROP TABLE Examen_atm_protesis_Removible;
+DROP TABLE Observaciones_Intraorales_protesis_Removible;
+DROP TABLE anamnesis_protesis_Removible;
 
 
-CREATE TABLE anamnesis_protesis_fija (
-    anamnesis_protesis_fijaid SERIAL PRIMARY KEY,
+
+
+
+
+
+CREATE TABLE anamnesis_protesis_Removible (
+    anamnesis_protesis_Removibleid SERIAL PRIMARY KEY,
     Uso_protesis BOOLEAN,
     Tipo_Protesis_anterior TEXT,
     Problema_Protesis_anterior TEXT,
@@ -20,8 +25,8 @@ CREATE TABLE anamnesis_protesis_fija (
 );
 
 
-CREATE TABLE Observaciones_Intraorales_protesis_fija (
-    Observaciones_Intraorales_protesis_fijaid   SERIAL PRIMARY KEY,
+CREATE TABLE Observaciones_Intraorales_protesis_Removible (
+    Observaciones_Intraorales_protesis_Removibleid   SERIAL PRIMARY KEY,
     Ingiene_Oral BOOLEAN,
     Indice_Caries TEXT,
     Calidad_Tegido TEXT,
@@ -45,7 +50,7 @@ CREATE TABLE Observaciones_Intraorales_protesis_fija (
 );
 
 
-CREATE TABLE  Examen_atm_protesis_fija (
+CREATE TABLE  Examen_atm_protesis_Removible (
     Examen_atmid  SERIAL PRIMARY KEY,
     Desviacion_Apertura TEXT,
     Desviacion_Cierre TEXT,
@@ -60,8 +65,8 @@ CREATE TABLE  Examen_atm_protesis_fija (
 );
 
 
-CREATE TABLE analisis_modelos_protesis_fija (
-    analisis_modelos_protesis_fijaid SERIAL PRIMARY KEY,
+CREATE TABLE analisis_modelos_protesis_Removible (
+    analisis_modelos_protesis_Removibleid SERIAL PRIMARY KEY,
     Clase_Kennedy_Superior TEXT,
     Clase_Kennedy_Inferior TEXT,
     Espacio_interoclusal BOOLEAN,
@@ -76,7 +81,7 @@ CREATE TABLE analisis_modelos_protesis_fija (
 );
 
 
-CREATE TABLE modelos_montados_protesis_fija (
+CREATE TABLE modelos_montados_protesis_Removible (
     Modelos_Montadosid SERIAL PRIMARY KEY,
     Piezas_Adecuadas TEXT,
     Ubicacion_Favorable BOOLEAN,
@@ -86,13 +91,13 @@ CREATE TABLE modelos_montados_protesis_fija (
 );
 
 
-CREATE TABLE Analisis_Fotografico_protesis_fija (
+CREATE TABLE Analisis_Fotografico_protesis_Removible (
     Analisis_Fotograficoid SERIAL PRIMARY KEY,
     Diagnostico TEXT,
     Pronostico TEXT
 );
 
-CREATE TABLE Preparación_boca_protesis_fija (
+CREATE TABLE Preparación_boca_protesis_Removible (
     Preparación_bocaid SERIAL PRIMARY KEY,
     Tratamiento_Periodontal TEXT,
     Tratamiento_endodontico TEXT,
@@ -100,15 +105,15 @@ CREATE TABLE Preparación_boca_protesis_fija (
     Odontologia_Restaurativa TEXT
 );
 
-CREATE TABLE Preparación_protesis_fija (
+CREATE TABLE Preparación_protesis_Removible (
     Preparaciónid SERIAL PRIMARY KEY,
     Tipo_de_Impresion_Estudio BOOLEAN,
     Tipo_de_Impresion_Trabajo BOOLEAN,
     Seleccion_Dientes TEXT 
 );
 
-CREATE TABLE Pruebas_armazon_protesis_fija (
-    Pruebas_armazon_protesis_fijaid SERIAL PRIMARY KEY,
+CREATE TABLE Pruebas_armazon_protesis_Removible (
+    Pruebas_armazon_protesis_Removibleid SERIAL PRIMARY KEY,
     Foto_Prueba_Armazon TEXT,
     Foto_Relacion_interoclusales TEXT,
     Foto_Instalacion_PPR TEXT,
@@ -132,15 +137,15 @@ CREATE TABLE Pruebas_armazon_protesis_fija (
 --69.
 CREATE TABLE Parcial_Removible_Propuesta (
    Parcial_RemovibleID SERIAL PRIMARY KEY,
-   anamnesis_protesis_fijaid INTEGER REFERENCES anamnesis_protesis_fija(anamnesis_protesis_fijaid),
-   Observaciones_Intraorales_protesis_fijaid INTEGER REFERENCES Observaciones_Intraorales_protesis_fija(Observaciones_Intraorales_protesis_fijaid),
-   Examen_atmid INTEGER REFERENCES Examen_atm_protesis_fija( Examen_atmid),
-   analisis_modelos_protesis_fijaid INTEGER REFERENCES analisis_modelos_protesis_fija(analisis_modelos_protesis_fijaid),
-   Modelos_Montadosid INTEGER REFERENCES modelos_montados_protesis_fija( Modelos_Montadosid),
-   Analisis_Fotograficoid INTEGER REFERENCES Analisis_Fotografico_protesis_fija(Analisis_Fotograficoid),
-   Preparación_bocaid INTEGER REFERENCES Preparación_boca_protesis_fija(Preparación_bocaid),
-   Preparaciónid INTEGER REFERENCES Preparación_protesis_fija(Preparaciónid),
-   Pruebas_armazon_protesis_fijaid INTEGER REFERENCES Pruebas_armazon_protesis_fija(Pruebas_armazon_protesis_fijaid),
+   anamnesis_protesis_Removibleid INTEGER REFERENCES anamnesis_protesis_Removible(anamnesis_protesis_Removibleid),
+   Observaciones_Intraorales_protesis_Removibleid INTEGER REFERENCES Observaciones_Intraorales_protesis_Removible(Observaciones_Intraorales_protesis_Removibleid),
+   Examen_atmid INTEGER REFERENCES Examen_atm_protesis_Removible( Examen_atmid),
+   analisis_modelos_protesis_Removibleid INTEGER REFERENCES analisis_modelos_protesis_Removible(analisis_modelos_protesis_Removibleid),
+   Modelos_Montadosid INTEGER REFERENCES modelos_montados_protesis_Removible( Modelos_Montadosid),
+   Analisis_Fotograficoid INTEGER REFERENCES Analisis_Fotografico_protesis_Removible(Analisis_Fotograficoid),
+   Preparación_bocaid INTEGER REFERENCES Preparación_boca_protesis_Removible(Preparación_bocaid),
+   Preparaciónid INTEGER REFERENCES Preparación_protesis_Removible(Preparaciónid),
+   Pruebas_armazon_protesis_Removibleid INTEGER REFERENCES Pruebas_armazon_protesis_Removible(Pruebas_armazon_protesis_Removibleid),
    Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
@@ -148,8 +153,6 @@ CREATE TABLE Parcial_Removible_Propuesta (
 );
 
 
-
---70.
 CREATE TABLE Pilares_Parcial_Removible_Propuesta(
     PilaresID SERIAL PRIMARY KEY,
     DienteID INTEGER,
@@ -159,5 +162,6 @@ CREATE TABLE Pilares_Parcial_Removible_Propuesta(
     Areas_Retentivas BOOLEAN,
     Preparaciónid INTEGER,
     FOREIGN KEY (DienteID) REFERENCES Dientes(DienteID),
-    FOREIGN KEY (Preparaciónid) REFERENCES Preparación_protesis_fija(Preparaciónid)
+    FOREIGN KEY (Preparaciónid) REFERENCES Preparación_protesis_Removible(Preparaciónid)
 );
+
