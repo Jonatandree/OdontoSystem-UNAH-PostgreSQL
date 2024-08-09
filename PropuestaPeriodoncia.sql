@@ -1,8 +1,8 @@
 
 
-CREATE TABLE  Caracteristicas_De_La_Encia_Periodoncia{
+CREATE TABLE  Caracteristicas_De_La_Encia_Periodoncia(
   Caracteristicas_De_La_EnciaID SERIAL PRIMARY KEY,
-       Color BOOLEAN,
+    Color BOOLEAN,
     Explique_Color TEXT,
     Tamaño BOOLEAN,
     Explique_Tamaño TEXT,
@@ -16,32 +16,32 @@ CREATE TABLE  Caracteristicas_De_La_Encia_Periodoncia{
     Explique_Textura TEXT,
     Posicion BOOLEAN,
     Explique_Posicion TEXT
-};
+);
 
-CREATE TABLE  Periodontograma_Periodoncia{
+CREATE TABLE  Periodontograma_Periodoncia(
   PeriodontogramaID SERIAL PRIMARY KEY,
       Porcenaje_Sangrado_Periodontograma INTEGER,
    imagen TEXT
-};
-CREATE TABLE   Diagnostico_Pronostico_individual_Periodoncia{
+);
+CREATE TABLE   Diagnostico_Pronostico_individual_Periodoncia(
    Diagnostico_Pronostico_individualID SERIAL PRIMARY KEY,
      imagen TEXT,
      Pronostico_Individual VARCHAR(20),
     Explique_Pronostico TEXT
-};
-CREATE TABLE  Valoracion_Riesgo_Peridontal_Periodoncia{
+);
+CREATE TABLE  Valoracion_Riesgo_Peridontal_Periodoncia(
   Valoracion_Riesgo_Peridontal_Periodoncia SERIAL PRIMARY KEY,
        Valor_Riesgo_Peridontal VARCHAR(255),
     Recomendaciones TEXT
-};
+);
 
-CREATE TABLE  Diagnostico_Periodoncia{
+CREATE TABLE  Diagnostico_Periodoncia(
   DiagnosticoID SERIAL PRIMARY KEY,
     Diagnostico_General TEXT,
     Pronostico_General TEXT,
     Fundamentos_Pronostico TEXT
 
-};
+);
 
 CREATE TABLE Periodoncias (
     PeriodonciaID SERIAL PRIMARY KEY,
