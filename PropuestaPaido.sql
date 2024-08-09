@@ -1,4 +1,17 @@
-CREATE TABLE  Antecedentes_Personales_Odonto_Pedriatrias{
+DROP TABLE Odonto_Pedriatrias_Propuesta;
+DROP TABLE Control_Placa_Indice_Odonto_Pedriatrias;
+DROP TABLE Dieta_Odonto_Pedriatrias;
+DROP TABLE Sistema_Periodontal_Odonto_Pedriatrias;
+DROP TABLE Analisis_Funcional_Odonto_Pedriatria;
+DROP TABLE Sistema_Craneofacial_Odonto_Pedriatrias;
+DROP TABLE Area_Estomatognica_Odonto_Pedriatria;
+DROP TABLE Antecedentes_Personales_Odonto_Pedriatrias;
+
+
+
+
+
+CREATE TABLE  Antecedentes_Personales_Odonto_Pedriatrias(
   Antecedentes_PersonalesID SERIAL PRIMARY KEY,
     Prenatales TEXT,
     Perinatales TEXT,
@@ -13,29 +26,31 @@ CREATE TABLE  Antecedentes_Personales_Odonto_Pedriatrias{
     Alergia_Alimentos BOOLEAN,
     Especificacion_Alergia_Alimentos TEXT,
     Transfunciones TEXT
- 
-};
+);
+
+
 -- falta en frontend
-CREATE TABLE  Area_Estomatognica_Odonto_Pedriatria{
+CREATE TABLE  Area_Estomatognica_Odonto_Pedriatria(
   Area_EstomatognicaID SERIAL PRIMARY KEY,
     Labios TEXT,
     Comisuras TEXT,
-    Incursion_De_Frenillos: TEXT,
+    Incursion_De_Frenillos TEXT,
     Mucosa TEXT,
     Encía TEXT,
-    Paladar_Duro: TEXT,
+    Paladar_Duro TEXT,
     Uvula TEXT,
     Orofaringe TEXT,
     Lengua TEXT,
-    Piso_De_La_boca: TEXT,
+    Piso_De_La_boca TEXT,
     Saliva VARCHAR(255),
     Describe TEXT
-};
+);
 
 
-CREATE TABLE  Sistema_Craneofacial_Odonto_Pedriatrias{
+
+CREATE TABLE  Sistema_Craneofacial_Odonto_Pedriatrias(
   Sistema_CraneofacialID SERIAL PRIMARY KEY,
-     Perfil INTEGER REFERENCES Tipo_Perfil(Tipo_PerfilID),
+    Perfil INTEGER REFERENCES Tipo_Perfil(Tipo_PerfilID),
     Cabeza INTEGER REFERENCES Tipo_Cabeza(Tipo_CabezaID),
     Denticion INTEGER REFERENCES Tipo_Denticion(Tipo_DenticionID),
     Clase_Molar_Derecha INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
@@ -57,12 +72,12 @@ CREATE TABLE  Sistema_Craneofacial_Odonto_Pedriatrias{
     Mordida_Abierta BOOLEAN,
     Razon_Mordida_Abierta TEXT,
     Linea_Media BOOLEAN,
-    Arco_Dentario INTEGER REFERENCES Tipo_Arco_Odonto_Pedriatrias(Tipo_Arco_Odonto_PedriatriasID),
-   
-  
-};
+    Arco_Dentario INTEGER REFERENCES Tipo_Arco_Odonto_Pedriatrias(Tipo_Arco_Odonto_PedriatriasID)
+);
 
-CREATE TABLE  Analisis_Funcional_Odonto_Pedriatria{
+
+
+CREATE TABLE  Analisis_Funcional_Odonto_Pedriatria(
   Analisis_FuncionalID SERIAL PRIMARY KEY,
     Tipo_Respiracion INTEGER REFERENCES Tipo_Respiracion(Tipo_RespiracionID),
     Ronca BOOLEAN,
@@ -72,66 +87,66 @@ CREATE TABLE  Analisis_Funcional_Odonto_Pedriatria{
     Tonicidad_Labial INTEGER REFERENCES Tonicidad_Labial(Tonicidad_LabialID),
     Apertura_Bucal NUMERIC(5, 2),
     Desgaste_Caninos BOOLEAN
-};
+);
 
 
-CREATE TABLE  Sistema_Periodontal_Odonto_Pedriatrias{
+
+CREATE TABLE  Sistema_Periodontal_Odonto_Pedriatrias(
   Sistema_PeriodontalID SERIAL PRIMARY KEY,
-   Presencia_Sangrado BOOLEAN,
-    Movilidad_Dentaria BOOLEAN,
-    Fisiologica BOOLEAN,
-    Patologica BOOLEAN,
-    Presencia_Abceso BOOLEAN,
-    Localizacion_Presencia_Absceso TEXT,
-    Halitosis BOOLEAN
-};
+  Presencia_Sangrado BOOLEAN,
+  Movilidad_Dentaria BOOLEAN,
+  Fisiologica BOOLEAN,
+  Patologica BOOLEAN,
+  Presencia_Abceso BOOLEAN,
+  Localizacion_Presencia_Absceso TEXT,
+  Halitosis BOOLEAN
+);
 
 
-CREATE TABLE  Dieta_Odonto_Pedriatrias{
+
+CREATE TABLE  Dieta_Odonto_Pedriatrias(
   DietaID SERIAL PRIMARY KEY,
-  --Aliment
-   Alimentos_Mas_Consumidos TEXT,
-    Carbohidratos TEXT,
-    Proteinas TEXT,
-    Grasas TEXT,
-     Come_Frecuentemente_Entre_Comidas BOOLEAN,
-     Frecuencia_Comidas TEXT,
-     Uso_De_Biberon TEXT,
+  Alimentos_Mas_Consumidos TEXT,
+  Carbohidratos TEXT,
+  Proteinas TEXT,
+  Grasas TEXT,
+  Come_Frecuentemente_Entre_Comidas BOOLEAN,
+  Frecuencia_Comidas TEXT,
+  Uso_De_Biberon TEXT,
+  Frecuencia_uso_de_biberon TEXT,
+  Numero_Biberones_Por_Dia INTEGER,
+  Onzas_De_Leche_Biberon INTEGER,
+  Otros_Agregados_Biberon TEXT,
+  Cepillado_Despues_Biberon BOOLEAN,
+  Duerme_con_el_biberon BOOLEAN,
+  Uso_Vaso_Entrenador BOOLEAN,
+  Otros_Bebida_Uso_Vaso_Entrenador TEXT,
+  Consumo_Jugos_Azucarados TEXT,
+  Mantiene_Lactancia_Materna BOOLEAN,
+  Exclusiva BOOLEAN,
+  Combinada BOOLEAN,
+  Combinacion_Lactancia TEXT,
+  Otros_Combinacion_Lactancia TEXT,
+  Observaciones TEXT
+);
 
-    Frecuencia_uso_de_biberon TEXT,
-    Numero_Biberones_Por_Dia INTEGER,
-    Onzas_De_Leche_Biberon INTEGER,
-    Otros_Agregados_Biberon TEXT,
-    Cepillado_Despues_Biberon BOOLEAN,
-    Duerme_con_el_biberon BOOLEAN,
-    Uso_Vaso_Entrenador BOOLEAN,
-    Otros_Bebida_Uso_Vaso_Entrenador TEXT,
-    Consumo_Jugos_Azucarados TEXT,
-    Mantiene_Lactancia_Materna BOOLEAN,
-    Exclusiva BOOLEAN,
-    Combinada BOOLEAN,--9
-    Combinacion_Lactancia TEXT,
-    Otros_Combinacion_Lactancia TEXT,
-    Observaciones TEXT
-};
 
-CREATE TABLE  Control_Placa_Indice_Odonto_Pedriatrias{
+CREATE TABLE  Control_Placa_Indice_Odonto_Pedriatrias(
   Control_Placa_IndiceID SERIAL PRIMARY KEY,
   Imagen_Control_Placa_oleary TEXT
-};
+);
 
 
 
-CREATE TABLE Odonto_Pedriatrias (
+CREATE TABLE Odonto_Pedriatrias_Propuesta (
     OdontoPedriatriaID SERIAL PRIMARY KEY,
     Antecedentes_PersonalesID INTEGER REFERENCES  Antecedentes_Personales_Odonto_Pedriatrias( Antecedentes_PersonalesID),
-    Area_EstomatognicaID INTEGER REFERENCES  Area_Estomatognica_Odonto_Pedriatrias( Area_EstomatognicaID),
+    Area_EstomatognicaID INTEGER REFERENCES  Area_Estomatognica_Odonto_Pedriatria(Area_EstomatognicaID),
     Sistema_CraneofacialID INTEGER REFERENCES   Sistema_Craneofacial_Odonto_Pedriatrias(Sistema_CraneofacialID),
-    Analisis_FuncionalID INTEGER REFERENCES  Analisis_Funcional_Odonto_Pedriatrias(Analisis_FuncionalID),
+    Analisis_FuncionalID INTEGER REFERENCES  Analisis_Funcional_Odonto_Pedriatria(Analisis_FuncionalID),
     Sistema_PeriodontalID INTEGER REFERENCES  Sistema_Periodontal_Odonto_Pedriatrias( Sistema_PeriodontalID),
     DietaID INTEGER REFERENCES  Dieta_Odonto_Pedriatrias( DietaID),
     Control_Placa_IndiceID INTEGER REFERENCES  Control_Placa_Indice_Odonto_Pedriatrias( Control_Placa_IndiceID),
-
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
