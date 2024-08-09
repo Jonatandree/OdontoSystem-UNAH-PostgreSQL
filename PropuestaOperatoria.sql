@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS Operatorias_Propuesta;
+DROP TABLE IF EXISTS Estado_Piezas_Operatorias;
+DROP TABLE IF EXISTS Patologias_No_Dentarias_Operatorias;
+DROP TABLE IF EXISTS Oclusion_Operatorias;
+
 CREATE TABLE Oclusion_Operatorias (
     Oclusion_Operatoriasid SERIAL PRIMARY KEY,
     Sobremordida_Vertical BOOLEAN,
@@ -23,7 +28,7 @@ CREATE TABLE Estado_Piezas_Operatorias (
 );
 
 
-CREATE TABLE Operatorias (
+CREATE TABLE Operatorias_Propuesta (
     OperatoriaID SERIAL PRIMARY KEY,
     Oclusion_Operatoriasid INTEGER REFERENCES Oclusion_Operatorias(Oclusion_Operatoriasid),
     Patologias_No_Dentarias_Operatoriasid INTEGER REFERENCES Patologias_No_Dentarias_Operatorias (Patologias_No_Dentarias_Operatoriasid),
