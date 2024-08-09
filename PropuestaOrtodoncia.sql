@@ -1,59 +1,7 @@
-
---(LARGA, CUADRADA, OVALADA)
-CREATE TABLE Tipo_Forma_Cara (
-    Tipo_Forma_CaraID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
---( NORMAL, HIPOTONICA, HIPERTONICA)
-CREATE TABLE Tipo_Musculatura_Peribucal (
-    Tipo_Musculatura_PeribucalID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-
---(AUMENTADO, DISMINUIDO)
-CREATE TABLE Tipo_Relacion_Tercios (
-    Tipo_Relacion_TerciosID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE Tipo_Protrusion_Labial (
-    Tipo_Protrusion_LabialID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE Tipo_Relacion_Clases (
-    Tipo_Relacion_ClasesID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE Tipo_Desviacion (
-    Tipo_DesviacionID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE Tipo_Forma_Paladar (
-    Tipo_Forma_PaladarID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE Tipo_Biotipo_Facial (
-    Tipo_Biotipo_FacialID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
-CREATE TABLE Estado_Bucal_Ortodoncia (
-    Estado_Bucal_OrtodonciaID SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
-);
-
---
-
-
-
-
+DROP TABLE Ortodoncias_Propuesta;
+DROP TABLE Cefalometria;
+DROP TABLE examen_Atm_Ortodoncia;
+DROP TABLE examen_clinico_Ortodoncia;
 
 CREATE TABLE examen_clinico_Ortodoncia (
     examen_clinico_OrtodonciaID SERIAL PRIMARY KEY,
@@ -96,7 +44,7 @@ CREATE TABLE examen_clinico_Ortodoncia (
     Frenillo_Detalle TEXT,
     Forma_PaladarID INTEGER REFERENCES Tipo_Forma_Paladar(Tipo_Forma_PaladarID),
     Paladar_Profundo BOOLEAN,
-    Presencia_Torus VARCHAR(50),
+    Presencia_Torus VARCHAR(50)
    
 );
 
@@ -119,22 +67,17 @@ CREATE TABLE Cefalometria (
     Biotipo_FacialID INTEGER REFERENCES Tipo_Biotipo_Facial(Tipo_Biotipo_FacialID),
     Clase_Esqueletica INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
     Clase_Dental INTEGER REFERENCES Tipo_Relacion_Clases(Tipo_Relacion_ClasesID),
-    IMPA_93_97 INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID),
+    IMPA_93_97 INTEGER REFERENCES Tipo_Relacion_Tercios(Tipo_Relacion_TerciosID)
     
 );
 
 
-
-
-
-
-
 --72.
-CREATE TABLE Ortodoncias (
+CREATE TABLE Ortodoncias_Propuesta (
     OrtodonciaID SERIAL PRIMARY KEY,
-    examen_clinico_OrtodonciaID INTEGER REFERENCES examen_clinico_Ortodoncia(examen_clinico_OrtodonciaID);
-    examen_Atm_OrtodonciaID INTEGER REFERENCES examen_Atm_Ortodoncia(examen_Atm_OrtodonciaID);
-    CefalometriaID INTEGER REFERENCES Cefalometria( CefalometriaID)
+    examen_clinico_OrtodonciaID INTEGER REFERENCES examen_clinico_Ortodoncia(examen_clinico_OrtodonciaID),
+    examen_Atm_OrtodonciaID INTEGER REFERENCES examen_Atm_Ortodoncia(examen_Atm_OrtodonciaID),
+    CefalometriaID INTEGER REFERENCES Cefalometria( CefalometriaID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
     EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
