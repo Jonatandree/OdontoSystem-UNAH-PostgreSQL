@@ -1,9 +1,19 @@
-CREATE TABLE Cirugias_Bucal (
-    Cirugia_BucalID SERIAL PRIMARY KEY,  -- Identificador único y autoincremental para cada cirugía bucal
-    Pieza_Dentaria INTEGER, -- Almacena la descripción de la pieza dentaria involucrada en la cirugía
-    Diagnostico TEXT, -- Almacena la descripción del diagnóstico relacionado con la cirugía
-    Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID), -- Clave foránea referenciando a la tabla Registros
-    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), -- Clave foránea referenciando a la tabla Estudiantes
-    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), -- Clave foránea referenciando a la tabla Plan_Tratamiento
+DROP TABLE Cirugias_Bucal_Propuesta;
+DROP TABLE Evalucion_Dental_Cirugia;
+
+
+
+CREATE TABLE Evalucion_Dental_Cirugia (
+    Evalucion_Dental_CirugiaID SERIAL PRIMARY KEY, 
+    Pieza_Dentaria INTEGER,
+    Diagnostico TEXT
+);
+
+CREATE TABLE Cirugias_Bucal_Propuesta (
+    Cirugia_BucalID SERIAL PRIMARY KEY,  
+    Evalucion_Dental_CirugiaID INTEGER REFERENCES Evalucion_Dental_Cirugia(Evalucion_Dental_CirugiaID),
+    Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID), 
+    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
+    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID), 
     DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
 );
