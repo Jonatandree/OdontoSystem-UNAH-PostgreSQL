@@ -242,7 +242,8 @@ CREATE TABLE Usuarios (
 CREATE TABLE Departamentos (
     DepartamentoID SERIAL PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL UNIQUE,
-    Jefe_Departamento INTEGER REFERENCES Personas(PersonaID)
+    Jefe_Departamento VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    activo BOOLEAN DEFAULT TRUE
 );
 --17
 CREATE TABLE Clinicas (
