@@ -335,7 +335,8 @@ CREATE TABLE Secciones (
     Semestre_Academico VARCHAR(50),
     DoctorID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID),
-    nombre_sección VARCHAR(20)
+    nombre_sección VARCHAR(20),
+    activo BOOLEAN DEFAULT TRUE
 );
 
 --28.
