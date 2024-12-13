@@ -328,14 +328,14 @@ CREATE TABLE Cobros_Pendientes (
 );
 --27.
 CREATE TABLE Secciones (
-    SeccionesID INTEGER NOT NULL,        
-    Hora_Inicio TIME,                 
-    Hora_Final TIME,                 
-    Año_Academico VARCHAR(50),        
-    Semestre_Academico VARCHAR(50),   
-    DoctorID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta), 
+    SeccionesID SERIAL PRIMARY KEY,
+    Hora_Inicio TIME,
+    Hora_Final TIME,
+    Año_Academico VARCHAR(50),
+    Semestre_Academico VARCHAR(50),
+    DoctorID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
     Codigo_ClaseID VARCHAR(10) REFERENCES Clases(Codigo_ClaseID),
-    PRIMARY KEY (SeccionesID, Codigo_ClaseID)
+    nombre_sección VARCHAR(20)
 );
 
 --28.
