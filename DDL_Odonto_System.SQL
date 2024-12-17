@@ -1607,6 +1607,19 @@ ALTER TABLE Cobros_Pendientes
 ADD COLUMN ReciboID INTEGER REFERENCES Recibos(ReciboID);
 
 
+--73 (tablas fichas necesario para redirigir)
+CREATE TABLE Fichas (
+    Codigo_FichaID SERIAL PRIMARY KEY,
+    nombre_ficha VARCHAR(100) NOT NULL
+);
+
+--74
+CREATE TABLE Clases_Fichas (
+    Clase_FichaID SERIAL PRIMARY KEY,
+    Codigo_ClaseID VARCHAR(10) NOT NULL REFERENCES Clases(Codigo_ClaseID),
+    Codigo_FichaID INT NOT NULL REFERENCES Fichas(Codigo_FichaID),
+    UNIQUE (Codigo_ClaseID, Codigo_FichaID)
+);
 
 
 --------------- INSERTS KEVIN ---------------
