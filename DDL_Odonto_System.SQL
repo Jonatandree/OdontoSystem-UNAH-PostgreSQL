@@ -292,7 +292,8 @@ CREATE TABLE Remisiones (
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     EstadoID INTEGER REFERENCES Estados_Aprobacion_Docente(Estado_AprobacionID),
-    Comentario TEXT -- Nuevo campo para comentarios
+    Comentario TEXT, -- Nuevo campo para comentarios
+    Aprobado BOOLEAN
 );
 
 --23.
