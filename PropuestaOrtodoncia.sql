@@ -31,6 +31,8 @@ CREATE TABLE examen_clinico_Ortodoncia (
     Perdida_Dientes_Permanentes_Detalle TEXT,
     Desviacion_SuperiorID INTEGER REFERENCES Tipo_Desviacion(Tipo_DesviacionID),
     Desviacion_InferiorID INTEGER REFERENCES Tipo_Desviacion(Tipo_DesviacionID),
+    Desviacion_Linea_Media_Superior VARCHAR(15),
+    Desviacion_Linea_Media_Inferior VARCHAR(15),
     Desviacion_Linea_Media_Arqueada BOOLEAN,
     Mordida_Cruzada_Posterior_Derecha BOOLEAN,
     Mordida_Cruzada_Posterior_Izquierda BOOLEAN,
@@ -53,7 +55,7 @@ CREATE TABLE examen_clinico_Ortodoncia (
 CREATE TABLE examen_Atm_Ortodoncia (
     examen_Atm_OrtodonciaID SERIAL PRIMARY KEY,
     Foto_Oclusal_Superior TEXT,
-    Foto_Oclusal_Inferior VARCHAR(255),
+    Foto_Oclusal_Inferior TEXT,
     Apertura_Boca_Dolor BOOLEAN,
     Apertura_Boca_Chasquido BOOLEAN,
     Disminucion_De_Apertura_Boca BOOLEAN
