@@ -16,7 +16,7 @@ CREATE TABLE  Evaluacion_Dental_Endodoncias(
 
 CREATE TABLE  Pruebas_Diagnosticas_Endodoncias(
   Pruebas_Diagnosticas_ID SERIAL PRIMARY KEY,
-  Pruebas_Termicas TEXT,
+  Pruebas_Termicas BOOLEAN,
   Palpitacion BOOLEAN,
   Percucion BOOLEAN
 );
