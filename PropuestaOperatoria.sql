@@ -23,8 +23,8 @@ CREATE TABLE Patologias_No_Dentarias_Operatorias (
 
 CREATE TABLE Estado_Piezas_Operatorias (
     Estado_Piezas_Operatoriasid SERIAL PRIMARY KEY,
-    imagen_diagnostico_inicial TEXT,
-    imagen_diagnostico_Final TEXT
+    imagen_diagnostico_inicial TEXT
+    --imagen_diagnostico_Final TEXT
 );
 
 
