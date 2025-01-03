@@ -10,6 +10,8 @@ CREATE TABLE  Evaluacion_Dental_Endodoncias(
   Evaluacion_Dental_ID SERIAL PRIMARY KEY,
   Num_Organo_dentario INTEGER,
   Presencia_de_Dolor BOOLEAN,
+  TipoDolorID INTEGER REFERENCES Tipo_DolorID(Tipo_Dolor),
+  TipoEstimuloID INTEGER REFERENCES Tipo_EstimuloID(Tipo_Estimulo),
   MovilidadID INTEGER REFERENCES  Tipo_Grado_Movilidad(Tipo_Grado_MovilidadID) 
 );
 
@@ -18,7 +20,7 @@ CREATE TABLE  Pruebas_Diagnosticas_Endodoncias(
   Pruebas_Diagnosticas_ID SERIAL PRIMARY KEY,
   Pruebas_Termicas BOOLEAN,
   Palpitacion BOOLEAN,
-  Percucion BOOLEAN
+  Percusion BOOLEAN
 );
 
 
@@ -42,6 +44,7 @@ CREATE TABLE Examen_Radiografico_Endodoncias(
     Esp_ligamento_periodontal_Ensanchado BOOLEAN,
     Discontinuidad_del_espacio BOOLEAN,
     Tamaño_Camara_pulparID INTEGER REFERENCES Tipo_Tamaño_Camara(Tipo_Tamaño_CamaraID),
+    Tipo_Tamaño_ConductoID INTEGER REFERENCES Tipo_Tamaño_ConductoID(Tipo_Tamaño_Conducto),
     Diagnostico_Pulpar TEXT,
     Diagnostico_Periapical TEXT
 );
@@ -49,7 +52,11 @@ CREATE TABLE Examen_Radiografico_Endodoncias(
 
 CREATE TABLE  Datos_De_Trabajo_Endodoncias(
   Datos_De_Trabajo_ID SERIAL PRIMARY KEY,
-    Tamaño_conduntoID INTEGER REFERENCES Tipo_Tamaño_Conducto(Tipo_Tamaño_ConductoID)
+    Tamaño_conductoID INTEGER REFERENCES Tipo_Tamaño_Conducto(Tipo_Tamaño_ConductoID),
+  Longitud_De_Trabajo DECIMAL,
+  Puntos_De_Referencia TEXT, -- PREGUNTAR
+  Lima_Maestra TEXT, -- PREGUNTAR
+  Cono_Maestro TEXT -- PREGUNTAR
 );
 
 
