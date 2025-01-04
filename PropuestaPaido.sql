@@ -42,8 +42,7 @@ CREATE TABLE  Area_Estomatognica_Odonto_Pedriatria(
     Orofaringe TEXT,
     Lengua TEXT,
     Piso_De_La_boca TEXT,
-    Saliva VARCHAR(255),
-    Describe TEXT
+    Saliva VARCHAR(255)
 );
 
 
@@ -61,9 +60,9 @@ CREATE TABLE  Sistema_Craneofacial_Odonto_Pedriatrias(
     Clase_Canina_Derecha INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
     Clase_Canina_Izquierda INTEGER REFERENCES Tipo_Clase_Num_Romano(Tipo_Clase_Num_RomanoID),
     Sobre_mordida_Horizontal NUMERIC(5, 2),
-    Piezas_Involucradas_Modida_Horizontal INTEGER,
+    Piezas_Involucradas_Modida_Horizontal TEXT,
     Sobre_Mordida_Vertical NUMERIC(5, 2),
-    Piezas_Involucradas_Modida_Vertical INTEGER,
+    Piezas_Involucradas_Modida_Vertical TEXT,
     Mordida_Cruzada BOOLEAN,
     Anterior BOOLEAN,
     Posterior BOOLEAN,
@@ -86,7 +85,11 @@ CREATE TABLE  Analisis_Funcional_Odonto_Pedriatria(
     Desglucion INTEGER REFERENCES Tipo_Desglucion(Tipo_DesglucionID),
     Tonicidad_Labial INTEGER REFERENCES Tonicidad_Labial(Tonicidad_LabialID),
     Apertura_Bucal NUMERIC(5, 2),
-    Desgaste_Caninos BOOLEAN
+    Desgaste_Caninos BOOLEAN,
+    Succion_Digital BOOLEAN,
+    Chupon BOOLEAN,
+    Morderse_Unyas BOOLEAN,
+    Proyeccion_Lingual BOOLEAN
 );
 
 
@@ -102,16 +105,20 @@ CREATE TABLE  Sistema_Periodontal_Odonto_Pedriatrias(
   Halitosis BOOLEAN
 );
 
+CREATE TABLE Lactancia_Materna{
+  Lactancia_MaternaID SERIAL PRIMARY KEY,
+  Nombre VARCHAR(255) UNIQUE NOT NULL
+  
+  }
 
 
 CREATE TABLE  Dieta_Odonto_Pedriatrias(
   DietaID SERIAL PRIMARY KEY,
-  Alimentos_Mas_Consumidos TEXT,
   Carbohidratos TEXT,
   Proteinas TEXT,
   Grasas TEXT,
   Come_Frecuentemente_Entre_Comidas BOOLEAN,
-  Frecuencia_Comidas TEXT,
+  Frecuencia_Comidas INTEGER,
   Uso_De_Biberon TEXT,
   Frecuencia_uso_de_biberon TEXT,
   Numero_Biberones_Por_Dia INTEGER,
@@ -121,13 +128,10 @@ CREATE TABLE  Dieta_Odonto_Pedriatrias(
   Duerme_con_el_biberon BOOLEAN,
   Uso_Vaso_Entrenador BOOLEAN,
   Otros_Bebida_Uso_Vaso_Entrenador TEXT,
-  Consumo_Jugos_Azucarados TEXT,
-  Mantiene_Lactancia_Materna BOOLEAN,
-  Exclusiva BOOLEAN,
-  Combinada BOOLEAN,
+  Mantiene_Lactancia_Materna INTEGER REFERENCES Lactancia_Materna(Lactancia_MaternaID),
   Combinacion_Lactancia TEXT,
-  Otros_Combinacion_Lactancia TEXT,
   Observaciones TEXT
+
 );
 
 
