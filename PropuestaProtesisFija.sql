@@ -72,7 +72,8 @@ CREATE TABLE Tipo_Preparacion (
 
 CREATE TABLE Tipo_Tecnica_Impresion (
     Tipo_Tecnica_Impresionid SERIAL PRIMARY KEY,
-    Nombre VARCHAR(255) UNIQUE NOT NULL
+    Nombre VARCHAR(255) UNIQUE NOT NULL,
+    Categoria VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE Tipo_Color_Carillas (
@@ -134,11 +135,12 @@ CREATE TABLE Examen_Extraoral_Protesis_Fija (
     Examen_Extraoralid SERIAL PRIMARY KEY,
     Fenotipo_Facial INTEGER REFERENCES Tipo_Fenotipo_Facial(Tipo_Fenotipo_Facialid),
     Forma_Facial INTEGER REFERENCES Tipo_Forma_Facial(Tipo_Forma_Facialid),
+    Medida_Dimension_Vertical DECIMAL,
     Tercio_Superior DECIMAL,
     Tercio_medio DECIMAL,
     Tercio_inferior DECIMAL,
     asimetria_tersios BOOLEAN,
-    Especifique_asimetria_tersios TEXT,
+    Especifique_asimetria_tercios TEXT,
     Quinto_Central DECIMAL,
     Quinto_Lateral_Derecha DECIMAL,
     Quintos_Lateral_Izquierda DECIMAL,
@@ -166,10 +168,10 @@ CREATE TABLE Impresion_Clinica_Intraoral_Protesis_Fija (
     ausencia_Total_Dientes_Inferior BOOLEAN,
     Portador_Protesis BOOLEAN,
     Protesis_Combinada BOOLEAN,
-    Protesis_Bien_Adactada BOOLEAN,
+    Protesis_Bien_Adaptada BOOLEAN,
     Requiere_Cambio BOOLEAN,
     Porque_Requiere_Cambios TEXT,
-    Presencia_Guia_anterior BOOLEAN,
+	Presencia_Guia_anterior BOOLEAN,
     Presencia_Guia_Canina INTEGER REFERENCES Tipo_Presencia(IdTipo_Presencia),
     Guia_Insisal BOOLEAN,
     Presencia_Funcion_Grupo INTEGER REFERENCES Tipo_Presencia(IdTipo_Presencia)
@@ -182,7 +184,7 @@ CREATE TABLE Observaciones_Intraoral_Protesis_Fija (
     Mucosa_Maxilar_Superior INTEGER REFERENCES Tipo_Presencia(IdTipo_Presencia),
     Mucosa_Maxilar_Inferior INTEGER REFERENCES Tipo_Presencia(IdTipo_Presencia),
     Lesiones TEXT,
-    Torus_Paladino INTEGER REFERENCES Tipo_Torus(Tipo_TorusID),
+    Torus_Palatino INTEGER REFERENCES Tipo_Torus(Tipo_TorusID),
     Torus_Mandibular INTEGER REFERENCES Tipo_Torus(Tipo_TorusID),
     Consistencia_Papilla_Derecho INTEGER REFERENCES Tipo_Mucosa_Maxilar(Tipo_Mucosa_MaxilarID),
     Tamaño_Papilla_Derecho INTEGER REFERENCES Tipo_Tamaño_Papilla(Tipo_Tamaño_PapillaID),
@@ -190,7 +192,7 @@ CREATE TABLE Observaciones_Intraoral_Protesis_Fija (
     Tamaño_Papilla_Izquierdo INTEGER REFERENCES Tipo_Tamaño_Papilla(Tipo_Tamaño_PapillaID),
     Lengua_Tamaño INTEGER REFERENCES Tipo_Lengua_Tamaño(Tipo_Lengua_TamañoID),
     Lengua_Posicion INTEGER REFERENCES Tipo_Lengua_Posicion(Tipo_Lengua_PosicionID),
-    Habitos_lengua TEXT,
+    Habitos_Lengua TEXT,
     Desplazamiento_Lengua BOOLEAN,
     Desplazamiento_Glandulas BOOLEAN,
     Saliva INTEGER REFERENCES Tipo_Saliva(Tipo_SalivaID)
@@ -209,6 +211,7 @@ CREATE TABLE Estado_Actual_Protesis_Fija (
     Total_Indicados_Extracion INTEGER,
     Contactos_Prematuros TEXT,
     Interferencia_Oclusales TEXT,
+    Observaciones TEXT,
     Pronostico_Tratamiento TEXT
 );
 --DROP TABLE Analisis_Radiografico_Protesis_Fija
@@ -217,12 +220,13 @@ CREATE TABLE Analisis_Radiografico_Protesis_Fija (
     Analisis_Radiograficoid SERIAL PRIMARY KEY,
     Hallazgo_Radiografico TEXT,
     Presencia_Radiopacas BOOLEAN,
-    Presencia_Radiolucidad BOOLEAN,
+    Presencia_Radiolucidas BOOLEAN,
     Organos_Dentales_Incluidos BOOLEAN,
     Presencia_Restos BOOLEAN,
     Protesico TEXT,
     Forma_Alveolar_Residual TEXT,
     Relacion_Corona_Pilar TEXT,
+    Otros TEXT,
     Pilar1 TEXT,
     Pilar2 TEXT,
     Pilar3 TEXT,
@@ -272,16 +276,15 @@ CREATE TABLE Encerado_Diagnostico_Protesis_Fija (
 CREATE TABLE Tratamientos_Implantes_Protesis_Fija (
     Tratamientos_Implantesid SERIAL PRIMARY KEY,
     Zona_Colocacion_Implantes TEXT,
-    Num_Unidades TEXT,
-    Corona_individual TEXT,
-    Puente TEXT,
-    Arcada_Competa TEXT,
+    Num_Unidades INTEGER,
+    Tipo_Implante TEXT,	
     Marca_Del_Implante TEXT,
     Tipo_Conexion TEXT,
     Geometria_Implante TEXT,
     Longitud TEXT,
     Diametro TEXT,
     Profundidad TEXT,
+    Otros TEXT,
     Medio_Fijacion INTEGER REFERENCES Tipo_Medio_Fijacion(Tipo_Medio_Fijacionid),
     Tipo_Pilar TEXT,
     Material_Restauracion INTEGER REFERENCES Tipo_Material_Restauracion(Tipo_Material_Restauracionid),
@@ -291,27 +294,24 @@ CREATE TABLE Tratamientos_Implantes_Protesis_Fija (
 --DROP TABLE  Protesis_Protesis_Fija
 CREATE TABLE Protesis_Protesis_Fija (
     Protesisid SERIAL PRIMARY KEY,
-    Numero_Unidades TEXT,
-    Puente_Protesis TEXT,
-    Corona_individual_Protesis TEXT,
+    Numero_Unidades INTEGER,
+    Puente_Corona TEXT,
     Tipo_Pontico TEXT,
     Tecnica_De_impresion INTEGER REFERENCES Tipo_Tecnica_Impresion(Tipo_Tecnica_Impresionid),
-    Protesis_Provicional INTEGER REFERENCES Tipo_Protesis_Provisional(Protesis_Provisionalid),
-    Materia_Escigido TEXT,
+    Protesis_Provisional TEXT,
+    Materia_Escogido TEXT,
     Prueba_En_cera TEXT,
     Prueba_De_Resina TEXT,
     Prueba_De_Metal TEXT,
     Prueba_De_Bizcocho TEXT,
     Prueba_Final TEXT,
-    Medio_De_Fijacio TEXT
+    Medio_De_Fijaciom TEXT
 );
 
 --DROP TABLE  Toma_de_color_Protesis_Fija
 CREATE TABLE Toma_de_color_Protesis_Fija (
     Toma_de_colorid SERIAL PRIMARY KEY,
-    Luz_sillo TEXT,
-    Luz_Oficina TEXT,
-    Luz_Natural TEXT,
+    Tipo_Luz TEXT,
     Escala_De_Color_Utilizada INTEGER REFERENCES Tipo_Escala_De_Color_Utilizada(Escala_De_Color_Utilizadaid),
     Color_Base_Final_Escogido INTEGER REFERENCES Tipo_Color_Base_Final_Escogido(Tipo_Color_Base_Final_Escogidoid)
 );
@@ -346,6 +346,8 @@ CREATE TABLE Protesis_Adhesion_Protesis_Fija (
     Color_Carillas TEXT,
     tecnica_impresion_Carillas BOOLEAN,
     Medio_Fijacion_Carillas TEXT
+    Material_Impresion_Carillas TEXT,
+    Observaciones_Carillas TEXT
 );
 
 
