@@ -7,12 +7,12 @@ DROP TABLE Evaluacion_Dental_Urgencia;
 
 CREATE TABLE Evaluacion_Dental_Urgencia (
     Evaluacion_Dental_Urgenciaid SERIAL PRIMARY KEY,
-    Num_de_Organo_Dentario INTEGER,
     Num_dientes_Con_Caries INTEGER,
     Num_dientes_Con_Fractura INTEGER,
     Exposicion_Pulpar TEXT,
-    Num_Protesis_Dentales INTEGER,
+    Protesis_Dentales TEXT,
     Presencia_Dolor BOOLEAN,
+    Tipo_De_Dolor TEXT,
     Intensidad INTEGER CHECK (Intensidad IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10)),
     PresenciaDeFistula BOOLEAN,
     Presencia_Bolsa_Periodontal BOOLEAN,
@@ -23,15 +23,15 @@ CREATE TABLE Evaluacion_Dental_Urgencia (
 
 CREATE TABLE Pruebas_Diagnosticas_Urgencia(
      Pruebas_Diagnosticas_Urgenciaid SERIAL PRIMARY KEY,
-     Prueba_Termica BOOLEAN,
+     Prueba_Termica_Dientes TEXT,
      Prueba_Termica_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
-     Palpitacion BOOLEAN,
+     Palpitacion_Dientes TEXT,
      Palpitacion_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
-     percucion_Vertical BOOLEAN,
-     percucion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
-     percucion_Horizontal BOOLEAN,
-    percucion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
-    imagen TEXT
+     percusion_Dientes TEXT,
+     percusion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
+     percusion_Horizontal_Dientes TEXT,
+     percusion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
+     imagen TEXT
 );
 
 CREATE TABLE Tipo_Dolor_Urgencias (
