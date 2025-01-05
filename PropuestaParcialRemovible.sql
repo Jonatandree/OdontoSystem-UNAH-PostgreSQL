@@ -27,15 +27,15 @@ CREATE TABLE anamnesis_protesis_Removible (
 
 CREATE TABLE Observaciones_Intraorales_protesis_Removible (
     Observaciones_Intraorales_protesis_Removibleid   SERIAL PRIMARY KEY,
-    Ingiene_Oral BOOLEAN,
+    Higiene_Oral TEXT,
     Indice_Caries TEXT,
-    Calidad_Tegido TEXT,
-    Cantidad_Tegido TEXT,
+    Calidad_Tejido TEXT,
+    Cantidad_Tejido TEXT,
     Numero_Posicion_Diente TEXT,
     Tamaño_Dientes_Remanetes TEXT, 
     Condiciones_Proceso TEXT,
     Coincide_Relacion_Oclucion BOOLEAN,
-    Interaciones_Frenillo BOOLEAN,
+    Inserciones_Frenillo BOOLEAN,
     Tipo_Saliva TEXT,
     Cantida_Normal_Saliva  BOOLEAN,
     Cantida_Normal_Saliva_No BOOLEAN, -- si en caso Cantida_Normal_Saliva es NO  ( Sialorrea o Xerostomía) 
@@ -55,8 +55,8 @@ CREATE TABLE  Examen_atm_protesis_Removible (
     Desviacion_Apertura TEXT,
     Desviacion_Cierre TEXT,
     Tono_Muscular TEXT,
-    Maseterio_Izquierdo TEXT,
-    Maseterio_Derecho TEXT,
+    Masetero_Izquierdo TEXT,
+    Masetero_Derecho TEXT,
     Temporal_Izquierdo TEXT,
     Temporal_Derecho TEXT,
     Contactos_Prematuros BOOLEAN,
@@ -69,16 +69,22 @@ CREATE TABLE analisis_modelos_protesis_Removible (
     analisis_modelos_protesis_Removibleid SERIAL PRIMARY KEY,
     Clase_Kennedy_Superior TEXT,
     Clase_Kennedy_Inferior TEXT,
+    Img_Kennedy TEXT,
+    Analisis TEXT,
     Espacio_interoclusal BOOLEAN,
-    Espacio_Endetulo_Superior TEXT,
-    Espacio_Modificacion_1_Superior VARCHAR(50),
-    Espacio_Modificacion_2_Superior VARCHAR(50),
-    Espacio_Modificacion_3_Superior VARCHAR(50),
-    Espacio_Endetulo_Inferior TEXT,
-    Espacio_Modificacion_1_Inferior VARCHAR(50),
-    Espacio_Modificacion_2_Inferior VARCHAR(50),
-    Espacio_Modificacion_3_Inferior VARCHAR(50)
 );
+
+CREATE TABLE Clasificacion_Seibert{
+    Clasificacion_SeibertID SERIAL PRIMARY KEY,
+    Espacio_Edetulo_Superior TEXT,
+    Espacio_Modificacion_1_Superior TEXT,
+    Espacio_Modificacion_2_Superior TEXT,
+    Espacio_Modificacion_3_Superior TEXT,
+    Espacio_Endetulo_Inferior TEXT,
+    Espacio_Modificacion_1_Inferior TEXT,
+    Espacio_Modificacion_2_Inferior TEXT,
+    Espacio_Modificacion_3_Inferior TEXT
+}
 
 
 CREATE TABLE modelos_montados_protesis_Removible (
@@ -109,6 +115,9 @@ CREATE TABLE Preparación_protesis_Removible (
     Preparaciónid SERIAL PRIMARY KEY,
     Tipo_de_Impresion_Estudio BOOLEAN,
     Tipo_de_Impresion_Trabajo BOOLEAN,
+    Preparacion_Planos_Guias TEXT,
+    Preparacion_Descansos TEXT,
+    Creacion_Aumento_Areas TEXT,
     Seleccion_Dientes TEXT 
 );
 
@@ -118,18 +127,35 @@ CREATE TABLE Pruebas_armazon_protesis_Removible (
     Foto_Relacion_interoclusales TEXT,
     Foto_Instalacion_PPR TEXT,
     Foto_Control_Post_operatorio TEXT,
-    Imagen_superior TEXT,
-    Clase_superior VARCHAR(150),
-    Conector_superior VARCHAR(150),
-    Base_superior VARCHAR(150),
-    Retenedores_Directos_Superior VARCHAR(150),
-    Retenedores_Indirectos_Superior VARCHAR(150),
-    Imagen_Inferior TEXT,
-    Clase_Inferior VARCHAR(150),
-    Conector_Inferior VARCHAR(150),
-    Base_Inferior VARCHAR(150),
-    Retenedores_Directos_Inferior VARCHAR(150),
-    Retenedores_Indirectos_Inferior VARCHAR(150)
+
+    --Inicial
+    Imagen_superior_Inicial TEXT,
+    Clase_superior_Inicial VARCHAR(150),
+    Conector_superior_Inicial VARCHAR(150),
+    Base_superior_Inicial VARCHAR(150),
+    Retenedores_Directos_Superior_Inicial VARCHAR(150),
+    Retenedores_Indirectos_Superior_Inicial VARCHAR(150),
+    Imagen_Inferior_Inicial TEXT,
+    Clase_Inferior_Inicial VARCHAR(150),
+    Conector_Inferior_Inicial VARCHAR(150),
+    Base_Inferior_Inicial VARCHAR(150),
+    Retenedores_Directos_Inferior_Inicial VARCHAR(150),
+    Retenedores_Indirectos_Inferior_Inicial VARCHAR(150),
+
+    --Final
+    Imagen_superior_Final TEXT,
+    Clase_superior_Final VARCHAR(150),
+    Conector_superior_Final VARCHAR(150),
+    Base_superior_Final VARCHAR(150),
+    Retenedores_Directos_Superior_Final VARCHAR(150),
+    Retenedores_Indirectos_Superior_Final VARCHAR(150),
+    Imagen_Inferior_Final TEXT,
+    Clase_Inferior_Final VARCHAR(150),
+    Conector_Inferior_Final VARCHAR(150),
+    Base_Inferior_Final VARCHAR(150),
+    Retenedores_Directos_Inferior_Final VARCHAR(150),
+    Retenedores_Indirectos_Inferior_Final VARCHAR(150),
+    
 );
 
 
@@ -149,7 +175,8 @@ CREATE TABLE Parcial_Removible_Propuesta (
    Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
-   DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta)
+   DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
+    Clasificacion_SeibertID REFERENCES Clasificacion_Seibert(Clasificacion_SeibertID)
 );
 
 
