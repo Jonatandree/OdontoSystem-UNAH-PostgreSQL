@@ -105,6 +105,7 @@ CREATE TABLE Observaciones_Protesis_Total (
 CREATE TABLE Examen_Intraoral_Protesis_Total (
     Examen_Intraoral_protesis_totalid SERIAL PRIMARY KEY,
     Forma_Maxilar_Superior INTEGER REFERENCES Tipo_Forma_Maxilar(Tipo_Forma_MaxilarID),
+    Tipo_Grande_Maxilar_Superior TEXT,
     Forma_Maxilar_Inferior INTEGER REFERENCES Tipo_Forma_Maxilar(Tipo_Forma_MaxilarID),
     Simetria_Maxilar_Superior INTEGER REFERENCES Tipo_Simetria_Maxilar(Tipo_Simetria_MaxilarID),
     Simetria_Maxilar_Inferior INTEGER REFERENCES Tipo_Simetria_Maxilar(Tipo_Simetria_MaxilarID),
@@ -138,8 +139,7 @@ CREATE TABLE Encerado_diagnostico_Protesis_Total (
     Enceradoid SERIAL PRIMARY KEY,
     Longitud_Lineas_Caninas DECIMAL(5, 2),
     Altura_Incisal DECIMAL(5, 2),
-    Eleccion_Color_Dientes TEXT,
-    Eleccion_Formas_Dientes TEXT
+    Eleccion_Color_Forma TEXT,
 );
 
 
