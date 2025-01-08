@@ -34,18 +34,6 @@ CREATE TABLE Pruebas_Diagnosticas_Urgencia(
      imagen TEXT
 );
 
-CREATE TABLE Tipo_Dolor_Urgencias (
-    Tipo_DolorID INT NOT NULL,
-    Evaluacion_Dental_Urgenciaid INT NOT NULL,
-    Historia_ClinicaID INT NOT NULL,
-    PRIMARY KEY (Tipo_DolorID, Evaluacion_Dental_Urgenciaid, Historia_ClinicaID),
-    FOREIGN KEY (Tipo_DolorID) REFERENCES Tipo_Dolor(Tipo_DolorID),
-    FOREIGN KEY (Evaluacion_Dental_Urgenciaid) REFERENCES Evaluacion_Dental_Urgencia(Evaluacion_Dental_Urgenciaid),
-    FOREIGN KEY (Historia_ClinicaID) REFERENCES Historia_Clinica(Historia_ClinicaID)
-);
-
-
-
 --65.
 CREATE TABLE Urgencias_Propuesta (
     UrgenciaID SERIAL PRIMARY KEY,
