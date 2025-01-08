@@ -20,6 +20,10 @@ CREATE TABLE Evaluacion_Dental_Urgencia (
     Grado_movilidad INTEGER CHECK (Grado_movilidad IN (1, 2, 3))
 );
 
+CREATE TABLE Tipo_Resultado_Urgencia (
+	Tipo_ResultadoID SERIAL PRIMARY KEY,
+	Nombre_Tipo VARCHAR(10) NOT NULL
+)
 
 CREATE TABLE Pruebas_Diagnosticas_Urgencia(
      Pruebas_Diagnosticas_Urgenciaid SERIAL PRIMARY KEY,
