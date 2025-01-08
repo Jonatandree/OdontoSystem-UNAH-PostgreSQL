@@ -28,13 +28,13 @@ CREATE TABLE Tipo_Resultado_Urgencia (
 CREATE TABLE Pruebas_Diagnosticas_Urgencia(
      Pruebas_Diagnosticas_Urgenciaid SERIAL PRIMARY KEY,
      Prueba_Termica_Dientes TEXT,
-     Prueba_Termica_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
+     Prueba_Termica_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_ResultadoID),
      Palpitacion_Dientes TEXT,
-     Palpitacion_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
+     Palpitacion_resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_ResultadoID),
      percusion_Dientes TEXT,
-     percusion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
+     percusion_Vertical_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_ResultadoID),
      percusion_Horizontal_Dientes TEXT,
-     percusion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_Resultado_UrgenciaID),
+     percusion_Horizontal_Resultado INTEGER REFERENCES Tipo_Resultado_Urgencia(Tipo_ResultadoID),
      imagen TEXT
 );
 
