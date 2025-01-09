@@ -28,6 +28,38 @@ DROP TABLE Tipo_Presencia;
 DROP TABLE Tipo_Material;
 drop table Tipo_Paciente_Edentulo;
 
+CREATE TABLE Tipo_Saliva (
+    Tipo_SalivaID SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+
+CREATE TABLE Tipo_Lengua_Posicion (
+    Tipo_Lengua_PosicionID SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Tipo_Torus (
+    Tipo_TorusID SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Tipo_Mucosa_Maxilar (
+    Tipo_Mucosa_MaxilarID SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Tipo_Tamaño_Papilla (
+    Tipo_Tamaño_PapillaID SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Tipo_Lengua_Tamaño (
+    Tipo_Lengua_TamañoID SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+
 CREATE TABLE Tipo_Fenotipo_Facial (
     Tipo_Fenotipo_Facialid SERIAL PRIMARY KEY,
     Descripcion VARCHAR(255) NOT NULL
@@ -363,7 +395,7 @@ CREATE TABLE Protesis_Adhesion_Protesis_Fija (
     Material_Carillas INTEGER REFERENCES Tipo_Material(IDTipo_Material),
     Color_Carillas TEXT,
     tecnica_impresion_Carillas BOOLEAN,
-    Medio_Fijacion_Carillas TEXT
+    Medio_Fijacion_Carillas TEXT,
     Material_Impresion_Carillas TEXT,
     Observaciones_Carillas TEXT
 );
