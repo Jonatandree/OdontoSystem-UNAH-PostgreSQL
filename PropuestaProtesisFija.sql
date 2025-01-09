@@ -28,7 +28,25 @@ DROP TABLE Tipo_Presencia;
 DROP TABLE Tipo_Material;
 drop table Tipo_Paciente_Edentulo;
 
+CREATE TABLE Tipo_Fenotipo_Facial (
+    Tipo_Fenotipo_Facialid SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
 
+CREATE TABLE Tipo_Forma_Facial (
+    Tipo_Forma_Facialid SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Tipo_Perfil(
+    Tipo_Perfilid SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Tipo_Color_Piel(
+    Tipo_Color_Pielid SERIAL PRIMARY KEY,
+    Descripcion VARCHAR(255) NOT NULL
+);
 
 CREATE TABLE Tipo_Paciente_Edentulo (
     Tipo_Paciente_Edentuloid SERIAL PRIMARY KEY,
