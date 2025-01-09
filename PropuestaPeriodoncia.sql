@@ -48,7 +48,7 @@ CREATE TABLE Periodoncias (
     Caracteristicas_De_La_EnciaID INTEGER REFERENCES Caracteristicas_De_La_Encia_Periodoncia(Caracteristicas_De_La_EnciaID),
     PeriodontogramaID INTEGER REFERENCES Periodontograma_Periodoncia(PeriodontogramaID),
     Diagnostico_Pronostico_individualID INTEGER REFERENCES Diagnostico_Pronostico_individual_Periodoncia(Diagnostico_Pronostico_individualID),
-    Valoracion_Riesgo_PeridontalID INTEGER REFERENCES Valoracion_Riesgo_Peridontal_Periodoncia(Valoracion_Riesgo_PeridontalID),
+    Valoracion_Riesgo_PeridontalID INTEGER REFERENCES Valoracion_Riesgo_Peridontal_Periodoncia(Valoracion_Riesgo_Peridontal_Periodoncia),
     DiagnosticoID INTEGER REFERENCES Diagnostico_Periodoncia(DiagnosticoID),
     Historia_ClinicaID INTEGER REFERENCES Historia_Clinica(Historia_ClinicaID),
     Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
