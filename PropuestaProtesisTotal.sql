@@ -8,6 +8,67 @@ DROP TABLE Examen_ATM_Protesis_Total;
 DROP TABLE Impresion_Clinica_Extraoral_Protesis_Total;
 
 
+CREATE TABLE Color_de_Ojos(
+	Color_de_OjosID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Consistencia_Papilla(
+	Tipo_Consistencia_PapillaID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Forma_Maxilar(
+	Tipo_Forma_MaxilarID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Simetria_Maxilar(
+	Tipo_Simetria_MaxilarID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Rebordes_Maxilar(
+	Tipo_Rebordes_MaxilarID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Tuberosidad_Maxilar(
+	Tipo_Tuberosidad_MaxilarID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+
+CREATE TABLE Tipo_Tubo_Reten(
+	Tipo_Tubo_RetenID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Zona_Cierre(
+	Tipo_Zona_CierreID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Fosa_Retro_Profunda(
+	Tipo_Fosa_Retro_ProfundaID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Fosa_Retro_Retentiva(
+	Tipo_Fosa_Retro_RetentivaID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Frenillo_Insercion(
+	Tipo_Frenillo_InsercionID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
+CREATE TABLE Tipo_Frenillo_Consistencia(
+	Tipo_Frenillo_ConsistenciaID SERIAL PRIMARY KEY,
+	descripcion TEXT
+);
+
 
 
 CREATE TABLE Impresion_Clinica_Extraoral_Protesis_Total (
@@ -139,7 +200,7 @@ CREATE TABLE Encerado_diagnostico_Protesis_Total (
     Enceradoid SERIAL PRIMARY KEY,
     Longitud_Lineas_Caninas DECIMAL(5, 2),
     Altura_Incisal DECIMAL(5, 2),
-    Eleccion_Color_Forma TEXT,
+    Eleccion_Color_Forma TEXT
 );
 
 
