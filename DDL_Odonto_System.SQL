@@ -255,7 +255,7 @@ CREATE TABLE Clinicas (
 CREATE TABLE Clases (
     Codigo_ClaseID VARCHAR(10) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL UNIQUE,
-    --DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID)
+    DepartamentoID INTEGER REFERENCES Departamentos(DepartamentoID),
     ClinicaID INTEGER REFERENCES Clinicas(ClinicaID)
 );
 --19.
