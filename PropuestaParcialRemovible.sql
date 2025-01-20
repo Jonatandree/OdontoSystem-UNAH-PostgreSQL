@@ -161,7 +161,7 @@ CREATE TABLE Pruebas_armazon_protesis_Removible (
 
 
 --69.
-CREATE TABLE Parcial_Removible_Propuesta (
+CREATE TABLE Parcial_Removible (
    Parcial_RemovibleID SERIAL PRIMARY KEY,
    anamnesis_protesis_Removibleid INTEGER REFERENCES anamnesis_protesis_Removible(anamnesis_protesis_Removibleid),
    Observaciones_Intraorales_protesis_Removibleid INTEGER REFERENCES Observaciones_Intraorales_protesis_Removible(Observaciones_Intraorales_protesis_Removibleid),
@@ -176,7 +176,7 @@ CREATE TABLE Parcial_Removible_Propuesta (
    Plan_TratamientoID INTEGER REFERENCES Plan_Tratamiento(Plan_TratamientoID),
    EstudianteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
    DocenteID VARCHAR(20) REFERENCES Usuarios(NumeroCuenta),
-    Clasificacion_SeibertID REFERENCES Clasificacion_Seibert(Clasificacion_SeibertID)
+   Clasificacion_SeibertID INT REFERENCES Clasificacion_Seibert(Clasificacion_SeibertID)
 );
 
 
